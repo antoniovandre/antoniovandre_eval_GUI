@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 11-07-2020.
+// Última atualização: 12-07-2020.
 
 #include "../antoniovandre.c"
 
@@ -45,6 +45,12 @@ int main (int argc, char *argv [])
 		printf ("\n");
 		return -1;
 		}
+	else if (! strcmp (strf, STRINGSAIDAERROOVER))
+		{
+		printf (MENSAGEM_ERRO_OVER);
+		printf ("\n");
+		return -1;
+		}
 	else
 		printf ("%s\n", strf);
 
@@ -52,3 +58,4 @@ int main (int argc, char *argv [])
 
 	return 0;
 	}
+
