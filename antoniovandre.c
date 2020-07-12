@@ -597,6 +597,8 @@ char * antoniovandre_valornumericopolinomio (char * args)
 
 			if (* err != 0) return STRINGSAIDAERRO;
 
+			if (fator > VALOR_MAX) return STRINGSAIDAERROOVER;
+
 			for (j = 0; j < indice_inicio; j++)
 				{
 				flag = 0; contador = 0;
@@ -615,6 +617,8 @@ char * antoniovandre_valornumericopolinomio (char * args)
 
 				coef = antoniovandre_partenumericamonomio (str);
 
+				if (coef > VALOR_MAX) return STRINGSAIDAERROOVER;
+
 				str2 = antoniovandre_parteliteralmonomio (str);
 
 				strcpy (str3, "");
@@ -624,6 +628,8 @@ char * antoniovandre_valornumericopolinomio (char * args)
 						coef *= fator;
 					else
 						strncat (str3, & str2 [k], 1);
+
+				if (coef > VALOR_MAX) return STRINGSAIDAERROOVER;
 
 				strcat (str4, antoniovandre_numeroparastring (coef));
 				strcat (str4, str3);
@@ -1504,6 +1510,8 @@ char * antoniovandre_derivada (char * str, long double ponto)
 	int i;
 	char * err;
 
+	if (ponto > VALOR_MAX) return STRINGSAIDAERROOVER;
+
 	strcpy (str2, "");
 
 	for (i = 0; i < strlen (str); i++)
@@ -1511,8 +1519,6 @@ char * antoniovandre_derivada (char * str, long double ponto)
 			strcat (str2, antoniovandre_numeroparastring ((long double) ((long double) ponto + (long double) EPSILON)));
 		else
 			strncat (str2, & str [i], 1);
-
-	if (! strcmp (str2, STRINGSAIDAERROOVER)) return STRINGSAIDAERROOVER;
 
 	valorsup = strtold (antoniovandre_eval (str2), & err);
 
@@ -1525,8 +1531,6 @@ char * antoniovandre_derivada (char * str, long double ponto)
 			strcat (str3, antoniovandre_numeroparastring ((long double) ((long double) ponto - (long double) EPSILON)));
 		else
 			strncat (str3, & str [i], 1);
-
-	if (! strcmp (str3, STRINGSAIDAERROOVER)) return STRINGSAIDAERROOVER;
 
 	valorinf = strtold (antoniovandre_eval (str3), & err);
 
