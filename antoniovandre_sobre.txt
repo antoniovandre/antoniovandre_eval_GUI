@@ -1,0 +1,72 @@
+                                        
+      .':clllc;'.   ..;clll:,.          
+    .col;'..,cxxl,,ldo:'.,lxxl.         
+  .:dc.      .lkkxxl:.  .cdxkx:         
+ .cd:.       .lkkko.    ;xkkkd'         
+ ,o:.        ,dkkx:     .;cc;.   .......
+  .         .ckkko.         ....''''''''
+            ,dkkx;       ...''''''''''''
+           .ckkko.    ..''''''''''''''''
+           'dkkx:. ..'''''',;,''''''''''
+ .:cc;.   .ckkkd,.'''''''';odc''''''''''
+;dkkkx,   ;xkkkl,'''''''';oxl,''''''''''
+ckkxd:.  ,dxxkxo,'''''',cddc,'''''''''''
+'okdc'.,coc':dxxo::::clddl;'''''''''''''
+ .,:clcc;.  .;clooooool:;'''''''''''''''
+           .''''',,,''''''''''''''''''''
+          .'''''''''''''''''''''''''''''
+          .'''''''''''''''''''''''''''''
+         .''''''''''''''''''''''''''''''
+         .''''''''''''''''''''''''''''''
+
+Projeto Mathematical Ramblings (mathematicalramblings.blogspot.com).
+____________________
+
+Constantes disponíveis para "antoniovandre_eval":
+
+"PI": razão entre o comprimento e o diâmetro de uma circunferência.
+
+"E": base dos logaritmos naturais.
+_____
+
+Constantes físicas disponíveis para "antoniovandre_eval":
+
+"c": velocidade da luz no vácuo no SI.
+_____
+
+Funções disponíveis para "antoniovandre_eval":
+
+"sen": função seno.
+
+"cos": função cosseno.
+
+"tg": função tangente.
+
+"cotg": função cotangente.
+
+"sec": função secante.
+
+"cossec": função cossecante.
+
+"arcsen": função arco-seno.
+
+"arccos": função arco-cosseno.
+
+"arctg": função arco-tangente.
+
+"arccotg": função arco-cotangente.
+
+"arcsec": função arco-secante.
+
+"arccossec": função arco-cossecante.
+
+"ln": função logaritmo natural.
+
+"logdez": função logaritmo na base 10.
+
+"logdois": função logaritmo na base 2.
+____________________
+
+Sugestões ou comunicar erros: "a.vandre.g@gmail.com".
+____________________
+

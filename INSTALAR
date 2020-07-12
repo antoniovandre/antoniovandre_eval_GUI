@@ -1,0 +1,72 @@
+#!/bin/bash
+
+# Projeto Mathematical Ramblings (mathematicalramblings.blogspot.com).
+
+# Script para compilar e instalar antoniovandre_eval_gui, versão de distribuição.
+
+# Licença: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
+
+# Última atualização: 12-07-2020.
+
+SOURCEDIR="Math/"
+DESTDIR="/usr/bin/"
+DESTDIRSHARE="/usr/share/"
+
+if ! [ -n "$AVCORES" ]; then echo -ne "Carregando antoniovandre_cores... "; if ! source "antoniovandre_cores" &>> /dev/null; then echo -e "Ocorreu um erro.\n"; else echo -e "${AV_VERDE}Ok${AV_SEMCOR}.\n"; fi; fi
+
+if [ "${1}" != "desinstalar" ] && [ "${1}" != "instalar" ]; then echo -e "${AV_VERMELHO}Entre com um dos argumentos: \"instalar\" ou \"desinstalar\"${AV_SEMCOR}."; exit 1; fi
+
+if [ "${1}" == "instalar" ] && hash antoniovandre_eval_gui &>> /dev/null; then echo -e "${AV_VERMELHO}Instalação anterior já realizada${AV_SEMCOR}."; exit 1; fi
+
+if [ "${1}" == "instalar" ] && hash antoniovandre_eval &>> /dev/null; then echo -e "${AV_VERMELHO}\"antoniovandre_eval\" em conflito${AV_SEMCOR}."; exit 1; fi
+
+if [ "${1}" == "desinstalar" ] && ! hash antoniovandre_eval_gui &>> /dev/null; then echo -e "${AV_VERMELHO}Software já desinstalado${AV_SEMCOR}."; exit 1; fi
+
+if ! hash bash &>> /dev/null; then echo -e "${AV_VERMELHO}Software \"bash\" não encontrado${AV_SEMCOR}."; exit 1; fi
+
+if ! hash gcc &>> /dev/null; then echo -e "${AV_VERMELHO}Software \"gcc\" não encontrado${AV_SEMCOR}."; exit 1; fi
+
+if ! hash md5sum &>> /dev/null; then echo -e "${AV_VERMELHO}Software \"md5sum\" não encontrado${AV_SEMCOR}."; exit 1; fi
+
+if ! hash python3 &>> /dev/null; then echo -e "${AV_VERMELHO}Software \"python3\" não encontrado${AV_SEMCOR}."; exit 1; fi
+
+if ! hash gedit &>> /dev/null; then echo -e "${AV_VERMELHO}Software \"xterm\" não encontrado${AV_SEMCOR}."; exit 1; fi
+
+if ! ls INSTALAR &>> /dev/null; then echo -e "${AV_VERMELHO}Instale a partir do diretório dos arquivos${AV_SEMCOR}."; exit 1; fi
+
+if [ "${1}" == "instalar" ]; then if ! ls README.txt &>> /dev/null || ! ls antoniovandre.c &>> /dev/null || ! ls antoniovandre_constantes.c &>> /dev/null || ! ls antoniovandre_eval_gui.py &>> /dev/null || ! ls antoniovandre_cores &>> /dev/null || ! ls antoniovandre_sobre.txt &>> /dev/null || ! ls antoniovandre_precisao_real.txt &>> /dev/null || ! ls Math/antoniovandre_eval.c &>> /dev/null || ! ls antoniovandre_eval_gui_bgimage.png &>> /dev/null ||[ "$(md5sum README.txt 2>> /dev/null | cut -d ' ' -f 1)" != "9e2106458dd1bec317a4386f6aa338b9" ] || [ "$(md5sum antoniovandre.c 2>> /dev/null | cut -d ' ' -f 1)" != "0ea5d03db3edb97a402a2a39e81d9844" ] || [ "$(md5sum antoniovandre_constantes.c 2>> /dev/null | cut -d ' ' -f 1)" != "abe0b00cf723ed82e375f02f7f017e8a" ] || [ "$(md5sum antoniovandre_eval_gui.py 2>> /dev/null | cut -d ' ' -f 1)" != "62be047e98cc083aca77c2c448953784" ] || [ "$(md5sum antoniovandre_cores 2>> /dev/null | cut -d ' ' -f 1)" != "d4f1a5742145b4d790698eed8eaf7d50" ] || [ "$(md5sum antoniovandre_sobre.txt 2>> /dev/null | cut -d ' ' -f 1)" != "1ac89fdb080824d9badb4ff2066cf6d0" ] || [ "$(md5sum antoniovandre_precisao_real.txt 2>> /dev/null | cut -d ' ' -f 1)" != "30fb76aeb44dbcc2fef88ab066d55ac6" ] || [ "$(md5sum Math/antoniovandre_eval.c 2>> /dev/null | cut -d ' ' -f 1)" != "17be6c38f7e5dc1a09d51a9297ab7e3a" ] || [ "$(md5sum antoniovandre_eval_gui_bgimage.png 2>> /dev/null | cut -d ' ' -f 1)" != "89cb7026063ee5e52291ede3d75d730d" ]; then echo -e "${AV_VERMELHO}Diretório corrompido${AV_SEMCOR}."; exit 1; fi; fi
+
+echo -e "Certifique-se de que esteja executando este script com ${AV_AMARELO}privilégios de escrita${AV_SEMCOR} em \"${SOURCEDIR}\", \"${DESTDIR}\", e em \"${DESTDIRSHARE}\"."; read;
+
+if [ "${1}" == "instalar" ]; then echo -e "#define ARQUIVO_MATH_ESTATISTICAS \"${HOME}/antoniovandre_math_estatisticas.txt\"\n" > antoniovandre_extra.c; fi
+
+DIR="${PWD}"
+cd "${SOURCEDIR}"
+
+OLDIFS="${IFS}"
+IFS=$'\n'
+
+for FILE in `ls -1 *.c`; do echo -ne "Trabalhando em \"${FILE}\"... "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIR}${FILE%%.*}" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else if gcc "${FILE}" -o "${FILE%%.*}" -lm &>> /dev/null; then if mv "${FILE%%.*}" "${DESTDIR}" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; fi; done
+
+IFS="${OLDIFS}"
+
+cd .. &>> /dev/null
+
+rm antoniovandre_extra.c &>> /dev/null
+
+echo -n "Trabalhando no arquivo Python... "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIR}antoniovandre_eval_gui.py" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else if cp antoniovandre_eval_gui.py ${DESTDIR} &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; fi
+
+echo -n "Trabalhando no arquivo sobre... "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIRSHARE}antoniovandre_sobre.txt" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else if cp antoniovandre_sobre.txt ${DESTDIRSHARE} &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; fi
+
+echo -n "Trabalhando no arquivo de precisão real... "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIRSHARE}antoniovandre_precisao_real.txt" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else if cp antoniovandre_precisao_real.txt ${DESTDIRSHARE} &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; fi
+
+echo -n "Trabalhando no arquivo bgimage... "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIRSHARE}antoniovandre_eval_gui_bgimage.png" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else if cp antoniovandre_eval_gui_bgimage.png ${DESTDIRSHARE} &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; fi
+
+echo -n "Trabalhando no script executável... "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIR}antoniovandre_eval_gui" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else if echo -e "#!/bin/bash\nDIR=\$PWD\ncd \"${HOME}\"\npython3 ${DESTDIR}antoniovandre_eval_gui.py\ncd \"\${DIR}\"\n" > antoniovandre_eval_gui && chmod a+x antoniovandre_eval_gui &>> /dev/null && mv antoniovandre_eval_gui ${DESTDIR} &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; fi
+
+if [ "${1}" == "desinstalar" ]; then echo -n "Trabalhando no arquivo de estatísticas... "; rm "${HOME}/antoniovandre_math_estatisticas.txt" &>> /dev/null; echo -e "${AV_VERDE}Ok${AV_SEMCOR}."; fi
+
+if [ "${1}" == "desinstalar" ]; then echo -e "\n${AV_VERDE}Sucesso${AV_SEMCOR} ao desinstalar."; else echo -e "\n${AV_VERDE}Sucesso${AV_SEMCOR} ao compilar e por os arquivos nos paths. O executável resultante é \"${AV_AMARELO}antoniovandre_eval_gui${AV_SEMCOR}\"."; fi
+
+cd "${DIR}"
+
