@@ -19,7 +19,7 @@
 #define TAMANHO_BUFFER_SMALL 30 // Para pequenos buffers.
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
-#define VALOR_MAX 100000000
+#define VALOR_MAX 100000000000000 // Deve estar em hamonia com a precisão real.
 #define DELIMITADORSTRING ',' // Deve ser um char;
 #define STRINGSAIDAERRO "Erro de saida de uma string."
 #define STRINGSAIDAERROOVER "Erro de saida de uma string por over."
@@ -298,16 +298,18 @@ char * antoniovandre_parteliteralmonomio (char * str)
 		return NULL;
 	}
 
-// Número para string.
+// Número para string. Observaçao: devem estar em harmonia VALOR_MAX e a precisao real.
 
 char * antoniovandre_numeroparastring (long double numero)
 	{
-	int potencia_min = (-1) * antoniovandre_precisao_real ();
+	int precisao = antoniovandre_precisao_real ();
+	int potencia_min = (-1) * precisao;
 	int potencia_max = log10 (VALOR_MAX);
 	char * strr;
 	int algarismo;
 	int i;
 	int flag = 0;
+	int contador = 0;
 
 	strr = malloc (TAMANHO_BUFFER_WORD);
 
@@ -329,13 +331,15 @@ char * antoniovandre_numeroparastring (long double numero)
 			}
 
 		if (i >= 0)
-			algarismo = (int) fmodl (((long double) numero / (long double) powl (10, i)), 10);
+			algarismo = (int) fmodl (((long double) numero / (long double) powl ((long double) 10, i)), (long double) 10);
 		else
-			algarismo = (int) fmodl (((long double) numero * (long double) powl (10, (-1) * i)), 10);
+			algarismo = (int) fmodl (((long double) numero * (long double) powl ((long double) 10, (-1) * i)), (long double) 10);
 
 		if (algarismo != 0) flag = 1;
 
-		if (flag == 1 || i < 0)
+		if (flag == 1) contador++;
+
+		if ((flag == 1 || i < 0) && (contador <= precisao))
 			{
 			switch (algarismo)
 				{
