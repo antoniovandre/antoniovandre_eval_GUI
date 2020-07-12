@@ -27,11 +27,14 @@ Constantes disponíveis para "antoniovandre_eval":
 "PI": razão entre o comprimento e o diâmetro de uma circunferência.
 
 "E": base dos logaritmos naturais.
-_____
 
-Constantes físicas disponíveis para "antoniovandre_eval":
+"C": velocidade da luz no vácuo, no SI.
 
-"c": velocidade da luz no vácuo no SI.
+"G": constante da Gravitação Universal, no SI.
+
+"QE": carga elementar, no SI.
+
+"H": Constante de Planck, no SI.
 _____
 
 Funções disponíveis para "antoniovandre_eval":

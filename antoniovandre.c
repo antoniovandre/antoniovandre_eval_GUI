@@ -19,7 +19,7 @@
 #define TAMANHO_BUFFER_SMALL 30 // Para pequenos buffers.
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
-#define VALOR_MAX 100000000000000 // Deve estar em hamonia com a precisão real.
+#define VALOR_MAX 100000000000000 // Afim de evitar erros de saída.
 #define DELIMITADORSTRING ',' // Deve ser um char;
 #define STRINGSAIDAERRO "Erro de saida de uma string."
 #define STRINGSAIDAERROOVER "Erro de saida de uma string por over."
@@ -298,7 +298,7 @@ char * antoniovandre_parteliteralmonomio (char * str)
 		return NULL;
 	}
 
-// Número para string. Observaçao: devem estar em harmonia VALOR_MAX e a precisao real.
+// Número para string.
 
 char * antoniovandre_numeroparastring (long double numero)
 	{
@@ -779,7 +779,19 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 	strcpy (funcoesconstantes [17].token, FISICA_C_SI);
 	funcoesconstantes [17].valor = (long double) FISICA_C_SI_VALOR;
-	strcpy (funcoesconstantes [17].comentario, "Constante c, velocidade da luz no vácuo.");
+	strcpy (funcoesconstantes [17].comentario, FISICA_C_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [18].token, FISICA_G_SI);
+	funcoesconstantes [18].valor = (long double) FISICA_G_SI_VALOR;
+	strcpy (funcoesconstantes [18].comentario, FISICA_G_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [19].token, FISICA_QE_SI);
+	funcoesconstantes [19].valor = (long double) FISICA_QE_SI_VALOR;
+	strcpy (funcoesconstantes [19].comentario, FISICA_QE_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [20].token, FISICA_H_SI);
+	funcoesconstantes [20].valor = (long double) FISICA_H_SI_VALOR;
+	strcpy (funcoesconstantes [20].comentario, FISICA_H_SI_COMENTARIO);
 
 	for (i = 0; i < strlen (str); i++)
 		for (j = 0; j < TAMANHO_BUFFER_SMALL; j++)
