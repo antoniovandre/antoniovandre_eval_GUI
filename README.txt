@@ -44,5 +44,8 @@ Dependências:
 "bash", "gcc", "md5sum", "python3".
 ____________________
 
+Por limitações do compilador/hardware, quando são muitos os dígitos significativos, os mais desprezíveis podem ser ignorados.
+____________________
+
 Sugestões ou comunicar erros: "a.vandre.g@gmail.com".
 
