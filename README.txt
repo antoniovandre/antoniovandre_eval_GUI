@@ -26,7 +26,7 @@ Proprietário: Antonio Vandré Pedrosa Furtunato Gomes. (bit.ly/antoniovandre_le
 
 README do "antoniovandre_eval_gui".
 
-Última atualização: 12-07-2020.
+Última atualização: 13-07-2020.
 ____________________
 
 Uma calculadora desenvolvida em C, com interface gráfica em Python.
@@ -41,8 +41,8 @@ _____
 
 Dependências:
 
-"bash", "gcc", "md5sum", "python3", "gedit".
+"bash", "gcc", "md5sum", "python3".
 ____________________
 
-Deixei o arquivo "antoniovandre_precisao_real.txt" editável, pois diferentes processadores podem tratar longs doubles de diferentes formas, alguns com mais exatidão que outros.
+Sugestões ou comunicar erros: "a.vandre.g@gmail.com".
 

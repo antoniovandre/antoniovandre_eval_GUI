@@ -6,14 +6,14 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 12-07-2020.
+// Última atualização: 13-07-2020.
 
 #define FISICA_C_SI "C"
 #define FISICA_C_SI_VALOR 299792458L
 #define FISICA_C_SI_COMENTARIO "Constante c, velocidade da luz no vácuo."
 
 #define FISICA_G_SI "G"
-#define FISICA_G_SI_VALOR 0.0000000000667384L
+#define FISICA_G_SI_VALOR 0.0000000000667430L
 #define FISICA_G_SI_COMENTARIO "Constante G, da Gravitação Universal."
 
 #define FISICA_QE_SI "QE"

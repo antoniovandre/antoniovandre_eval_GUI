@@ -2,7 +2,9 @@
 
 # GUI para "antoniovandre_eval", versão de distribuição.
 
-# Última atualização: 12-07-2020.
+# Última atualização: 13-07-2020.
+
+import tkinter as tk
 
 from tkinter import *
 
@@ -53,25 +55,46 @@ def clicked ():
 
 def clicked2 ():
 
-	cmd = 'gedit /usr/share/antoniovandre_sobre.txt'
+	with open ("/usr/share/antoniovandre_sobre.txt", "r") as fa:
+		stringajuda = fa.read ()
 
-	os.system (cmd)
+	windowajuda = Tk ()
+
+	windowajuda.resizable (False, False)
+
+	windowajuda.title ("antoniovandre_eval GUI ajuda")
+
+	S = tk.Scrollbar (windowajuda)
+
+	T = tk.Text (windowajuda, height=30, width=100)
+
+	S.pack (side=tk.RIGHT, fill=tk.Y)
+
+	T.pack (side=tk.LEFT, fill=tk.Y)
+
+	S.config (command=T.yview)
+
+	T.config (yscrollcommand=S.set)
+
+	T.insert (tk.INSERT, stringajuda)
+
+	windowajuda.mainloop ()
 
 def clicked3 ():
 
 	quit ()
 
-btn_calcular = Button(window, text="Calcular", command=clicked)
+btn_calcular = Button (window, text="Calcular", command=clicked)
 
-btn_calcular.place(anchor='center', relx=.3, rely=.5)
+btn_calcular.place (anchor='center', relx=.3, rely=.5)
 
-btn_ajuda = Button(window, text="Ajuda", command=clicked2)
+btn_ajuda = Button (window, text="Ajuda", command=clicked2)
 
-btn_ajuda.place(anchor='center', relx=.5, rely=.5)
+btn_ajuda.place (anchor='center', relx=.5, rely=.5)
 
-btn_exit = Button(window, text="Sair", command=clicked3)
+btn_exit = Button (window, text="Sair", command=clicked3)
 
-btn_exit.place(anchor='center', relx=.7, rely=.5)
+btn_exit.place (anchor='center', relx=.7, rely=.5)
 
-window.mainloop()
+window.mainloop ()
 

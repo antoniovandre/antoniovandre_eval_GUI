@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 12-07-2020.
+// Última atualização: 13-07-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,7 +19,7 @@
 #define TAMANHO_BUFFER_SMALL 30 // Para pequenos buffers.
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
-#define VALOR_MAX 100000000000000L // Afim de evitar erros de saída.
+#define VALOR_MAX 1000000000L // Afim de evitar erros de saída.
 #define DELIMITADORSTRING ',' // Deve ser um char;
 #define STRINGSAIDAERRO "Erro de saida de uma string."
 #define STRINGSAIDAERROOVER "Erro de saida de uma string por over."
@@ -305,6 +305,7 @@ char * antoniovandre_numeroparastring (long double numero)
 	int precisao = antoniovandre_precisao_real ();
 	int potencia_min = (-1) * precisao;
 	int potencia_max = log10 (VALOR_MAX);
+	long double fator = powl (10, potencia_max);
 	char * strr;
 	int algarismo;
 	int i;
@@ -330,10 +331,9 @@ char * antoniovandre_numeroparastring (long double numero)
 			strcat (strr, ".");
 			}
 
-		if (i >= 0)
-			algarismo = (int) fmodl (((long double) numero / (long double) powl ((long double) 10, i)), (long double) 10);
-		else
-			algarismo = (int) fmodl (((long double) numero * (long double) powl ((long double) 10, (-1) * i)), (long double) 10);
+		algarismo = (int) ((int) ((long double) numero / (long double) fator) % 10);
+
+		fator /= (long double) 10;
 
 		if (algarismo != 0) flag = 1;
 
