@@ -42,4 +42,7 @@ _____
 Dependências:
 
 "bash", "gcc", "md5sum", "python3", "gedit".
+____________________
+
+Deixei o arquivo "antoniovandre_precisao_real.txt" editável, pois diferentes processadores podem tratar longs doubles de diferentes formas, alguns com mais exatidão que outros.
 

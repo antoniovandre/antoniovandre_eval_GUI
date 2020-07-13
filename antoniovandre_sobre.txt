@@ -35,6 +35,10 @@ Constantes disponíveis para "antoniovandre_eval":
 "QE": carga elementar, no SI.
 
 "H": Constante de Planck, no SI.
+
+"HH": Constante reduzida de Planck, no SI.
+
+"K": Constante de Boltzmann, no SI.
 _____
 
 Funções disponíveis para "antoniovandre_eval":

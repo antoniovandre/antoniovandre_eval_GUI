@@ -19,7 +19,7 @@
 #define TAMANHO_BUFFER_SMALL 30 // Para pequenos buffers.
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
-#define VALOR_MAX 100000000000000 // Afim de evitar erros de saída.
+#define VALOR_MAX 100000000000000L // Afim de evitar erros de saída.
 #define DELIMITADORSTRING ',' // Deve ser um char;
 #define STRINGSAIDAERRO "Erro de saida de uma string."
 #define STRINGSAIDAERROOVER "Erro de saida de uma string por over."
@@ -792,6 +792,14 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	strcpy (funcoesconstantes [20].token, FISICA_H_SI);
 	funcoesconstantes [20].valor = (long double) FISICA_H_SI_VALOR;
 	strcpy (funcoesconstantes [20].comentario, FISICA_H_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [21].token, FISICA_HH_SI);
+	funcoesconstantes [21].valor = (long double) FISICA_HH_SI_VALOR;
+	strcpy (funcoesconstantes [21].comentario, FISICA_HH_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [22].token, FISICA_K_SI);
+	funcoesconstantes [22].valor = (long double) FISICA_K_SI_VALOR;
+	strcpy (funcoesconstantes [22].comentario, FISICA_K_SI_COMENTARIO);
 
 	for (i = 0; i < strlen (str); i++)
 		for (j = 0; j < TAMANHO_BUFFER_SMALL; j++)
