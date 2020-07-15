@@ -6,29 +6,43 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 13-07-2020.
+// Última atualização: 15-07-2020.
 
 #define FISICA_C_SI "C"
 #define FISICA_C_SI_VALOR 299792458L
-#define FISICA_C_SI_COMENTARIO "Constante c, velocidade da luz no vácuo."
+#define FISICA_C_SI_COMENTARIO "Constante c, velocidade da luz no vácuo, no SI."
 
 #define FISICA_G_SI "G"
 #define FISICA_G_SI_VALOR 0.0000000000667430L
-#define FISICA_G_SI_COMENTARIO "Constante G, da Gravitação Universal."
+#define FISICA_G_SI_COMENTARIO "Constante G, da Gravitação Universal, no SI."
 
 #define FISICA_QE_SI "QE"
-#define FISICA_QE_SI_VALOR 0.0000000000000000001602176565L
-#define FISICA_QE_SI_COMENTARIO "Constante e, carga elementar."
+#define FISICA_QE_SI_VALOR 0.0000000000000000001602176634L
+#define FISICA_QE_SI_COMENTARIO "Constante e, carga elementar, no SI."
 
 #define FISICA_H_SI "H"
-#define FISICA_H_SI_VALOR 0.000000000000000000000000000000000662606957L
-#define FISICA_H_SI_COMENTARIO "Constante h, de Planck."
+#define FISICA_H_SI_VALOR 0.000000000000000000000000000000000662606891L
+#define FISICA_H_SI_COMENTARIO "Constante h, de Planck, no SI."
 
 #define FISICA_HH_SI "HH"
-#define FISICA_HH_SI_VALOR 0.0000000000000000000000000000000001054571726L
+#define FISICA_HH_SI_VALOR 0.0000000000000000000000000000000001054571621L
 #define FISICA_HH_SI_COMENTARIO "Constante reduzida de Planck, no SI."
 
 #define FISICA_K_SI "K"
-#define FISICA_K_SI_VALOR 0.000000000000000000000013806488L
+#define FISICA_K_SI_VALOR 0.0000000000000000000000138065156L
 #define FISICA_K_SI_COMENTARIO "Constante de Boltzmann, no SI."
+
+#define FISICA_ME_SI "ME"
+#define FISICA_ME_SI_VALOR 0.00000000000000000000000000000091093837015L
+#define FISICA_ME_SI_COMENTARIO "Massa do elétron, no SI."
+
+#define FISICA_MP_SI "MP"
+#define FISICA_MP_SI_VALOR 0.00000000000000000000000000167262192369L
+#define FISICA_MP_SI_COMENTARIO "Massa do próton, no SI."
+
+//	Trecho incompatível com alguns compiladores.
+
+/*#define FISICA_A_SI "A"
+#define FISICA_A_SI_VALOR 602214076000000000000000L
+#define FISICA_A_SI_COMENTARIO "Número de Avogadro, em mol^(-1)."*/
 

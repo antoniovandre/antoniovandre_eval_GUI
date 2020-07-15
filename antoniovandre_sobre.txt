@@ -22,6 +22,22 @@ ckkxd:.  ,dxxkxo,'''''',cddc,'''''''''''
 Projeto Mathematical Ramblings (mathematicalramblings.blogspot.com).
 ____________________
 
+Operadores disponíveis para "antoniovandre_eval":
+
+"+": soma.
+
+"-": subtração.
+
+"*": multiplicação.
+
+"/": divisão.
+
+"^": exponenciação.
+_____
+
+Parênteses podem ser utilizados em "antoniovandre_eval".
+_____
+
 Constantes disponíveis para "antoniovandre_eval":
 
 "PI": razão entre o comprimento e o diâmetro de uma circunferência.
@@ -39,6 +55,10 @@ Constantes disponíveis para "antoniovandre_eval":
 "HH": Constante reduzida de Planck, no SI.
 
 "K": Constante de Boltzmann, no SI.
+
+"ME": Massa do elétron, no SI.
+
+"MP": Massa do próton, no SI.
 _____
 
 Funções disponíveis para "antoniovandre_eval":
@@ -72,6 +92,39 @@ Funções disponíveis para "antoniovandre_eval":
 "logdez": função logaritmo na base 10.
 
 "logdois": função logaritmo na base 2.
+
+"senh": função seno hiperbólico.
+
+"cosh": função cosseno hiperbólico.
+
+"tgh": função tangente hiperbólica.
+
+"cotgh": função cotangente hiperbólica.
+
+"sech": função secante hiperbólica.
+
+"cossech": função cossecante hiperbólica.
+
+"arcsenh": função arco-seno hiperbólico.
+
+"arccosh": função arco-cosseno hiperbólico.
+
+"arctgh": função arco-tangente hiperbólico.
+
+"arccotgh": função arco-cotangente hiperbólico.
+
+"arcsech": função arco-secante hiperbólico.
+
+"arccossech": função arco-cossecante hiperbólico.
+
+"fatorial": função fatorial.
+_____
+
+Exemplo de cálculo em "antoniovandre_eval":
+
+Entrada: "(2 + ln (5 - 2 ^ (8 - 6))) * 3";
+
+Saída: "6". 
 ____________________
 
 Sugestões ou comunicar erros: "a.vandre.g@gmail.com".

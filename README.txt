@@ -25,16 +25,16 @@ ____________________
 Proprietário: Antonio Vandré Pedrosa Furtunato Gomes. (bit.ly/antoniovandre_legadoontologico).
 
 README do "antoniovandre_eval_gui".
-
-Última atualização: 13-07-2020.
 ____________________
 
 Uma calculadora desenvolvida em C, com interface gráfica em Python.
 
 Versão para Linux.
+
+Última atualização: 15-07-2020.
 _____
 
-Instale através do script "INSTALAR", com o argumento "instalar", e desinstale através do mesmo script "INSTALAR" com o argumento "desinstalar".
+Instale através do script "INSTALAR", com o argumento "instalar", e desinstale através do mesmo script "INSTALAR" com o argumento "desinstalar". Um executável "antoniovandre_eval_gui" será criado e posto no PATH.
 
 Um arquivo de estatísticas de uso, "antoniovandre_math_estatisticas.txt" localizar-se-á no diretório HOME, caso o software seja utilizado.
 _____

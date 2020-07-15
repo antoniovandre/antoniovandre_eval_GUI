@@ -2,7 +2,7 @@
 
 # GUI para "antoniovandre_eval", versão de distribuição.
 
-# Última atualização: 13-07-2020.
+# Última atualização: 15-07-2020.
 
 import tkinter as tk
 
@@ -49,7 +49,7 @@ def clicked ():
 	with open ("avevtemp", "r") as f:
 		string = f.read ()
 
-	lbl_saida.configure (text=string)
+	lbl_saida.configure (text=string.rstrip("\n"))
 
 	os.system ('rm avevtemp')
 

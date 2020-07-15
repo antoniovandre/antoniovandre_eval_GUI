@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 13-07-2020.
+// Última atualização: 15-07-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -16,7 +16,7 @@
 
 #include "antoniovandre_extra.c"
 
-#define TAMANHO_BUFFER_SMALL 30 // Para pequenos buffers.
+#define TAMANHO_BUFFER_SMALL 40 // Para pequenos buffers.
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
 #define VALOR_MAX 1000000000L // Afim de evitar erros de saída.
@@ -801,6 +801,59 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	funcoesconstantes [22].valor = (long double) FISICA_K_SI_VALOR;
 	strcpy (funcoesconstantes [22].comentario, FISICA_K_SI_COMENTARIO);
 
+	strcpy (funcoesconstantes [23].token, "senh");
+	strcpy (funcoesconstantes [23].comentario, "Função seno hiperbólico.");
+
+	strcpy (funcoesconstantes [24].token, "cosh");
+	strcpy (funcoesconstantes [24].comentario, "Função cosseno hiperbólico.");
+
+	strcpy (funcoesconstantes [25].token, "tgh");
+	strcpy (funcoesconstantes [25].comentario, "Função tangente hiperbólica.");
+
+	strcpy (funcoesconstantes [26].token, "cotgh");
+	strcpy (funcoesconstantes [26].comentario, "Função cotangente hiperbólica.");
+
+	strcpy (funcoesconstantes [27].token, "sech");
+	strcpy (funcoesconstantes [27].comentario, "Função secante hiperbólica.");
+
+	strcpy (funcoesconstantes [28].token, "cossech");
+	strcpy (funcoesconstantes [28].comentario, "Função cossecante hiperbólica.");
+
+	strcpy (funcoesconstantes [29].token, "arcsenh");
+	strcpy (funcoesconstantes [29].comentario, "Função arco-seno hiperbólico.");
+
+	strcpy (funcoesconstantes [30].token, "arccosh");
+	strcpy (funcoesconstantes [30].comentario, "Função arco-cosseno hiperbólico.");
+
+	strcpy (funcoesconstantes [31].token, "arctgh");
+	strcpy (funcoesconstantes [31].comentario, "Função arco-tangente hiperbólico.");
+
+	strcpy (funcoesconstantes [32].token, "arccotgh");
+	strcpy (funcoesconstantes [32].comentario, "Função arco-cotangente hiperbólico.");
+
+	strcpy (funcoesconstantes [33].token, "arcsech");
+	strcpy (funcoesconstantes [33].comentario, "Função arco-secante hiperbólico.");
+
+	strcpy (funcoesconstantes [34].token, "arccossech");
+	strcpy (funcoesconstantes [34].comentario, "Função arco-cossecante hiperbólico.");
+
+	strcpy (funcoesconstantes [35].token, "fatorial");
+	strcpy (funcoesconstantes [35].comentario, "Função fatorial.");
+
+	strcpy (funcoesconstantes [36].token, FISICA_ME_SI);
+	funcoesconstantes [36].valor = (long double) FISICA_ME_SI_VALOR;
+	strcpy (funcoesconstantes [36].comentario, FISICA_ME_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [37].token, FISICA_MP_SI);
+	funcoesconstantes [37].valor = (long double) FISICA_MP_SI_VALOR;
+	strcpy (funcoesconstantes [37].comentario, FISICA_MP_SI_COMENTARIO);
+
+//	Trecho incompatível com alguns compiladores.
+
+/*	strcpy (funcoesconstantes [38].token, FISICA_A_SI);
+	funcoesconstantes [38].valor = (long double) FISICA_A_SI_VALOR;
+	strcpy (funcoesconstantes [38].comentario, FISICA_A_SI_COMENTARIO);*/
+
 	for (i = 0; i < strlen (str); i++)
 		for (j = 0; j < TAMANHO_BUFFER_SMALL; j++)
 			if (! strcmp (antoniovandre_substring (str, i, i + strlen (funcoesconstantes [j].token) - 1), funcoesconstantes [j].token))
@@ -837,6 +890,372 @@ char * antoniovandre_evalcelulafuncao (char * str)
 			if (strcmp (antoniovandre_substring (str, tokeninicio + tamanhotokenfuncaoconstantemax, strlen (str) - 1), "")) return STRINGSAIDAERRO;
 
 			return antoniovandre_numeroparastring ((long double) coeficiente * funcoesconstantes [tokenid].valor);
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 7), "fatorial"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 8, strlen (str) - 1), & err);
+
+			if ((* err != 0) || ((argumento != (int) argumento) || argumento < 0)) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			resultado = 1; for (i = 1; i <= (int) argumento; i++) resultado *= i;
+
+			return antoniovandre_numeroparastring ((long double) resultado);
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 9), "arccossech"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 10, strlen (str) - 1), & err);
+
+			if ((* err != 0) || (argumento == 0)) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((long double) (logl ((long double) (1 + (long double) powl (1 + (long double) powl ((long double) argumento, 2), 0.5)) / ((long double) argumento))))));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 6), "arcsech"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 7, strlen (str) - 1), & err);
+
+			if ((* err != 0) || ((argumento <= 0) || (argumento > 1))) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((long double) (logl ((long double) (1 + (long double) powl (1 - (long double) powl ((long double) argumento, 2), 0.5)) / ((long double) argumento))))));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 7), "arccotgh"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 8, strlen (str) - 1), & err);
+
+			if ((* err != 0) || ((argumento >= -1) && (argumento <= 1))) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((long double) ((logl ((long double) ((long double) argumento + 1) / ((long double) argumento - 1))) / 2))));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 5), "arctgh"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 6, strlen (str) - 1), & err);
+
+			if ((* err != 0) || ((argumento <= -1) || (argumento >= 1))) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((long double) ((logl ((long double) (1 + (long double) argumento) / (1 - (long double) argumento))) / 2))));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 6), "arccosh"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 7, strlen (str) - 1), & err);
+
+			if ((* err != 0) || (argumento < 1)) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((long double) logl ((long double) (argumento + powl ((long double) (powl ((long double) argumento, 2) - 1), 0.5))))));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 6), "arcsenh"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 7, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((long double) logl ((long double) (argumento + powl ((long double) (powl ((long double) argumento, 2) + 1), 0.5))))));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 6), "cossech"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 7, strlen (str) - 1), & err);
+
+			if ((* err != 0) || (argumento == 0)) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) (2 / (powl (M_El, (long double) argumento) - powl (M_El, ((-1) * (long double) argumento))))));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 3), "sech"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 4, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) (2 / (powl (M_El, (long double) argumento) + powl (M_El, ((-1) * (long double) argumento))))));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 4), "cotgh"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 5, strlen (str) - 1), & err);
+
+			if ((* err != 0) || (argumento == 0)) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((powl (M_El, (long double) argumento) + powl (M_El, ((-1) * (long double) argumento))) / (powl (M_El, (long double) argumento) - powl (M_El, ((-1) * (long double) argumento))))));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 2), "tgh"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 3, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((powl (M_El, (long double) argumento) - powl (M_El, ((-1) * (long double) argumento))) / (powl (M_El, (long double) argumento) + powl (M_El, ((-1) * (long double) argumento))))));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 3), "senh"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 4, strlen (str) - 1), & err);
+
+			if ((* err != 0) || (argumento == 0)) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((powl (M_El, (long double) argumento) - powl (M_El, ((-1) * (long double) argumento))) / 2)));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 3), "cosh"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 4, strlen (str) - 1), & err);
+
+			if ((* err != 0) || (argumento == 0)) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((powl (M_El, (long double) argumento) + powl (M_El, ((-1) * (long double) argumento))) / 2)));
 			}
 
 	for (i = 0; i < strlen (str); i++)
