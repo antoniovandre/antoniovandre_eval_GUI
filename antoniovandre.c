@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 15-07-2020.
+// Última atualização: 16-07-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -27,7 +27,7 @@
 #define TENTATIVASLOGICAS 2 // Podem ser necessárias mais de uma verificação lógica em alguns trechos.
 #define TOKENINICIOEVAL '('
 #define TOKENFIMEVAL ')'
-#define EPSILON 0.0000000001 // Para funções de Cálculo Diferencial.
+#define EPSILON 0.001 // Para funções de Cálculo Diferencial.
 #define VARIAVELDESUBSTITUICAO 'x' // Deve ser uma letra não presente nos nomes das funções.
 #define NUMEROPARTICOESSOMARIEMANN 100 // Para Cálculo Integral.
 
@@ -695,7 +695,7 @@ char * antoniovandre_substring (char * str, int inicio, int fim)
 	return strt;
 	}
 
-// Função eval célula função. Os nomes das funções devem conter apenas letras minúsculas. Os nomes das constantes devem conter apenas letras maiúsculas.
+// Função eval célula função. Os nomes das funções devem conter apenas letras minúsculas. Os nomes das constantes devem conter apenas letras maiúsculas. No escopo, as implementações das funções devem estar dispostas de modo a que os nomes das anteriores não sejam substrings das posteriores.
 
 char * antoniovandre_evalcelulafuncao (char * str)
 	{
@@ -854,6 +854,9 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	funcoesconstantes [38].valor = (long double) FISICA_A_SI_VALOR;
 	strcpy (funcoesconstantes [38].comentario, FISICA_A_SI_COMENTARIO);*/
 
+	strcpy (funcoesconstantes [39].token, "modulo");
+	strcpy (funcoesconstantes [39].comentario, "Função módulo.");
+
 	for (i = 0; i < strlen (str); i++)
 		for (j = 0; j < TAMANHO_BUFFER_SMALL; j++)
 			if (! strcmp (antoniovandre_substring (str, i, i + strlen (funcoesconstantes [j].token) - 1), funcoesconstantes [j].token))
@@ -890,6 +893,34 @@ char * antoniovandre_evalcelulafuncao (char * str)
 			if (strcmp (antoniovandre_substring (str, tokeninicio + tamanhotokenfuncaoconstantemax, strlen (str) - 1), "")) return STRINGSAIDAERRO;
 
 			return antoniovandre_numeroparastring ((long double) coeficiente * funcoesconstantes [tokenid].valor);
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 5), "modulo"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 6, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) fabs (argumento));
 			}
 
 	for (i = 0; i < strlen (str); i++)

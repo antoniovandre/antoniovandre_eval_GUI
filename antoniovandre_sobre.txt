@@ -118,6 +118,8 @@ Funções disponíveis para "antoniovandre_eval":
 "arccossech": função arco-cossecante hiperbólico.
 
 "fatorial": função fatorial.
+
+"modulo": função módulo.
 _____
 
 Exemplo de cálculo em "antoniovandre_eval":
