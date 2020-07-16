@@ -2,27 +2,6 @@
 ![antoniovandre_eval GUI logo](https://antoniovandre.github.io/antoniovandre_eval_GUI/antoniovandre_eval_gui_logo_200p.png)
 ____________________
 
-                                        
-      .':clllc;'.   ..;clll:,.          
-    .col;'..,cxxl,,ldo:'.,lxxl.         
-  .:dc.      .lkkxxl:.  .cdxkx:         
- .cd:.       .lkkko.    ;xkkkd'         
- ,o:.        ,dkkx:     .;cc;.   .......
-  .         .ckkko.         ....''''''''
-            ,dkkx;       ...''''''''''''
-           .ckkko.    ..''''''''''''''''
-           'dkkx:. ..'''''',;,''''''''''
- .:cc;.   .ckkkd,.'''''''';odc''''''''''
-;dkkkx,   ;xkkkl,'''''''';oxl,''''''''''
-ckkxd:.  ,dxxkxo,'''''',cddc,'''''''''''
-'okdc'.,coc':dxxo::::clddl;'''''''''''''
- .,:clcc;.  .;clooooool:;'''''''''''''''
-           .''''',,,''''''''''''''''''''
-          .'''''''''''''''''''''''''''''
-          .'''''''''''''''''''''''''''''
-         .''''''''''''''''''''''''''''''
-         .''''''''''''''''''''''''''''''
-
 Projeto Mathematical Ramblings [mathematicalramblings.blogspot.com](https://mathematicalramblings.blogspot.com).
 ____________________
 
