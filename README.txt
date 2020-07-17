@@ -41,7 +41,7 @@ _____
 
 Dependências:
 
-"bash", "gcc", "md5sum", "python3".
+"bash", "gcc", "md5sum", "python3", Tcl/Tk.
 ____________________
 
 Por limitações do compilador/hardware, quando são muitos os dígitos significativos, os mais desprezíveis podem ser ignorados.
