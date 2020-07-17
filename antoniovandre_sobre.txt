@@ -50,15 +50,25 @@ Constantes disponíveis para "antoniovandre_eval":
 
 "QE": carga elementar, no SI.
 
-"H": Constante de Planck, no SI.
+"H": constante de Planck, no SI.
 
 "HH": Constante reduzida de Planck, no SI.
 
-"K": Constante de Boltzmann, no SI.
+"K": constante de Boltzmann, no SI.
 
-"ME": Massa do elétron, no SI.
+"ME": massa do elétron, no SI.
 
-"MP": Massa do próton, no SI.
+"MP": massa do próton, no SI.
+
+"AM": número de Avogadro, vezes 10^(-23), em mol^(-1).
+
+"KE": constante de Coulomb, constante eletrostática, no SI.
+
+"P": razão áurea.
+
+"CC": constante de Catalan.
+
+"EM": constante de Euler-Mascheroni.
 _____
 
 Funções disponíveis para "antoniovandre_eval":
@@ -120,6 +130,30 @@ Funções disponíveis para "antoniovandre_eval":
 "fatorial": função fatorial.
 
 "modulo": função módulo.
+
+"radparagrau": função para converter radianos para graus.
+
+"radparagrado": função para converter radianos para grados.
+
+"graupararad": função para converter graus para radianos.
+
+"grauparagrado": função para converter graus para grados.
+
+"gradopararad": função para converter grados para radianos.
+
+"gradoparagrau": função para converter grados para graus.
+
+"kelvinparacelsius": função para converter temperatura em Kelvin para Celsius.
+
+"kelvinparafahrenheit": função para converter temperatura em Kelvin para Fahrenheit.
+
+"celsiusparakelvin": função para converter temperatura em Celsius para Kelvin.
+
+"celsiusparafahrenheit": função para converter temperatura em Celsius para Fahrenheit.
+
+"fahrenheitparakelvin": função para converter temperatura em Fahrenheit para Kelvin.
+
+"fahrenheitparacelsius": função para converter temperatura em Fahrenheit para Celsius.
 _____
 
 Exemplo de cálculo em "antoniovandre_eval":

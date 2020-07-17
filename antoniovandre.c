@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 16-07-2020.
+// Última atualização: 17-07-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -16,7 +16,7 @@
 
 #include "antoniovandre_extra.c"
 
-#define TAMANHO_BUFFER_SMALL 40 // Para pequenos buffers.
+#define TAMANHO_BUFFER_SMALL 60 // Para pequenos buffers.
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
 #define VALOR_MAX 1000000000L // Afim de evitar erros de saída.
@@ -857,6 +857,62 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	strcpy (funcoesconstantes [39].token, "modulo");
 	strcpy (funcoesconstantes [39].comentario, "Função módulo.");
 
+	strcpy (funcoesconstantes [40].token, "radparagrau");
+	strcpy (funcoesconstantes [40].comentario, "Função para converter radianos para graus.");
+
+	strcpy (funcoesconstantes [41].token, "radparagrado");
+	strcpy (funcoesconstantes [41].comentario, "Função para converter radianos para grados.");
+
+	strcpy (funcoesconstantes [42].token, "graupararad");
+	strcpy (funcoesconstantes [42].comentario, "Função para converter graus para radianos.");
+
+	strcpy (funcoesconstantes [43].token, "grauparagrado");
+	strcpy (funcoesconstantes [43].comentario, "Função para converter graus para grados.");
+
+	strcpy (funcoesconstantes [44].token, "gradopararad");
+	strcpy (funcoesconstantes [44].comentario, "Função para converter grados para radianos.");
+
+	strcpy (funcoesconstantes [45].token, "gradopargrau");
+	strcpy (funcoesconstantes [45].comentario, "Função para converter grados para graus.");
+
+	strcpy (funcoesconstantes [46].token, "kelvinparacelsius");
+	strcpy (funcoesconstantes [46].comentario, "Função para converter temperatura em Kelvin para Celsius.");
+
+	strcpy (funcoesconstantes [47].token, "kelvinparafahrenheit");
+	strcpy (funcoesconstantes [47].comentario, "Função para converter temperatura em Kelvin para Fahrenheit.");
+
+	strcpy (funcoesconstantes [48].token, "celsiusparakelvin");
+	strcpy (funcoesconstantes [48].comentario, "Função para converter temperatura em Celsius para Kelvin.");
+
+	strcpy (funcoesconstantes [49].token, "celsiusparafahrenheit");
+	strcpy (funcoesconstantes [49].comentario, "Função para converter temperatura em Celsius para Fahrenheit.");
+
+	strcpy (funcoesconstantes [50].token, "fahrenheitparakelvin");
+	strcpy (funcoesconstantes [50].comentario, "Função para converter temperatura em Fahrenheit para Kelvin.");
+
+	strcpy (funcoesconstantes [51].token, "fahrenheitparacelsius");
+	strcpy (funcoesconstantes [51].comentario, "Função para converter temperatura em Fahrenheit para Celsius.");
+
+	strcpy (funcoesconstantes [52].token, FISICA_AM_SI);
+	funcoesconstantes [52].valor = (long double) FISICA_AM_SI_VALOR;
+	strcpy (funcoesconstantes [52].comentario, FISICA_AM_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [53].token, FISICA_KE_SI);
+	funcoesconstantes [53].valor = (long double) FISICA_KE_SI_VALOR;
+	strcpy (funcoesconstantes [53].comentario, FISICA_KE_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [54].token, MATEMATICA_P);
+	funcoesconstantes [54].valor = (long double) MATEMATICA_P_VALOR;
+	strcpy (funcoesconstantes [54].comentario, MATEMATICA_P_COMENTARIO);
+
+	strcpy (funcoesconstantes [55].token, MATEMATICA_C);
+	funcoesconstantes [55].valor = (long double) MATEMATICA_C_VALOR;
+	strcpy (funcoesconstantes [55].comentario, MATEMATICA_C_COMENTARIO);
+
+	strcpy (funcoesconstantes [56].token, MATEMATICA_EMC);
+	funcoesconstantes [56].valor = (long double) MATEMATICA_EMC_VALOR;
+	strcpy (funcoesconstantes [56].comentario, MATEMATICA_EMC_COMENTARIO);
+
 	for (i = 0; i < strlen (str); i++)
 		for (j = 0; j < TAMANHO_BUFFER_SMALL; j++)
 			if (! strcmp (antoniovandre_substring (str, i, i + strlen (funcoesconstantes [j].token) - 1), funcoesconstantes [j].token))
@@ -893,6 +949,342 @@ char * antoniovandre_evalcelulafuncao (char * str)
 			if (strcmp (antoniovandre_substring (str, tokeninicio + tamanhotokenfuncaoconstantemax, strlen (str) - 1), "")) return STRINGSAIDAERRO;
 
 			return antoniovandre_numeroparastring ((long double) coeficiente * funcoesconstantes [tokenid].valor);
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 20), "fahrenheitparacelsius"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 21, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) (5 * (argumento - 32) / 9));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 19), "fahrenheitparakelvin"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 20, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((5 * (argumento - 32) / 9) + 273.15));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 20), "celsiusparafahrenheit"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 21, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((9 * argumento / 5) + 32));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 16), "celsiusparakelvin"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 17, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) (argumento - 273.15));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 19), "kelvinparafahrenheit"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 20, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) ((9 * (argumento - 273.15) / 5) + 32));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 16), "kelvinparacelsius"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 17, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) (argumento + 273.15));
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 12), "gradoparagrau"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 13, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) argumento * 9 / 10);
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 11), "gradopararad"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 12, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) argumento * M_PIl / 200);
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 12), "grauparagrado"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 13, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) argumento * 10 / 9);
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 10), "graupararad"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 11, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) argumento * M_PIl / 180);
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 11), "radparagrado"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 12, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) argumento * 200 / M_PIl);
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 10), "radparagrau"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 11, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			return antoniovandre_numeroparastring ((long double) argumento * 180 / M_PIl);
 			}
 
 	for (i = 0; i < strlen (str); i++)

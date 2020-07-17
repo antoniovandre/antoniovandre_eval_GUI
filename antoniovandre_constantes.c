@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 15-07-2020.
+// Última atualização: 17-07-2020.
 
 #define FISICA_C_SI "C"
 #define FISICA_C_SI_VALOR 299792458L
@@ -46,3 +46,22 @@
 #define FISICA_A_SI_VALOR 602214076000000000000000L
 #define FISICA_A_SI_COMENTARIO "Número de Avogadro, em mol^(-1)."*/
 
+#define FISICA_AM_SI "AM"
+#define FISICA_AM_SI_VALOR 6.02214076L
+#define FISICA_AM_SI_COMENTARIO "Número de Avogadro, vezes 10^(-23), em mol^(-1)."
+
+#define FISICA_KE_SI "KE"
+#define FISICA_KE_SI_VALOR 8987551792.3L
+#define FISICA_KE_SI_COMENTARIO "Constante de Coulomb, constante eletrostática, no SI."
+
+#define MATEMATICA_P "P"
+#define MATEMATICA_P_VALOR 1.618033988749895L
+#define MATEMATICA_P_COMENTARIO "Razão áurea."
+
+#define MATEMATICA_C "CC"
+#define MATEMATICA_C_VALOR 0.915965594177219015054603514932384110774L
+#define MATEMATICA_C_COMENTARIO "Constante de Catalan."
+
+#define MATEMATICA_EMC "EM"
+#define MATEMATICA_EMC_VALOR 0.5772156649015328606065120900824024310421L
+#define MATEMATICA_EMC_COMENTARIO "Constante de Euler-Mascheroni."
