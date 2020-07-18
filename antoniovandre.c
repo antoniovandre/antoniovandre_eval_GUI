@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 17-07-2020.
+// Última atualização: 18-07-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -56,7 +56,7 @@ int antoniovandre_mathsobre ()
 	while (! feof(filesobre))
 		{
 		antoniovandre_sobre_buffer_char = fgetc (filesobre);
-		if (antoniovandre_sobre_buffer_char != (char) EOF) printf ("%c", antoniovandre_sobre_buffer_char);
+		if (! feof(filesobre)) printf ("%c", antoniovandre_sobre_buffer_char);
 		}
 
 	fclose (filesobre);
@@ -107,17 +107,17 @@ int antoniovandre_salvarmathestatisticas (char * cabecalho)
 			if ((int) log10 (antoniovandre_estatisticas_contador - 1) != (int) log10(antoniovandre_estatisticas_contador))
 				{
 				tc = fgetc (filemathestatisticas);
-				if (tc != EOF) fseek (filemathestatisticas, (-1) * sizeof (char), SEEK_CUR);
+				if (! feof (filemathestatisticas)) fseek (filemathestatisticas, (-1) * sizeof (char), SEEK_CUR);
 				fputc ('\n', filemathestatisticas);
 
-				if (tc != EOF)
+				if (! feof (filemathestatisticas))
 					do
 						{
 						tc2 = fgetc (filemathestatisticas);
-						if (tc2 != EOF) fseek (filemathestatisticas, (-1) * sizeof (char), SEEK_CUR);
+						if (! feof (filemathestatisticas)) fseek (filemathestatisticas, (-1) * sizeof (char), SEEK_CUR);
 						fputc (tc, filemathestatisticas);
 						tc = tc2;
-						} while (tc != EOF);
+						} while (! feof (filemathestatisticas));
 				}
 
 			flag = 1;
