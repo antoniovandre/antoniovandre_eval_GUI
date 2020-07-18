@@ -14,7 +14,6 @@ Uma calculadora desenvolvida em C, com interface gráfica em Python.
 
 Versão para Linux.
 
-
 Última atualização: 18-07-2020.
 _____
 
