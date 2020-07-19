@@ -48,4 +48,3 @@ Due to compiler/hardware limitations, when there are many significant digits, th
 ____________________
 
 Suggestions or reporting errors: "a.vandre.g@gmail.com".
-

@@ -48,4 +48,3 @@ Por limitações do compilador/hardware, quando são muitos os dígitos signific
 ____________________
 
 Sugestões ou comunicar erros: "a.vandre.g@gmail.com".
-
