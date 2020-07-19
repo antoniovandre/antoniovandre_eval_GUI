@@ -43,5 +43,7 @@ ____________________
 Due to compiler/hardware limitations, when there are many significant digits, the most negligible digits can be ignored.
 ____________________
 
-Sugestões ou comunicar erros: "a.vandre.g@gmail.com".
+由於編譯器/硬件的限制，當有很多有效數字時，最可忽略的數字可以忽略。
+____________________
 
+Sugestões ou comunicar erros: "a.vandre.g@gmail.com".
