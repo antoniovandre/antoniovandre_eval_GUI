@@ -6,39 +6,104 @@
 
 # Licença: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-# Última atualização: 18-07-2020.
+# Última atualização: 19-07-2020.
 
 SOURCEDIR="Math/"
 DESTDIR="/usr/bin/"
 DESTDIRSHARE="/usr/share/"
 
-if ! [ -n "$AVCORES" ]; then echo -ne "Carregando antoniovandre_cores... "; if ! source "antoniovandre_cores" &>> /dev/null; then echo -e "Ocorreu um erro.\n"; else echo -e "${AV_VERDE}Ok${AV_SEMCOR}.\n"; fi; fi
+TRADUCOESARQUIVO="antoniovandre_traducoes.txt"
+MD5SUMTRADUCOESARQUIVO="620d4360312b7f2ecba4be3db86a1292"
 
-if [ "${1}" != "desinstalar" ] && [ "${1}" != "instalar" ]; then echo -e "${AV_VERMELHO}Entre com um dos argumentos: \"instalar\" ou \"desinstalar\"${AV_SEMCOR}."; exit 1; fi
+if [ "${1}" == "instalar" ]; then if ! ls "${TRADUCOESARQUIVO}" &>> /dev/null || ! ls index.html &>> /dev/null || ! ls index_en.html &>> /dev/null || ! ls README.txt &>> /dev/null || ! ls README_en.txt &>> /dev/null || ! ls README.md &>> /dev/null || ! ls antoniovandre.c &>> /dev/null || ! ls antoniovandre_constantes.c &>> /dev/null || ! ls antoniovandre_eval_gui.pytemp &>> /dev/null || ! ls antoniovandre_cores &>> /dev/null || ! ls antoniovandre_sobre.txt &>> /dev/null || ! ls antoniovandre_sobre_en.txt &>> /dev/null || ! ls antoniovandre_precisao_real.txt &>> /dev/null || ! ls Math/antoniovandre_eval.c &>> /dev/null || ! ls antoniovandre_eval_gui_bgimage.png &>> /dev/null || ! ls antoniovandre_eval_gui_logo.png &>> /dev/null || ! ls antoniovandre_eval_gui_logo_200p.png &>> /dev/null || [ "$(md5sum ${TRADUCOESARQUIVO} 2>> /dev/null | cut -d ' ' -f 1)" != "${MD5SUMTRADUCOESARQUIVO}" ] || [ "$(md5sum index.html 2>> /dev/null | cut -d ' ' -f 1)" != "9c74fdb81f4cde02619ef7e75176dc6b" ] || [ "$(md5sum index_en.html 2>> /dev/null | cut -d ' ' -f 1)" != "2ad91505f2ed6e1b53e7238f19aa5307" ] || [ "$(md5sum README.txt 2>> /dev/null | cut -d ' ' -f 1)" != "453a9793ce62d3594257808e3aa7416f" ] || [ "$(md5sum README_en.txt 2>> /dev/null | cut -d ' ' -f 1)" != "e844f7da90a20250a460828a29e15fcd" ] || [ "$(md5sum README.md 2>> /dev/null | cut -d ' ' -f 1)" != "4071114d054148829aeec7f8189b83c8" ] || [ "$(md5sum antoniovandre.c 2>> /dev/null | cut -d ' ' -f 1)" != "06b6389e314d20529640c2c59749a96b" ] || [ "$(md5sum antoniovandre_constantes.c 2>> /dev/null | cut -d ' ' -f 1)" != "f51aa177990b0a7fbfee03eb3041054a" ] || [ "$(md5sum antoniovandre_eval_gui.pytemp 2>> /dev/null | cut -d ' ' -f 1)" != "045d0140ddea3348d51d32cf59305f8b" ] || [ "$(md5sum antoniovandre_cores 2>> /dev/null | cut -d ' ' -f 1)" != "d4f1a5742145b4d790698eed8eaf7d50" ] || [ "$(md5sum antoniovandre_sobre.txt 2>> /dev/null | cut -d ' ' -f 1)" != "4953fde4128437780c7898ebe7b47ef3" ] || [ "$(md5sum antoniovandre_sobre_en.txt 2>> /dev/null | cut -d ' ' -f 1)" != "0d6d3f16d2fb21a317d3be4b27a2e3a8" ] || [ "$(md5sum antoniovandre_precisao_real.txt 2>> /dev/null | cut -d ' ' -f 1)" != "d268edba3f2644172d611aa9bc7a43a9" ] || [ "$(md5sum Math/antoniovandre_eval.c 2>> /dev/null | cut -d ' ' -f 1)" != "c44c02132e0b983beee9bc0350202048" ] || [ "$(md5sum antoniovandre_eval_gui_bgimage.png 2>> /dev/null | cut -d ' ' -f 1)" != "89cb7026063ee5e52291ede3d75d730d" ] || [ "$(md5sum antoniovandre_eval_gui_logo.png 2>> /dev/null | cut -d ' ' -f 1)" != "a7fcaccb1a993d65a644d781b4fa8d59" ] || [ "$(md5sum antoniovandre_eval_gui_logo_200p.png 2>> /dev/null | cut -d ' ' -f 1)" != "77d3ec93b5775b1029c6099ed6421b20" ]; then echo -e "Diretório corrompido. / Corrupted directory."; exit 1; fi; fi
 
-if [ "${1}" == "instalar" ] && hash antoniovandre_eval_gui &>> /dev/null; then echo -e "${AV_VERMELHO}Instalação anterior já realizada${AV_SEMCOR}."; exit 1; fi
+if [ -n "${2}" ]; then ARGUMENTOLINGUISTICO="${2}"; else ARGUMENTOLINGUISTICO="nulo"; fi
 
-if [ "${1}" == "instalar" ] && hash antoniovandre_eval &>> /dev/null; then echo -e "${AV_VERMELHO}\"antoniovandre_eval\" em conflito${AV_SEMCOR}."; exit 1; fi
+CARREGANDOCORES=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '1p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '1p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
 
-if [ "${1}" == "desinstalar" ] && ! hash antoniovandre_eval_gui &>> /dev/null; then echo -e "${AV_VERMELHO}Software já desinstalado${AV_SEMCOR}."; exit 1; fi
+if ! [ -n "$AVCORES" ]; then echo -ne "${CARREGANDOCORES}"; if ! source "antoniovandre_cores" &>> /dev/null; then echo -e "Ocorreu um erro.\n"; else echo -e "${AV_VERDE}Ok${AV_SEMCOR}.\n"; fi; fi
 
-if ! hash bash &>> /dev/null; then echo -e "${AV_VERMELHO}Software \"bash\" não encontrado${AV_SEMCOR}."; exit 1; fi
+ENTRECOMOSARGUMENTOS=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '2p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '2p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
 
-if ! hash gcc &>> /dev/null; then echo -e "${AV_VERMELHO}Software \"gcc\" não encontrado${AV_SEMCOR}."; exit 1; fi
+JAINSTALADO=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '3p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '3p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
 
-if ! hash md5sum &>> /dev/null; then echo -e "${AV_VERMELHO}Software \"md5sum\" não encontrado${AV_SEMCOR}."; exit 1; fi
+CONFLITO=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '4p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '4p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
 
-if ! hash python3 &>> /dev/null; then echo -e "${AV_VERMELHO}Software \"python3\" não encontrado${AV_SEMCOR}."; exit 1; fi
+JADESINSTALADO=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '5p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '5p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
 
-if ! hash tclsh &>> /dev/null; then echo -e "${AV_VERMELHO}Tcl/Tk não encontrado${AV_SEMCOR}."; exit 1; fi
+BASHNAOENCONTRADO=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '6p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '6p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
 
-if ! ls INSTALAR &>> /dev/null; then echo -e "${AV_VERMELHO}Instale a partir do diretório dos arquivos${AV_SEMCOR}."; exit 1; fi
+GCCNAOENCONTRADO=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '7p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '7p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
 
-if [ "${1}" == "instalar" ]; then if ! ls index.html &>> /dev/null || ! ls index_en.html &>> /dev/null || ! ls README.txt &>> /dev/null || ! ls README_en.txt &>> /dev/null || ! ls README.md &>> /dev/null || ! ls antoniovandre.c &>> /dev/null || ! ls antoniovandre_constantes.c &>> /dev/null || ! ls antoniovandre_eval_gui.py &>> /dev/null || ! ls antoniovandre_cores &>> /dev/null || ! ls antoniovandre_sobre.txt &>> /dev/null || ! ls antoniovandre_sobre_en.txt &>> /dev/null || ! ls antoniovandre_precisao_real.txt &>> /dev/null || ! ls Math/antoniovandre_eval.c &>> /dev/null || ! ls antoniovandre_eval_gui_bgimage.png &>> /dev/null || ! ls antoniovandre_eval_gui_logo.png &>> /dev/null || ! ls antoniovandre_eval_gui_logo_200p.png &>> /dev/null || [ "$(md5sum index.html 2>> /dev/null | cut -d ' ' -f 1)" != "9c74fdb81f4cde02619ef7e75176dc6b" ] || [ "$(md5sum index_en.html 2>> /dev/null | cut -d ' ' -f 1)" != "2ad91505f2ed6e1b53e7238f19aa5307" ] || [ "$(md5sum README.txt 2>> /dev/null | cut -d ' ' -f 1)" != "7d488c2bd94b1c3ac1b4607bea716ea5" ] || [ "$(md5sum README_en.txt 2>> /dev/null | cut -d ' ' -f 1)" != "cdebb113aaec3fa4605a825b72a4efd6" ] || [ "$(md5sum README.md 2>> /dev/null | cut -d ' ' -f 1)" != "a485ff8f2f636986082f3c78c7626dbf" ] || [ "$(md5sum antoniovandre.c 2>> /dev/null | cut -d ' ' -f 1)" != "06b6389e314d20529640c2c59749a96b" ] || [ "$(md5sum antoniovandre_constantes.c 2>> /dev/null | cut -d ' ' -f 1)" != "f51aa177990b0a7fbfee03eb3041054a" ] || [ "$(md5sum antoniovandre_eval_gui.py 2>> /dev/null | cut -d ' ' -f 1)" != "106dfda7acf40eba6c3eb762995713e7" ] || [ "$(md5sum antoniovandre_cores 2>> /dev/null | cut -d ' ' -f 1)" != "d4f1a5742145b4d790698eed8eaf7d50" ] || [ "$(md5sum antoniovandre_sobre.txt 2>> /dev/null | cut -d ' ' -f 1)" != "4953fde4128437780c7898ebe7b47ef3" ] || [ "$(md5sum antoniovandre_sobre_en.txt 2>> /dev/null | cut -d ' ' -f 1)" != "0d6d3f16d2fb21a317d3be4b27a2e3a8" ] || [ "$(md5sum antoniovandre_precisao_real.txt 2>> /dev/null | cut -d ' ' -f 1)" != "d268edba3f2644172d611aa9bc7a43a9" ] || [ "$(md5sum Math/antoniovandre_eval.c 2>> /dev/null | cut -d ' ' -f 1)" != "c44c02132e0b983beee9bc0350202048" ] || [ "$(md5sum antoniovandre_eval_gui_bgimage.png 2>> /dev/null | cut -d ' ' -f 1)" != "89cb7026063ee5e52291ede3d75d730d" ] || [ "$(md5sum antoniovandre_eval_gui_logo.png 2>> /dev/null | cut -d ' ' -f 1)" != "a7fcaccb1a993d65a644d781b4fa8d59" ] || [ "$(md5sum antoniovandre_eval_gui_logo_200p.png 2>> /dev/null | cut -d ' ' -f 1)" != "77d3ec93b5775b1029c6099ed6421b20" ]; then echo -e "${AV_VERMELHO}Diretório corrompido${AV_SEMCOR}."; exit 1; fi; fi
+MD5SUMNAOENCONTRADO=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '8p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '8p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
 
-echo -e "Certifique-se de que esteja executando este script com ${AV_AMARELO}privilégios de escrita${AV_SEMCOR} em \"${PWD}\", \"${PWD}/${SOURCEDIR}\", \"${DESTDIR}\", e em \"${DESTDIRSHARE}\". Vocẽ pode, como um conselho, se já não o fez, executar através do comando \"${AV_AMARELO}sudo${AV_SEMCOR}\".\n\nPressione ENTER para continuar. ou CTRL+C para abortar."; read;
+PYTHONNAOENCONTRADO=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '9p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '9p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
 
-if [ "${1}" == "instalar" ]; then echo -e "#define ARQUIVO_MATH_ESTATISTICAS \"${HOME}/antoniovandre_math_estatisticas.txt\"\n" > antoniovandre_extra.c; fi
+TCLTKNAOENCONTRADO=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '10p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '10p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+INSTALEDODIRETORIO=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '11p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '11p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+INSTALARINTRODUCAO=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '12p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '12p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+TRABALHANDOEM=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '13p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '13p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+SUCESSO=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '14p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '14p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+OCORREUFALHA=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '15p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '15p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+TRABALHANDOPYTHON=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '16p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '16p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+TRABALHANDOSOBRE=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '17p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '17p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+TRABALHANDOPRECISAOREAL=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '18p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '18p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+TRABALHANDOBGIMAGE=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '19p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '19p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+TRABALHANDOEXECUTAVEL=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '20p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '20p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+TRABALHANDOESTATISTICAS=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '21p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '21p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+SUCESSODESINSTALAR=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '22p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '22p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+SUCESSOINSTALAR=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '23p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '23p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+ENTREEXPRESSAO=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '24p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '24p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+RESULTADO=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '25p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '25p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+ENTREEXPRESSAOCLIQUE=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '26p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '26p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+ARQUIVOSOBRE=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '27p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '27p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+AJUDA=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '28p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '28p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+CALCULAR=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '29p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '29p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+MAJUDA=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '30p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '30p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+SAIR=$(eval echo "$(if [ ${ARGUMENTOLINGUISTICO} == 'en' ]; then sed -n '31p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 2; else sed -n '31p' < ${TRADUCOESARQUIVO} | cut -d '%' -f 1; fi)")
+
+if [ "${1}" != "desinstalar" ] && [ "${1}" != "instalar" ]; then echo -e "${AV_VERMELHO}${ENTRECOMOSARGUMENTOS}${AV_SEMCOR}."; exit 1; fi
+
+if [ "${1}" == "instalar" ] && hash antoniovandre_eval_gui &>> /dev/null; then echo -e "${AV_VERMELHO}${JAINSTALADO}${AV_SEMCOR}."; exit 1; fi
+
+if [ "${1}" == "instalar" ] && hash antoniovandre_eval echo &>> /dev/null; then echo -e "${AV_VERMELHO}${CONFLITO}${AV_SEMCOR}."; exit 1; fi
+
+if [ "${1}" == "desinstalar" ] && ! hash antoniovandre_eval_gui &>> /dev/null; then echo -e "${AV_VERMELHO}${JADESINSTALADO}${AV_SEMCOR}."; exit 1; fi
+
+if ! hash bash &>> /dev/null; then echo -e "${AV_VERMELHO}${BASHNAOENCONTRADO}${AV_SEMCOR}."; exit 1; fi
+
+if [ "${1}" == "instalar" ] && ! hash gcc &>> /dev/null; then echo -e "${AV_VERMELHO}${GCCNAOENCONTRADO}${AV_SEMCOR}."; exit 1; fi
+
+if [ "${1}" == "instalar" ] && ! hash md5sum &>> /dev/null; then echo -e "${AV_VERMELHO}${MD5SUMNAOENCONTRADO}${AV_SEMCOR}."; exit 1; fi
+
+if [ "${1}" == "instalar" ] && ! hash python3 &>> /dev/null; then echo -e "${AV_VERMELHO}${PYTHONNAOENCONTRADO}${AV_SEMCOR}."; exit 1; fi
+
+if [ "${1}" == "instalar" ] && ! hash tclsh &>> /dev/null; then echo -e "${AV_VERMELHO}${TCLTKNAOENCONTRADO}${AV_SEMCOR}."; exit 1; fi
+
+if [ "${1}" == "instalar" ] && ! ls INSTALAR &>> /dev/null; then echo -e "${AV_VERMELHO}${INSTALEDODIRETORIO}${AV_SEMCOR}."; exit 1; fi
+
+if [ "${1}" == "instalar" ]; then echo -e "${INSTALARINTRODUCAO}"; read; echo -e "#define ARQUIVO_MATH_ESTATISTICAS \"${HOME}/antoniovandre_math_estatisticas.txt\"\n" > antoniovandre_extra.c; fi
 
 DIR="${PWD}"
 cd "${SOURCEDIR}"
@@ -46,7 +111,7 @@ cd "${SOURCEDIR}"
 OLDIFS="${IFS}"
 IFS=$'\n'
 
-for FILE in `ls -1 *.c`; do echo -ne "Trabalhando em \"${FILE}\"... "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIR}${FILE%%.*}" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else if gcc "${FILE}" -o "${FILE%%.*}" -lm &>> /dev/null; then if mv "${FILE%%.*}" "${DESTDIR}" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; fi; done
+for FILE in `ls -1 *.c`; do echo -ne "${TRABALHANDOEM} \"${FILE}\"... "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIR}${FILE%%.*}" &>> /dev/null; then echo -e "${AV_VERDE}${SUCESSO}${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}${OCORREUFALHA}${AV_SEMCOR}."; exit 1; fi; else if gcc "${FILE}" -o "${FILE%%.*}" -lm &>> /dev/null; then if mv "${FILE%%.*}" "${DESTDIR}" &>> /dev/null; then echo -e "${AV_VERDE}${SUCESSO}${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}${OCORREUFALHA}${AV_SEMCOR}."; rm antoniovandre_extra.c &>> /dev/null; exit 1; fi; else echo -e "${AV_VERMELHO}${OCORREUFALHA}${AV_SEMCOR}."; rm antoniovandre_extra.c &>> /dev/null; exit 1; fi; fi; done
 
 IFS="${OLDIFS}"
 
@@ -54,19 +119,18 @@ cd .. &>> /dev/null
 
 rm antoniovandre_extra.c &>> /dev/null
 
-echo -n "Trabalhando no arquivo Python... "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIR}antoniovandre_eval_gui.py" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else if cp antoniovandre_eval_gui.py ${DESTDIR} &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; fi
+echo -n "${TRABALHANDOPYTHON} "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIR}antoniovandre_eval_gui.py" &>> /dev/null; then echo -e "${AV_VERDE}${SUCESSO}${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}${OCORREUFALHA}${AV_SEMCOR}."; exit 1; fi; else if cp antoniovandre_eval_gui.pytemp antoniovandre_eval_gui.pytempt && sed -i -e "s/ENTREEXPRESSAOCLIQUE/${ENTREEXPRESSAOCLIQUE}/g" antoniovandre_eval_gui.pytempt && sed -i -e "s/RESULTADO/${RESULTADO}/g" antoniovandre_eval_gui.pytempt && sed -i -e "s/ENTREEXPRESSAO/${ENTREEXPRESSAO}/g" antoniovandre_eval_gui.pytempt && sed -i -e "s/MAJUDA/${MAJUDA}/g" antoniovandre_eval_gui.pytempt && sed -i -e "s/CALCULAR/${CALCULAR}/g" antoniovandre_eval_gui.pytempt && sed -i -e "s/AJUDA/${AJUDA}/g" antoniovandre_eval_gui.pytempt && sed -i -e "s/SAIR/${SAIR}/g" antoniovandre_eval_gui.pytempt && mv antoniovandre_eval_gui.pytempt "${DESTDIR}antoniovandre_eval_gui.py" &>> /dev/null; then echo -e "${AV_VERDE}${SUCESSO}${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}${OCORREUFALHA}${AV_SEMCOR}."; rm antoniovandre_eval_gui.pytempt &>> /dev/null; exit 1; fi; fi
 
-echo -n "Trabalhando no arquivo sobre... "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIRSHARE}antoniovandre_sobre.txt" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else if cp antoniovandre_sobre.txt ${DESTDIRSHARE} &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; fi
+echo -n "${TRABALHANDOSOBRE} "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIRSHARE}antoniovandre_sobre.txt" &>> /dev/null; then echo -e "${AV_VERDE}${SUCESSO}${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}${OCORREUFALHA}${AV_SEMCOR}."; exit 1; fi; else if cp "${ARQUIVOSOBRE}" "${DESTDIRSHARE}antoniovandre_sobre.txt" &>> /dev/null; then echo -e "${AV_VERDE}${SUCESSO}${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}${OCORREUFALHA}${AV_SEMCOR}."; exit 1; fi; fi
 
-echo -n "Trabalhando no arquivo de precisão real... "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIRSHARE}antoniovandre_precisao_real.txt" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else if cp antoniovandre_precisao_real.txt ${DESTDIRSHARE} &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; fi
+echo -n "${TRABALHANDOPRECISAOREAL} "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIRSHARE}antoniovandre_precisao_real.txt" &>> /dev/null; then echo -e "${AV_VERDE}${SUCESSO}${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}${OCORREUFALHA}${AV_SEMCOR}."; exit 1; fi; else if cp antoniovandre_precisao_real.txt ${DESTDIRSHARE} &>> /dev/null; then echo -e "${AV_VERDE}${SUCESSO}${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}${OCORREUFALHA}${AV_SEMCOR}."; exit 1; fi; fi
 
-echo -n "Trabalhando no arquivo bgimage... "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIRSHARE}antoniovandre_eval_gui_bgimage.png" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else if cp antoniovandre_eval_gui_bgimage.png ${DESTDIRSHARE} &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; fi
+echo -n "${TRABALHANDOBGIMAGE} "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIRSHARE}antoniovandre_eval_gui_bgimage.png" &>> /dev/null; then echo -e "${AV_VERDE}${SUCESSO}${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}${OCORREUFALHA}${AV_SEMCOR}."; exit 1; fi; else if cp antoniovandre_eval_gui_bgimage.png ${DESTDIRSHARE} &>> /dev/null; then echo -e "${AV_VERDE}${SUCESSO}${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}${OCORREUFALHA}${AV_SEMCOR}."; exit 1; fi; fi
 
-echo -n "Trabalhando no script executável... "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIR}antoniovandre_eval_gui" &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; else if echo -e "#!/bin/bash\nDIR=\$PWD\ncd \"${HOME}\"\npython3 ${DESTDIR}antoniovandre_eval_gui.py\ncd \"\${DIR}\"\n" > antoniovandre_eval_gui && chmod a+x antoniovandre_eval_gui &>> /dev/null && mv antoniovandre_eval_gui ${DESTDIR} &>> /dev/null; then echo -e "${AV_VERDE}Sucesso${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}Ocorreu uma falha${AV_SEMCOR}."; exit 1; fi; fi
+echo -n "${TRABALHANDOEXECUTAVEL} "; if [ "${1}" == "desinstalar" ]; then if rm "${DESTDIR}antoniovandre_eval_gui" &>> /dev/null; then echo -e "${AV_VERDE}${SUCESSO}${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}${OCORREUFALHA}${AV_SEMCOR}."; exit 1; fi; else if echo -e "#!/bin/bash\nDIR=\$PWD\ncd \"${HOME}\"\npython3 ${DESTDIR}antoniovandre_eval_gui.py\ncd \"\${DIR}\"\n" > antoniovandre_eval_gui && chmod a+x antoniovandre_eval_gui &>> /dev/null && mv antoniovandre_eval_gui ${DESTDIR} &>> /dev/null; then echo -e "${AV_VERDE}${SUCESSO}${AV_SEMCOR}."; else echo -e "${AV_VERMELHO}${OCORREUFALHA}${AV_SEMCOR}."; rm antoniovandre_eval_gui &>> /dev/null; exit 1; fi; fi
 
-if [ "${1}" == "desinstalar" ]; then echo -n "Trabalhando no arquivo de estatísticas... "; rm "${HOME}/antoniovandre_math_estatisticas.txt" &>> /dev/null; echo -e "${AV_VERDE}Ok${AV_SEMCOR}."; fi
+if [ "${1}" == "desinstalar" ]; then echo -n "${TRABALHANDOESTATISTICAS} "; rm "${HOME}/antoniovandre_math_estatisticas.txt" &>> /dev/null; echo -e "${AV_VERDE}Ok${AV_SEMCOR}."; fi
 
-if [ "${1}" == "desinstalar" ]; then echo -e "\n${AV_VERDE}Sucesso${AV_SEMCOR} ao desinstalar."; else echo -e "\n${AV_VERDE}Sucesso${AV_SEMCOR} ao compilar e por os arquivos nos paths. O executável resultante é \"${AV_AMARELO}antoniovandre_eval_gui${AV_SEMCOR}\"."; fi
+if [ "${1}" == "desinstalar" ]; then echo -e "\n${SUCESSODESINSTALAR}."; else echo -e "\n${SUCESSOINSTALAR}."; fi
 
 cd "${DIR}"
-

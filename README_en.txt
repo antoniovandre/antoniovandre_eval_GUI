@@ -31,10 +31,10 @@ A calculator developed in C, with graphical interface in Python.
 
 Linux version.
 
-Última atualização: 18-07-2020.
+Última atualização: 19-07-2020.
 _____
 
-Install using the "INSTALAR" script, with the "instalar" argument, and uninstall using the same "INSTALAR" script with the "desinstalar" argument. An executable "antoniovandre_eval_gui" will be created and placed in PATH.
+Install using the "INSTALAR" script, with "instalar" as the first argument and "en" as second argument for install english version, and uninstall using the same "INSTALAR" script with the "desinstalar" argument, optionally, not mandatory, "en" as a second argument if you want to see messages in English. An executable "antoniovandre_eval_gui" will be created and placed in PATH.
 
 A usage statistics file, "antoniovandre_math_estatisticas.txt" will be located in the HOME directory, if the software is used.
 _____
