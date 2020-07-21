@@ -14,7 +14,7 @@ Uma calculadora desenvolvida em C, com interface gráfica em Python.
 
 Versão para Linux.
 
-Última atualização: 19-07-2020.
+Última atualização: 21-07-2020.
 _____
 
 Instale através do script "INSTALAR", com o argumento "instalar", e desinstale através do mesmo script "INSTALAR" com o argumento "desinstalar". Um executável "antoniovandre_eval_gui" será criado e posto no PATH.
@@ -32,6 +32,11 @@ _____
 如果使用了該軟件，則使用統計信息文件"antoniovandre_math_estatisticas.txt"將位於HOME目錄中。
 _____
 
+Instale usando el script "INSTALAR", con "instalar" como primer argumento y "es" como segundo argumento para instalar la versión en Español, y desinstale usando el mismo script "INSTALAR" con el argumento "desinstalar", opcionalmente, no obligatorio, "es" como segundo argumento si desea ver mensajes en Español. Se creará un archivo ejecutable "antoniovandre_eval_gui" y se colocará en PATH.
+
+Un archivo de estadísticas de uso, "antoniovandre_math_estatisticas.txt" se ubicará en el directorio HOME, si se utiliza el software.
+_____
+
 Dependências:
 
 "bash", "gcc", "md5sum", "python3", Tcl/Tk.
@@ -44,6 +49,9 @@ Due to compiler/hardware limitations, when there are many significant digits, th
 ____________________
 
 由於編譯器/硬件的限制，當有很多有效數字時，最可忽略的數字可以忽略。
+____________________
+
+Debido a las limitaciones del compilador/hardware, cuando hay muchos dígitos significativos, se pueden ignorar los dígitos más insignificantes.
 ____________________
 
 Sugestões ou comunicar erros: "a.vandre.g@gmail.com".
