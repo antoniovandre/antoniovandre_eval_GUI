@@ -14,7 +14,7 @@ Uma calculadora desenvolvida em C, com interface gráfica em Python.
 
 Versão para Linux.
 
-Última atualização: 21-07-2020.
+Última atualização: 22-07-2020.
 _____
 
 Instale através do script "INSTALAR", com o argumento "instalar", e desinstale através do mesmo script "INSTALAR" com o argumento "desinstalar". Um executável "antoniovandre_eval_gui" será criado e posto no PATH.
@@ -37,6 +37,11 @@ Instale usando el script "INSTALAR", con "instalar" como primer argumento y "es"
 Un archivo de estadísticas de uso, "antoniovandre_math_estatisticas.txt" se ubicará en el directorio HOME, si se utiliza el software.
 _____
 
+"INSTALAR" स्क्रिप्ट का उपयोग करके स्थापित करें, "instalar" पहले तर्क के रूप में और "in" भारतीय संस्करण को स्थापित करने के लिए दूसरे तर्क के रूप में, और "desinstalar" तर्क के साथ समान "INSTALAR" स्क्रिप्ट का उपयोग करके स्थापना रद्द करें, वैकल्पिक रूप से, अनिवार्य नहीं, " यदि आप भारतीय संदेशों को देखना चाहते हैं, तो in एक दूसरे तर्क के रूप में। एक निष्पादन योग्य "antoniovandre_eval_gui" PATH में बनाया और बनाया जाएगा।
+
+यदि सॉफ़्टवेयर का उपयोग किया जाता है, तो एक उपयोग आंकड़े फ़ाइल, "antoniovandre_math_estatisticas.txt" HOME निर्देशिका में स्थित होगी।
+_____
+
 Dependências:
 
 "bash", "gcc", "md5sum", "python3", Tcl/Tk.
@@ -52,6 +57,9 @@ ____________________
 ____________________
 
 Debido a las limitaciones del compilador/hardware, cuando hay muchos dígitos significativos, se pueden ignorar los dígitos más insignificantes.
+____________________
+
+कंपाइलर / हार्डवेयर सीमाओं के कारण, जब कई महत्वपूर्ण अंक होते हैं, तो सबसे नगण्य अंकों को अनदेखा किया जा सकता है।
 ____________________
 
 Sugestões ou comunicar erros: "a.vandre.g@gmail.com".
