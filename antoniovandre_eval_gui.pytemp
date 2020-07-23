@@ -2,7 +2,7 @@
 
 # Arquivo meta para o Python GUI para "antoniovandre_eval", versão de distribuição.
 
-# Última atualização: 19-07-2020.
+# Última atualização: 23-07-2020.
 
 import tkinter as tk
 
@@ -86,7 +86,7 @@ def clicked3 ():
 
 btn_calcular = Button (window, text="CALCULAR", command=clicked)
 
-btn_calcular.place (anchor='center', relx=.3, rely=.5)
+btn_calcular.place (anchor='center', relx=.2, rely=.5)
 
 btn_ajuda = Button (window, text="MAJUDA", command=clicked2)
 
@@ -94,6 +94,6 @@ btn_ajuda.place (anchor='center', relx=.5, rely=.5)
 
 btn_exit = Button (window, text="SAIR", command=clicked3)
 
-btn_exit.place (anchor='center', relx=.7, rely=.5)
+btn_exit.place (anchor='center', relx=.8, rely=.5)
 
 window.mainloop ()
