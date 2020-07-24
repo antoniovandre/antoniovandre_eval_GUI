@@ -31,7 +31,7 @@ Uma calculadora desenvolvida em C, com interface gráfica em Python.
 
 Versão para Linux.
 
-Última atualização: 23-07-2020.
+Última atualização: 24-07-2020.
 _____
 
 Instale através do script "INSTALAR", com o argumento "instalar", e desinstale através do mesmo script "INSTALAR" com o argumento "desinstalar". Um executável "antoniovandre_eval_gui" será criado e posto no PATH.
@@ -45,6 +45,8 @@ Dependências:
 ____________________
 
 Por limitações do compilador/hardware, quando são muitos os dígitos significativos, os mais desprezíveis podem ser ignorados.
+
+Também por falhas do compilador/hardware, podem haver resultados errados.
 ____________________
 
 Sugestões ou comunicar erros: "a.vandre.g@gmail.com".

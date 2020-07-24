@@ -10,6 +10,8 @@ from tkinter import *
 
 import os
 
+import subprocess
+
 window = Tk ()
 
 window.geometry('410x150')
@@ -42,6 +44,8 @@ lbl_saida.place (anchor='w', rely=.9)
 
 def clicked ():
 
+	"""	Escopo opcional.
+
 	cmd = 'antoniovandre_eval \'' + txt.get() + '\' > avevtemp'
 
 	os.system (cmd)
@@ -52,6 +56,16 @@ def clicked ():
 	lbl_saida.configure (text=string.rstrip("\n"))
 
 	os.system ('rm avevtemp')
+	
+	"""
+
+	cmd = 'antoniovandre_eval \'' + txt.get() + '\''
+
+	processo = subprocess.Popen (cmd, shell=True, stdout=subprocess.PIPE)
+
+	processo_return = processo.stdout.read ()
+
+	lbl_saida.configure (text=processo_return.decode('UTF-8').rstrip("\n"))
 
 def clicked2 ():
 

@@ -33,6 +33,8 @@ Operadores disponíveis para "antoniovandre_eval":
 "/": divisão.
 
 "^": exponenciação.
+
+"%": resto da divisão.
 _____
 
 Parênteses podem ser utilizados em "antoniovandre_eval".
@@ -41,6 +43,8 @@ _____
 Constantes disponíveis para "antoniovandre_eval":
 
 "PI": razão entre o comprimento e o diâmetro de uma circunferência.
+
+"T": tal, o dobro de pi.
 
 "E": base dos logaritmos naturais.
 
@@ -63,6 +67,8 @@ Constantes disponíveis para "antoniovandre_eval":
 "AM": número de Avogadro, vezes 10^(-23), em mol^(-1).
 
 "KE": constante de Coulomb, constante eletrostática, no SI.
+
+"R": constante universal dos gases perfeitos, no SI.
 
 "P": razão áurea.
 
@@ -130,6 +136,10 @@ Funções disponíveis para "antoniovandre_eval":
 "fatorial": função fatorial.
 
 "modulo": função módulo.
+
+"piso": função piso.
+
+"teto": função teto.
 
 "radparagrau": função para converter radianos para graus.
 

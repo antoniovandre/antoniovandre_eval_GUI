@@ -33,6 +33,8 @@ Operators available for "antoniovandre_eval":
 "/": division.
 
 "^": exponentiation.
+
+"%": rest of division
 _____
 
 Parentheses can be used in "antoniovandre_eval".
@@ -41,6 +43,8 @@ _____
 Constants available for "antoniovandre_eval":
 
 "PI": ratio between the length and diameter of a circumference.
+
+"T": double pi.
 
 "E": base of natural logarithms.
 
@@ -63,6 +67,8 @@ Constants available for "antoniovandre_eval":
 "AM": Avogadro's constant, times 10^(-23), in mol^(-1).
 
 "KE": Coulomb's constant, electrostatic constant, on IS.
+
+"R": universal constant of perfect gases, on IS.
 
 "P": golden ratio.
 
@@ -130,6 +136,10 @@ Functions available for "antoniovandre_eval":
 "fatorial": factorial function.
 
 "modulo": module function.
+
+"piso": floor function;
+
+"teto": ceiling function;
 
 "radparagrau": function to convert radians to degrees.
 

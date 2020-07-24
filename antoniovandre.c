@@ -4,19 +4,20 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 18-07-2020.
+// Última atualização: 24-07-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
 #include <string.h>
 #define __USE_GNU
 #include <math.h>
+#include <float.h>
 
 #include "antoniovandre_constantes.c"
 
 #include "antoniovandre_extra.c"
 
-#define TAMANHO_BUFFER_SMALL 60 // Para pequenos buffers.
+#define TAMANHO_BUFFER_SMALL 70 // Para pequenos buffers.
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
 #define VALOR_MAX 1000000000L // Afim de evitar erros de saída.
@@ -24,7 +25,7 @@
 #define STRINGSAIDAERRO "Erro de saida de uma string."
 #define STRINGSAIDAERROOVER "Erro de saida de uma string por over."
 #define MENSAGEM_ERRO_OVER "Um dos números atingiu o limite máximo."
-#define TENTATIVASLOGICAS 2 // Podem ser necessárias mais de uma verificação lógica em alguns trechos.
+#define TENTATIVASLOGICAS 4 // Podem ser necessárias mais de uma verificação lógica em alguns trechos.
 #define TOKENINICIOEVAL '('
 #define TOKENFIMEVAL ')'
 #define EPSILON 0.001 // Para funções de Cálculo Diferencial.
@@ -182,7 +183,7 @@ const char * antoniovandre_numeros = ".-0123456789";
 
 // Array de operadores.
 
-const char * antoniovandre_operadores = "+-*/^";
+const char * antoniovandre_operadores = "%+-*/^";
 
 // Remover letras de uma string.
 
@@ -913,6 +914,20 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	funcoesconstantes [56].valor = (long double) MATEMATICA_EMC_VALOR;
 	strcpy (funcoesconstantes [56].comentario, MATEMATICA_EMC_COMENTARIO);
 
+	strcpy (funcoesconstantes [57].token, MATEMATICA_T);
+	funcoesconstantes [57].valor = (long double) MATEMATICA_T_VALOR;
+	strcpy (funcoesconstantes [57].comentario, MATEMATICA_T_COMENTARIO);
+
+	strcpy (funcoesconstantes [58].token, FISICA_R_SI);
+	funcoesconstantes [58].valor = (long double) FISICA_R_SI_VALOR;
+	strcpy (funcoesconstantes [58].comentario, FISICA_R_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [59].token, "piso");
+	strcpy (funcoesconstantes [59].comentario, "Função piso.");
+
+	strcpy (funcoesconstantes [60].token, "teto");
+	strcpy (funcoesconstantes [60].comentario, "Função teto.");
+
 	for (i = 0; i < strlen (str); i++)
 		for (j = 0; j < TAMANHO_BUFFER_SMALL; j++)
 			if (! strcmp (antoniovandre_substring (str, i, i + strlen (funcoesconstantes [j].token) - 1), funcoesconstantes [j].token))
@@ -949,6 +964,82 @@ char * antoniovandre_evalcelulafuncao (char * str)
 			if (strcmp (antoniovandre_substring (str, tokeninicio + tamanhotokenfuncaoconstantemax, strlen (str) - 1), "")) return STRINGSAIDAERRO;
 
 			return antoniovandre_numeroparastring ((long double) coeficiente * funcoesconstantes [tokenid].valor);
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 3), "teto"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 4, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			if (argumento <= 0)
+				resultado = (long int) argumento;
+			else
+				{
+					if (argumento == (long int) argumento)
+						resultado = (long int) argumento;
+					else
+						resultado = (long int) argumento + 1;
+				}
+
+			return antoniovandre_numeroparastring ((long double) resultado);
+			}
+
+	for (i = 0; i < strlen (str); i++)
+		if (! strcmp (antoniovandre_substring (str, i, i + 3), "piso"))
+			{
+			coeficiente = 1;
+
+			if (i > 0)
+				{
+				buffer = antoniovandre_substring (str, 0, i - 1);
+
+				if (! strcmp (buffer, "-"))
+					coeficiente = -1;
+				else
+					{
+					coeficiente = strtold (buffer, & err);
+					if (* err != 0) return STRINGSAIDAERRO;
+					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					}
+				}
+
+			argumento = strtold (antoniovandre_substring (str, i + 4, strlen (str) - 1), & err);
+
+			if (* err != 0) return STRINGSAIDAERRO;
+
+			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+			if (argumento >= 0)
+				resultado = (long int) argumento;
+			else
+				{
+					if (argumento == (long int) argumento)
+						resultado = (long int) argumento;
+					else
+						resultado = (long int) argumento - 1;
+				}
+
+			return antoniovandre_numeroparastring ((long double) resultado);
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1336,11 +1427,11 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			argumento = strtold (antoniovandre_substring (str, i + 8, strlen (str) - 1), & err);
 
-			if ((* err != 0) || ((argumento != (int) argumento) || argumento < 0)) return STRINGSAIDAERRO;
+			if ((* err != 0) || ((argumento != (long int) argumento) || argumento < 0)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			resultado = 1; for (i = 1; i <= (int) argumento; i++) resultado *= i;
+			resultado = 1; for (i = 1; i <= (long int) argumento; i++) resultado *= i;
 
 			return antoniovandre_numeroparastring ((long double) resultado);
 			}
@@ -2238,7 +2329,7 @@ char * antoniovandre_evalcelula (char * str)
 
 				if (strt [posicoes_operadores [i]] == '^')
 					{
-					valor = powl (valort, valort2);
+					valor = powl ((long double) valort, (long double) valort2);
 					if (isnan (valor) || isinf (valor)) return STRINGSAIDAERRO;
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
@@ -2246,7 +2337,7 @@ char * antoniovandre_evalcelula (char * str)
 
 				if ((strt [posicoes_operadores [i]] == '*') && (flag2 == 0))
 					{
-					valor = valort * valort2;
+					valor = (long double) valort * (long double) valort2;
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
@@ -2255,21 +2346,28 @@ char * antoniovandre_evalcelula (char * str)
 					{
 					if (valort2 == 0) return STRINGSAIDAERRO;
 
-					valor = valort / valort2;
+					valor = (long double) valort / (long double) valort2;
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 
 				if ((strt [posicoes_operadores [i]] == '+') && (flag == 0) && (flag2 == 0))
 					{
-					valor = valort + valort2;
+					valor = (long double) valort + (long double) valort2;
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 
 				if ((strt [posicoes_operadores [i]] == '-') && (flag == 0) && (flag2 == 0))
 					{
-					valor = valort - valort2;
+					valor = (long double) valort - (long double) valort2;
+					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					break;
+					}
+
+				if ((strt [posicoes_operadores [i]] == '%') && (flag == 0) && (flag2 == 0))
+					{
+					valor = fmodl ((long double) valort, (long double) valort2);
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
@@ -2445,4 +2543,3 @@ char * antoniovandre_integraldefinida (char * str, long double a, long double b)
 
 	return antoniovandre_numeroparastring (integral);
 	}
-
