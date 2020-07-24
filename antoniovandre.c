@@ -183,7 +183,7 @@ const char * antoniovandre_numeros = ".-0123456789";
 
 // Array de operadores.
 
-const char * antoniovandre_operadores = "%+-*/^";
+const char * antoniovandre_operadores = "+-*/^%@#";
 
 // Remover letras de uma string.
 
@@ -455,6 +455,13 @@ char * antoniovandre_nthsubstr (char * str, int n)
 	for (i = inicio + shifti; i <= fim - shiftf; i++) strf [contador++] = str [i];
 
 	return strf;
+	}
+
+// Fatorial.
+
+unsigned long int antoniovandre_fatorial (unsigned long int n)
+	{
+		if (n > 1) return antoniovandre_fatorial (n - 1) * (unsigned long int) n; else return 1;
 	}
 
 // Reduzir termos semelhantes.
@@ -928,6 +935,14 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	strcpy (funcoesconstantes [60].token, "teto");
 	strcpy (funcoesconstantes [60].comentario, "Função teto.");
 
+	strcpy (funcoesconstantes [61].token, FISICA_SB_SI);
+	funcoesconstantes [61].valor = (long double) FISICA_SB_SI_VALOR;
+	strcpy (funcoesconstantes [61].comentario, FISICA_SB_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [62].token, FISICA_PM_SI);
+	funcoesconstantes [62].valor = (long double) FISICA_PM_SI_VALOR;
+	strcpy (funcoesconstantes [62].comentario, FISICA_PM_SI_COMENTARIO);
+
 	for (i = 0; i < strlen (str); i++)
 		for (j = 0; j < TAMANHO_BUFFER_SMALL; j++)
 			if (! strcmp (antoniovandre_substring (str, i, i + strlen (funcoesconstantes [j].token) - 1), funcoesconstantes [j].token))
@@ -1001,7 +1016,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 						resultado = (long int) argumento + 1;
 				}
 
-			return antoniovandre_numeroparastring ((long double) resultado);
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) resultado);
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1039,7 +1054,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 						resultado = (long int) argumento - 1;
 				}
 
-			return antoniovandre_numeroparastring ((long double) resultado);
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) resultado);
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1067,7 +1082,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) (5 * (argumento - 32) / 9));
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) (5 * (argumento - 32) / 9));
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1095,7 +1110,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((5 * (argumento - 32) / 9) + 273.15));
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) ((5 * (argumento - 32) / 9) + 273.15));
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1123,7 +1138,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((9 * argumento / 5) + 32));
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) ((9 * argumento / 5) + 32));
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1151,7 +1166,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) (argumento - 273.15));
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) (argumento - 273.15));
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1179,7 +1194,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((9 * (argumento - 273.15) / 5) + 32));
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) ((9 * (argumento - 273.15) / 5) + 32));
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1207,7 +1222,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) (argumento + 273.15));
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) (argumento + 273.15));
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1235,7 +1250,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) argumento * 9 / 10);
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) argumento * 9 / 10);
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1263,7 +1278,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) argumento * M_PIl / 200);
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) argumento * M_PIl / 200);
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1291,7 +1306,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) argumento * 10 / 9);
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) argumento * 10 / 9);
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1319,7 +1334,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) argumento * M_PIl / 180);
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) argumento * M_PIl / 180);
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1347,7 +1362,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) argumento * 200 / M_PIl);
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) argumento * 200 / M_PIl);
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1375,7 +1390,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) argumento * 180 / M_PIl);
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) argumento * 180 / M_PIl);
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1403,7 +1418,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) fabs (argumento));
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) fabs (argumento));
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -1431,9 +1446,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			resultado = 1; for (i = 1; i <= (long int) argumento; i++) resultado *= i;
-
-			return antoniovandre_numeroparastring ((long double) resultado);
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) antoniovandre_fatorial ((unsigned long int) argumento));
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -2368,6 +2381,22 @@ char * antoniovandre_evalcelula (char * str)
 				if ((strt [posicoes_operadores [i]] == '%') && (flag == 0) && (flag2 == 0))
 					{
 					valor = fmodl ((long double) valort, (long double) valort2);
+					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					break;
+					}
+
+				if ((strt [posicoes_operadores [i]] == '@') && (flag == 0) && (flag2 == 0))
+					{
+					if ((valort != (long int) valort) || (valort < 1) || (valort2 != (long int) valort2) || (valort2 < 1) || (valort < valort2)) return STRINGSAIDAERRO;
+					valor = (long double) antoniovandre_fatorial ((unsigned long int) valort) / antoniovandre_fatorial ((unsigned long int) (valort - valort2));
+					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					break;
+					}
+
+				if ((strt [posicoes_operadores [i]] == '#') && (flag == 0) && (flag2 == 0))
+					{
+					if ((valort != (long int) valort) || (valort < 1) || (valort2 != (long int) valort2) || (valort2 < 1) || (valort < valort2)) return STRINGSAIDAERRO;
+					valor = (long double) antoniovandre_fatorial ((unsigned long int) valort) / (antoniovandre_fatorial ((unsigned long int) (valort - valort2)) * antoniovandre_fatorial ((unsigned long int) (valort2)));
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}

@@ -35,6 +35,10 @@ Operadores disponíveis para "antoniovandre_eval":
 "^": exponenciação.
 
 "%": resto da divisão.
+
+"@": arranjos (Análise Combinatória).
+
+"#": combinações (Análise Combinatória).
 _____
 
 Parênteses podem ser utilizados em "antoniovandre_eval".
@@ -69,6 +73,10 @@ Constantes disponíveis para "antoniovandre_eval":
 "KE": constante de Coulomb, constante eletrostática, no SI.
 
 "R": constante universal dos gases perfeitos, no SI.
+
+"SB": constante de Stefan-Boltzmann, no SI.
+
+"PM": Constante de permeabilidade magnética no vácuo, no SI.
 
 "P": razão áurea.
 

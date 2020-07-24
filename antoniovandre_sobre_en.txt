@@ -35,6 +35,10 @@ Operators available for "antoniovandre_eval":
 "^": exponentiation.
 
 "%": rest of division
+
+"@": arrangements (Combinatory Analysis).
+
+"#": combinations (Combinatory Analysis).
 _____
 
 Parentheses can be used in "antoniovandre_eval".
@@ -69,6 +73,10 @@ Constants available for "antoniovandre_eval":
 "KE": Coulomb's constant, electrostatic constant, on IS.
 
 "R": universal constant of perfect gases, on IS.
+
+"SB": Stefan-Boltzmann's constant, on IS.
+
+"PM": magnetic permeability constant in vacuum, on IS.
 
 "P": golden ratio.
 
