@@ -2387,7 +2387,7 @@ char * antoniovandre_evalcelula (char * str)
 
 				if ((strt [posicoes_operadores [i]] == '@') && (flag == 0) && (flag2 == 0))
 					{
-					if ((valort != (long int) valort) || (valort < 1) || (valort2 != (long int) valort2) || (valort2 < 1) || (valort < valort2)) return STRINGSAIDAERRO;
+					if ((valort != (long int) valort) || (valort < 0) || (valort2 != (long int) valort2) || (valort2 < 0) || (valort < valort2)) return STRINGSAIDAERRO;
 					valor = (long double) antoniovandre_fatorial ((unsigned long int) valort) / antoniovandre_fatorial ((unsigned long int) (valort - valort2));
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
@@ -2395,7 +2395,7 @@ char * antoniovandre_evalcelula (char * str)
 
 				if ((strt [posicoes_operadores [i]] == '#') && (flag == 0) && (flag2 == 0))
 					{
-					if ((valort != (long int) valort) || (valort < 1) || (valort2 != (long int) valort2) || (valort2 < 1) || (valort < valort2)) return STRINGSAIDAERRO;
+					if ((valort != (long int) valort) || (valort < 0) || (valort2 != (long int) valort2) || (valort2 < 0) || (valort < valort2)) return STRINGSAIDAERRO;
 					valor = (long double) antoniovandre_fatorial ((unsigned long int) valort) / (antoniovandre_fatorial ((unsigned long int) (valort - valort2)) * antoniovandre_fatorial ((unsigned long int) (valort2)));
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
