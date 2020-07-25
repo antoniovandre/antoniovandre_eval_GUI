@@ -413,7 +413,7 @@ if [ "${1}" == "instalar" ] && ! hash tclsh &>> /dev/null; then echo -e "${AV_VE
 
 if [ "${1}" == "instalar" ] && ! ls INSTALAR &>> /dev/null; then echo -e "${AV_VERMELHO}${INSTALEDODIRETORIO}${AV_SEMCOR}."; exit 1; fi
 
-if [ "${1}" == "instalar" ]; then wget -qO- https://bit.ly/antoniovandreevalguimensagemdl 2>> /dev/null; echo -e "\n${INSTALARINTRODUCAO}"; read; echo -e "#define ARQUIVO_MATH_ESTATISTICAS \"${HOME}/antoniovandre_math_estatisticas.txt\"\n" > antoniovandre_extra.c; else echo -e "${DESINSTALARINTRODUCAO}"; read; fi
+if [ "${1}" == "instalar" ]; then if wget -qO- https://bit.ly/antoniovandreevalguimensagemdl 2>> /dev/null; then echo -e ""; fi; echo -e "${INSTALARINTRODUCAO}"; read; echo -e "#define ARQUIVO_MATH_ESTATISTICAS \"${HOME}/antoniovandre_math_estatisticas.txt\"\n" > antoniovandre_extra.c; else echo -e "${DESINSTALARINTRODUCAO}"; read; fi
 
 DIR="${PWD}"
 cd "${SOURCEDIR}"
