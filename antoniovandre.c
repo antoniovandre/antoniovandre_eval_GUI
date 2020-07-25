@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 24-07-2020.
+// Última atualização: 25-07-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -17,7 +17,7 @@
 
 #include "antoniovandre_extra.c"
 
-#define TAMANHO_BUFFER_SMALL 70 // Para pequenos buffers.
+#define TAMANHO_BUFFER_SMALL 75 // Para pequenos buffers.
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
 #define VALOR_MAX 1000000000L // Afim de evitar erros de saída.
@@ -37,7 +37,6 @@ typedef struct {char * token; long double valor; char * comentario;} tokenfuncao
 #define ARQUIVO_MATHSOBRE "/usr/share/antoniovandre_sobre.txt"
 // #define ARQUIVO_MATH_ESTATISTICAS "antoniovandre_math_estatisticas.txt"
 #define ARQUIVO_PRECISAO_REAL "/usr/share/antoniovandre_precisao_real.txt"
-
 
 // Função de output do sobre/about dos softwares matemáticos.
 
@@ -183,7 +182,7 @@ const char * antoniovandre_numeros = ".-0123456789";
 
 // Array de operadores.
 
-const char * antoniovandre_operadores = "+-*/^%@#";
+const char * antoniovandre_operadores = "+-*/^%@#$";
 
 // Remover letras de uma string.
 
@@ -461,7 +460,7 @@ char * antoniovandre_nthsubstr (char * str, int n)
 
 unsigned long int antoniovandre_fatorial (unsigned long int n)
 	{
-		if (n > 1) return antoniovandre_fatorial (n - 1) * (unsigned long int) n; else return 1;
+	if (n > 1) return antoniovandre_fatorial (n - 1) * (unsigned long int) n; else return 1;
 	}
 
 // Reduzir termos semelhantes.
@@ -942,6 +941,38 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	strcpy (funcoesconstantes [62].token, FISICA_PM_SI);
 	funcoesconstantes [62].valor = (long double) FISICA_PM_SI_VALOR;
 	strcpy (funcoesconstantes [62].comentario, FISICA_PM_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [63].token, FISICA_PE_SI);
+	funcoesconstantes [63].valor = (long double) FISICA_PE_SI_VALOR;
+	strcpy (funcoesconstantes [63].comentario, FISICA_PE_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [64].token, FISICA_B_SI);
+	funcoesconstantes [64].valor = (long double) FISICA_B_SI_VALOR;
+	strcpy (funcoesconstantes [64].comentario, FISICA_B_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [65].token, FISICA_MN_SI);
+	funcoesconstantes [65].valor = (long double) FISICA_MN_SI_VALOR;
+	strcpy (funcoesconstantes [65].comentario, FISICA_MN_SI_COMENTARIO);
+
+	strcpy (funcoesconstantes [66].token, MATEMATICA_FA);
+	funcoesconstantes [66].valor = (long double) MATEMATICA_FA_VALOR;
+	strcpy (funcoesconstantes [66].comentario, MATEMATICA_FA_COMENTARIO);
+
+	strcpy (funcoesconstantes [67].token, MATEMATICA_FS);
+	funcoesconstantes [67].valor = (long double) MATEMATICA_FS_VALOR;
+	strcpy (funcoesconstantes [67].comentario, MATEMATICA_FS_COMENTARIO);
+
+	strcpy (funcoesconstantes [68].token, MATEMATICA_CO);
+	funcoesconstantes [68].valor = (long double) MATEMATICA_CO_VALOR;
+	strcpy (funcoesconstantes [68].comentario, MATEMATICA_CO_COMENTARIO);
+
+	strcpy (funcoesconstantes [69].token, MATEMATICA_K);
+	funcoesconstantes [69].valor = (long double) MATEMATICA_K_VALOR;
+	strcpy (funcoesconstantes [69].comentario, MATEMATICA_K_COMENTARIO);
+
+	strcpy (funcoesconstantes [70].token, MATEMATICA_GK);
+	funcoesconstantes [70].valor = (long double) MATEMATICA_GK_VALOR;
+	strcpy (funcoesconstantes [70].comentario, MATEMATICA_GK_COMENTARIO);
 
 	for (i = 0; i < strlen (str); i++)
 		for (j = 0; j < TAMANHO_BUFFER_SMALL; j++)
@@ -2397,6 +2428,14 @@ char * antoniovandre_evalcelula (char * str)
 					{
 					if ((valort != (long int) valort) || (valort < 0) || (valort2 != (long int) valort2) || (valort2 < 0) || (valort < valort2)) return STRINGSAIDAERRO;
 					valor = (long double) antoniovandre_fatorial ((unsigned long int) valort) / (antoniovandre_fatorial ((unsigned long int) (valort - valort2)) * antoniovandre_fatorial ((unsigned long int) (valort2)));
+					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					break;
+					}
+
+				if ((strt [posicoes_operadores [i]] == '$') && (flag == 0) && (flag2 == 0))
+					{
+					if (valort2 != (int) valort2) return STRINGSAIDAERRO;
+					valor = roundl ((long double) valort / powl (10, valort2)) * powl (10, valort2);
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}

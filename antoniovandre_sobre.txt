@@ -39,6 +39,8 @@ Operadores disponíveis para "antoniovandre_eval":
 "@": arranjos (Análise Combinatória).
 
 "#": combinações (Análise Combinatória).
+
+"$": arredondamento para a ordem de grandeza.
 _____
 
 Parênteses podem ser utilizados em "antoniovandre_eval".
@@ -48,7 +50,7 @@ Constantes disponíveis para "antoniovandre_eval":
 
 "PI": razão entre o comprimento e o diâmetro de uma circunferência.
 
-"T": tal, o dobro de pi.
+"T": tau, o dobro de pi.
 
 "E": base dos logaritmos naturais.
 
@@ -68,6 +70,8 @@ Constantes disponíveis para "antoniovandre_eval":
 
 "MP": massa do próton, no SI.
 
+"MN": massa do neutron, no SI.
+
 "AM": número de Avogadro, vezes 10^(-23), em mol^(-1).
 
 "KE": constante de Coulomb, constante eletrostática, no SI.
@@ -76,13 +80,29 @@ Constantes disponíveis para "antoniovandre_eval":
 
 "SB": constante de Stefan-Boltzmann, no SI.
 
-"PM": Constante de permeabilidade magnética no vácuo, no SI.
+"PM": onstante de permeabilidade magnética no vácuo, no SI.
+
+"PE": constante de permeabilidade elétrica do vácuo, no SI.
+
+"B": constante de deslocamento de Wien, no SI.
 
 "P": razão áurea.
 
 "CC": constante de Catalan.
 
 "EM": constante de Euler-Mascheroni.
+
+"FA": constante alfa de Feigenbaum.
+
+"FS": constante sigma de Feigenbaum.
+
+"AP": constante de Apéry.
+
+"CO": constante de Conway.
+
+"KH": constante de Khinchin.
+
+"GK": constante de Glaisher-Kinkelin.
 _____
 
 Funções disponíveis para "antoniovandre_eval":

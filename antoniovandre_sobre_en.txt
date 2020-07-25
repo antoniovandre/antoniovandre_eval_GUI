@@ -39,6 +39,8 @@ Operators available for "antoniovandre_eval":
 "@": arrangements (Combinatory Analysis).
 
 "#": combinations (Combinatory Analysis).
+
+"$": rounding to the order of magnitude.
 _____
 
 Parentheses can be used in "antoniovandre_eval".
@@ -52,37 +54,53 @@ Constants available for "antoniovandre_eval":
 
 "E": base of natural logarithms.
 
-"C": speed of light in vacuum, on IS.
+"C": speed of light in vacuum, in IS.
 
-"G": constant of Universal Gravitation, on IS.
+"G": constant of Universal Gravitation, in IS.
 
-"QE": elementary charge, on IS.
+"QE": elementary charge, in IS.
 
 "H": Planck's constant, on SI.
 
-"HH": Planck's reduced constant, on IS.
+"HH": Planck's reduced constant, in IS.
 
-"K": Boltzmann's constant, on IS.
+"K": Boltzmann's constant, in IS.
 
-"ME": electron mass, on IS.
+"ME": electron mass, in IS.
 
-"MP": proton mass, on IS.
+"MP": proton mass, in IS.
+
+"MN": neutron mass, in SI.
 
 "AM": Avogadro's constant, times 10^(-23), in mol^(-1).
 
-"KE": Coulomb's constant, electrostatic constant, on IS.
+"KE": Coulomb's constant, electrostatic constant, in IS.
 
-"R": universal constant of perfect gases, on IS.
+"R": universal constant of perfect gases, in IS.
 
-"SB": Stefan-Boltzmann's constant, on IS.
+"SB": Stefan-Boltzmann's constant, in IS.
 
-"PM": magnetic permeability constant in vacuum, on IS.
+"PM": magnetic permeability constant in vacuum, in IS.
+
+"PE": electric permeability constant in vacuum, in SI.
 
 "P": golden ratio.
 
 "CC": Catalan's constant.
 
 "EM": Euler-Mascheroni's constant.
+
+"FA": Feigenbaum's alpha constant.
+
+"FS": Feigenbaum's sigma constant.
+
+"AP": Apéry's constant.
+
+"CO": Conway's constant.
+
+"KH": Khinchin's constant.
+
+"GK": Glaisher-Kinkelin's constant.
 _____
 
 Functions available for "antoniovandre_eval":
