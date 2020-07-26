@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 25-07-2020.
+// Última atualização: 26-07-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -2327,7 +2327,7 @@ char * antoniovandre_evalcelula (char * str)
 					if (strt [posicoes_operadores [j]] == '^') flag2 = 1;
 
 				for (j = 0; j < TAMANHO_BUFFER_PHRASE; j++)
-					if (((strt [posicoes_operadores [j]] == '*') || (strt [posicoes_operadores [j]] == '/')) && flag2 == 1) flag = 1;
+					if (((strt [posicoes_operadores [j]] == '*') || (strt [posicoes_operadores [j]] == '/'))) flag = 1;
 
 				strcpy (strt2, "");
 
