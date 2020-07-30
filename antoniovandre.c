@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 26-07-2020.
+// Última atualização: 30-07-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,7 +21,9 @@
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
 #define VALOR_MAX 1000000000L // Afim de evitar erros de saída.
+#define TAMANHO_MAX_ARQUIVO 1000000000 // Afim de evitar erros de saída.
 #define DELIMITADORSTRING ',' // Deve ser um char;
+#define DELIMITADORSTRING2 ';' // Deve ser um char, diferente de DELIMITADORSTRING;
 #define STRINGSAIDAERRO "Erro de saida de uma string."
 #define STRINGSAIDAERROOVER "Erro de saida de uma string por over."
 #define MENSAGEM_ERRO_OVER "Um dos números atingiu o limite máximo."
@@ -31,8 +33,10 @@
 #define EPSILON 0.001 // Para funções de Cálculo Diferencial.
 #define VARIAVELDESUBSTITUICAO 'x' // Deve ser uma letra não presente nos nomes das funções.
 #define NUMEROPARTICOESSOMARIEMANN 100 // Para Cálculo Integral.
+#define VERDADE 1
+#define FALSIDADE 0
 
-typedef struct {char * token; long double valor; char * comentario;} tokenfuncaoconstante; // Estrutura para funções e constantes.
+typedef struct {char token [TAMANHO_BUFFER_WORD]; long double valor; char comentario [TAMANHO_BUFFER_PHRASE];} tokenfuncaoconstante; // Estrutura para funções e constantes.
 
 #define ARQUIVO_MATHSOBRE "/usr/share/antoniovandre_sobre.txt"
 // #define ARQUIVO_MATH_ESTATISTICAS "antoniovandre_math_estatisticas.txt"
@@ -45,7 +49,7 @@ int antoniovandre_mathsobre ()
 	FILE * filesobre;
 	char antoniovandre_sobre_buffer_char;
 
-	filesobre = fopen(ARQUIVO_MATHSOBRE, "r");
+	filesobre = fopen (ARQUIVO_MATHSOBRE, "r");
 
 	if (filesobre == NULL)
 		{
@@ -53,7 +57,7 @@ int antoniovandre_mathsobre ()
 		return -1;
 		}
 
-	while (! feof(filesobre))
+	while (! feof (filesobre))
 		{
 		antoniovandre_sobre_buffer_char = fgetc (filesobre);
 		if (! feof(filesobre)) printf ("%c", antoniovandre_sobre_buffer_char);
@@ -74,11 +78,13 @@ int antoniovandre_salvarmathestatisticas (char * cabecalho)
 	char tc;
 	char tc2;
 
-	filemathestatisticas = fopen(ARQUIVO_MATH_ESTATISTICAS, "r+");
+	strcpy (antoniovandre_estatisticas_buffer, "");
+
+	filemathestatisticas = fopen (ARQUIVO_MATH_ESTATISTICAS, "r+");
 
 	if (filemathestatisticas == NULL)
 		{
-		filemathestatisticas = fopen(ARQUIVO_MATH_ESTATISTICAS, "w");
+		filemathestatisticas = fopen (ARQUIVO_MATH_ESTATISTICAS, "w");
 
 		if (filemathestatisticas == NULL)
 			{
@@ -145,6 +151,8 @@ int antoniovandre_precisao_real ()
 	char antoniovandre_precisao_real_buffer [TAMANHO_BUFFER_WORD];
 	int antoniovandre_precisao_real_valor;
 
+	strcpy (antoniovandre_precisao_real_buffer, "");
+
 	fileprecisaoreal = fopen(ARQUIVO_PRECISAO_REAL, "r");
 
 	if (fileprecisaoreal == NULL)
@@ -190,13 +198,13 @@ char * antoniovandre_removerletras (char * str)
 	{
 	int tam1 = strlen (str);
 	int tam2 = strlen (antoniovandre_letras);
-	char * strf;
+	char strf [TAMANHO_BUFFER_PHRASE];
 	int i;
 	int j;
 	int flag;
 	int contador = 0;
 
-	strf = malloc (TAMANHO_BUFFER_PHRASE);
+	strcpy (strf, "");
 
 	for (i = 0; i < tam1; i++)
 		{
@@ -217,12 +225,12 @@ char * antoniovandre_removernumeros (char * str)
 	{
 	int tam1 = strlen (str);
 	int tam2 = strlen (antoniovandre_numeros);
-	char * strf;
+	char strf [TAMANHO_BUFFER_PHRASE];
 	int i;
 	int j;
 	int flag;
 
-	strf = malloc (TAMANHO_BUFFER_PHRASE);
+	strcpy (strf, "");
 
 	for (i = 0; i < tam1; i++)
 		{
@@ -306,13 +314,13 @@ char * antoniovandre_numeroparastring (long double numero)
 	int potencia_min = (-1) * precisao;
 	int potencia_max = log10 (VALOR_MAX);
 	long double fator = powl (10, potencia_max);
-	char * strr;
+	char strr [TAMANHO_BUFFER_WORD];
 	int algarismo;
 	int i;
 	int flag = 0;
 	int contador = 0;
 
-	strr = malloc (TAMANHO_BUFFER_WORD);
+	strcpy (strr, "");
 
 	if (numero < 0)
 		{
@@ -418,7 +426,7 @@ int antoniovandre_compararstringssemorden (char * str1, char * str2)
 
 char * antoniovandre_nthsubstr (char * str, int n)
 	{
-	char * strf;
+	char * strf = (char *) malloc (TAMANHO_BUFFER_PHRASE);
 	int tam = strlen (str);
 	int inicio = 0;
 	int fim = 0;
@@ -428,7 +436,7 @@ char * antoniovandre_nthsubstr (char * str, int n)
 	int contador = 0;
 	int i;
 
-	strf = (char *) malloc (TAMANHO_BUFFER_PHRASE);
+	strcpy (strf, "");
 
 	for (i = 0; i < tam; i++)
 		if (str [i] == DELIMITADORSTRING)
@@ -468,9 +476,9 @@ unsigned long int antoniovandre_fatorial (unsigned long int n)
 char * antoniovandre_reduzirtermossemelhantes (char * args)
 	{
 	int nargs = 1;
-	char * strf;
-	char * parteliteral;
-	char * strt = (char *) malloc (TAMANHO_BUFFER_WORD);;
+	char strf [TAMANHO_BUFFER_WORD];
+	char parteliteral [TAMANHO_BUFFER_WORD];
+	char strt [TAMANHO_BUFFER_WORD];
 	int i;
 	int j;
 	int flag;
@@ -481,7 +489,15 @@ char * antoniovandre_reduzirtermossemelhantes (char * args)
 	char * strlit [nargs];
 	long double coefs [nargs];
 
-	for (i = 0; i < nargs; i++) strlit [i] = (char *) malloc (TAMANHO_BUFFER_WORD);
+	strcpy (strf, "");
+	strcpy (parteliteral, "");
+	strcpy (strt, "");
+
+	for (i = 0; i < nargs; i++)
+		{
+		strlit [i] = (char *) malloc (TAMANHO_BUFFER_WORD);
+		strcpy (strlit [i], "");
+		}
 
 	for (i = 0; i < nargs; i++)
 		{
@@ -492,8 +508,6 @@ char * antoniovandre_reduzirtermossemelhantes (char * args)
 
 		if (flag == 1)
 			{
-			parteliteral = malloc (TAMANHO_BUFFER_WORD);
-
 			strcpy (parteliteral, antoniovandre_parteliteralmonomio (antoniovandre_nthsubstr (args, i)));
 
 			flag = 0;
@@ -510,14 +524,10 @@ char * antoniovandre_reduzirtermossemelhantes (char * args)
 				strcpy (strlit [contador], parteliteral);
 				coefs [contador++] = (long double) antoniovandre_partenumericamonomio (antoniovandre_nthsubstr (args, i));
 				}
-
-			free (parteliteral);
 			}
 		else
 			return (STRINGSAIDAERRO);
 		}
-
-	strf = (char *) malloc (TAMANHO_BUFFER_WORD);
 
 	flag = 0;
 
@@ -538,6 +548,8 @@ char * antoniovandre_reduzirtermossemelhantes (char * args)
 			flag = 1;
 			}
 
+	for (i = 0; i < nargs; i++) free (strlit [i]);
+
 	if (flag == 1)
 		return (strf);
 	else
@@ -550,13 +562,13 @@ char * antoniovandre_valornumericopolinomio (char * args)
 	{
 	int nargs = 1;
 	int indice_inicio = -1;
-	char * strt = (char *) malloc (TAMANHO_BUFFER_WORD);
-	char * strt2 = (char *) malloc (TAMANHO_BUFFER_WORD);
-	char * str = (char *) malloc (TAMANHO_BUFFER_WORD);
-	char * str2 = (char *) malloc (TAMANHO_BUFFER_WORD);
-	char * str3 = (char *) malloc (TAMANHO_BUFFER_WORD);
-	char * str4 = (char *) malloc (TAMANHO_BUFFER_PHRASE);
-	char * str5 = (char *) malloc (TAMANHO_BUFFER_PHRASE);
+	char strt [TAMANHO_BUFFER_WORD];
+	char strt2 [TAMANHO_BUFFER_WORD];
+	char str [TAMANHO_BUFFER_WORD];
+	char str2 [TAMANHO_BUFFER_WORD];
+	char str3 [TAMANHO_BUFFER_WORD];
+	char str4 [TAMANHO_BUFFER_PHRASE];
+	char str5 [TAMANHO_BUFFER_PHRASE];
 	long double coef;
 	long double fator;
 	int i;
@@ -568,7 +580,13 @@ char * antoniovandre_valornumericopolinomio (char * args)
 	char c = DELIMITADORSTRING;
 	char * err;
 
+	strcpy (strt, "");
+	strcpy (strt2, "");
+	strcpy (str, "");
+	strcpy (str2, "");
+	strcpy (str3, "");
 	strcpy (str4, "");
+	strcpy (str5, "");
 
 	for (i = 0; i < strlen (args); i++)
 		{
@@ -586,7 +604,7 @@ char * antoniovandre_valornumericopolinomio (char * args)
 
 			while ((flag == 0) && (contador++ < TENTATIVASLOGICAS))
 				{
-				strt = antoniovandre_nthsubstr (args, i);
+				strcpy (strt, antoniovandre_nthsubstr (args, i));
 
 				if (strt [1] == '=') flag = 1;
 				}
@@ -617,9 +635,9 @@ char * antoniovandre_valornumericopolinomio (char * args)
 				while ((flag == 0) && (contador++ < TENTATIVASLOGICAS))
 					{
 					if (flag2 == 0)
-						str = antoniovandre_nthsubstr (args, j);
+						strcpy (str, antoniovandre_nthsubstr (args, j));
 					else
-						str = antoniovandre_nthsubstr (str5, j);
+						strcpy (str, antoniovandre_nthsubstr (str5, j));
 
 					if (antoniovandre_monomio (str)) flag = 1;
 					}
@@ -630,7 +648,7 @@ char * antoniovandre_valornumericopolinomio (char * args)
 
 				if (coef > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-				str2 = antoniovandre_parteliteralmonomio (str);
+				strcpy (str2, antoniovandre_parteliteralmonomio (str));
 
 				strcpy (str3, "");
 
@@ -691,7 +709,7 @@ int antoniovandre_expressao (char * str)
 
 char * antoniovandre_substring (char * str, int inicio, int fim)
 	{
-	char * strt = (char *) malloc (TAMANHO_BUFFER_PHRASE);
+	char strt [TAMANHO_BUFFER_PHRASE];
 	int i;
 
 	strcpy (strt, "");
@@ -714,7 +732,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	long double resultado;
 	long double argumento;
 	long double coeficiente;
-	char * buffer = (char *) malloc (TAMANHO_BUFFER_WORD);
+	char buffer [TAMANHO_BUFFER_WORD];
 	int i;
 	int j;
 	char * err;
@@ -722,12 +740,8 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 	for (i = 0; i < TAMANHO_BUFFER_SMALL; i++)
 		{
-		funcoesconstantes [i].token = (char *) malloc (TAMANHO_BUFFER_WORD);
 		strcpy (funcoesconstantes [i].token, "");
-
 		funcoesconstantes [i].valor = (long double) 0;
-
-		funcoesconstantes [i].comentario = (char *) malloc (TAMANHO_BUFFER_PHRASE);
 		strcpy (funcoesconstantes [i].comentario, "");
 		}
 
@@ -995,7 +1009,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (tokeninicio > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, tokeninicio - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, tokeninicio - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1019,7 +1033,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1057,7 +1071,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1095,7 +1109,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1123,7 +1137,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1151,7 +1165,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1179,7 +1193,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1207,7 +1221,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1235,7 +1249,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1263,7 +1277,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1291,7 +1305,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1319,7 +1333,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1347,7 +1361,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1375,7 +1389,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1403,7 +1417,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1431,7 +1445,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1459,7 +1473,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1487,7 +1501,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1515,7 +1529,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1543,7 +1557,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1571,7 +1585,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1599,7 +1613,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1627,7 +1641,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1655,7 +1669,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1683,7 +1697,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1711,7 +1725,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1739,7 +1753,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1767,7 +1781,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1795,7 +1809,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1823,7 +1837,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1851,7 +1865,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1879,7 +1893,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1909,7 +1923,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1937,7 +1951,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1965,7 +1979,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -1993,7 +2007,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -2021,7 +2035,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -2049,7 +2063,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -2077,7 +2091,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -2105,7 +2119,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -2133,7 +2147,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -2161,7 +2175,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -2189,7 +2203,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -2217,7 +2231,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (i > 0)
 				{
-				buffer = antoniovandre_substring (str, 0, i - 1);
+				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
@@ -2250,12 +2264,12 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 char * antoniovandre_evalcelula (char * str)
 	{
-	char * strt = (char *) malloc (TAMANHO_BUFFER_PHRASE);
-	char * strt2 = (char *) malloc (TAMANHO_BUFFER_WORD);
-	char * strt3 = (char *) malloc (TAMANHO_BUFFER_WORD);
-	char * strtv1 = (char *) malloc (TAMANHO_BUFFER_WORD);
-	char * strtv2 = (char *) malloc (TAMANHO_BUFFER_WORD);
-	char * strt4 = (char *) malloc (TAMANHO_BUFFER_PHRASE);
+	char strt [TAMANHO_BUFFER_PHRASE];
+	char strt2 [TAMANHO_BUFFER_WORD];
+	char strt3 [TAMANHO_BUFFER_WORD];
+	char strtv1 [TAMANHO_BUFFER_WORD];
+	char strtv2 [TAMANHO_BUFFER_WORD];
+	char strt4 [TAMANHO_BUFFER_PHRASE];
 	int posicoes_operadores [TAMANHO_BUFFER_PHRASE];
 	long double valor;
 	long double valort;
@@ -2293,7 +2307,7 @@ char * antoniovandre_evalcelula (char * str)
 			return STRINGSAIDAERRO;
 		}
 
-	while (1)
+	while (VERDADE)
 		{
 		for (i = 0; i < TAMANHO_BUFFER_PHRASE; i++) posicoes_operadores [i] = -1;
 
@@ -2356,8 +2370,8 @@ char * antoniovandre_evalcelula (char * str)
 				if ((! strcmp (strt2, "")) || (! strcmp (strt3, "")))
 					return STRINGSAIDAERRO;
 
-				strtv1 = antoniovandre_evalcelulafuncao (strt2);
-				strtv2 = antoniovandre_evalcelulafuncao (strt3);
+				strcpy (strtv1, antoniovandre_evalcelulafuncao (strt2));
+				strcpy (strtv2, antoniovandre_evalcelulafuncao (strt3));
 
 				if (! strcmp (strtv1, STRINGSAIDAERRO)) return STRINGSAIDAERRO;
 				if (! strcmp (strtv2, STRINGSAIDAERRO)) return STRINGSAIDAERRO;
@@ -2461,10 +2475,10 @@ char * antoniovandre_evalcelula (char * str)
 
 char * antoniovandre_eval (char * str)
 	{
-	char * str2 = (char *) malloc (TAMANHO_BUFFER_PHRASE);
-	char * str3 = (char *) malloc (TAMANHO_BUFFER_PHRASE);
-	char * str4 = (char *) malloc (TAMANHO_BUFFER_PHRASE);
-	char * str5 = (char *) malloc (TAMANHO_BUFFER_PHRASE);
+	char str2 [TAMANHO_BUFFER_PHRASE];
+	char str3 [TAMANHO_BUFFER_PHRASE];
+	char str4 [TAMANHO_BUFFER_PHRASE];
+	char str5 [TAMANHO_BUFFER_PHRASE];
 	int inicio;
 	int fim;
 	int i;
@@ -2513,7 +2527,7 @@ char * antoniovandre_eval (char * str)
 			for (i = inicio; i <= fim; i++)
 				strncat (str4, & str2 [i], 1);
 
-			str5 = antoniovandre_evalcelula (str4);
+			strcpy (str5, antoniovandre_evalcelula (str4));
 
 			if (! strcmp (str5, STRINGSAIDAERRO)) return STRINGSAIDAERRO;
 			if (! strcmp (str5, STRINGSAIDAERROOVER)) return STRINGSAIDAERROOVER;
@@ -2535,8 +2549,8 @@ char * antoniovandre_eval (char * str)
 
 char * antoniovandre_derivada (char * str, long double ponto)
 	{
-	char * str2 = (char *) malloc (TAMANHO_BUFFER_PHRASE);
-	char * str3 = (char *) malloc (TAMANHO_BUFFER_PHRASE);
+	char str2 [TAMANHO_BUFFER_PHRASE];
+	char str3 [TAMANHO_BUFFER_PHRASE];
 	long double valorsup;
 	long double valorinf;
 	int i;
@@ -2575,8 +2589,8 @@ char * antoniovandre_derivada (char * str, long double ponto)
 
 char * antoniovandre_integraldefinida (char * str, long double a, long double b)
 	{
-	char * str2 = (char *) malloc (TAMANHO_BUFFER_PHRASE);
-	char * str3 = (char *) malloc (TAMANHO_BUFFER_PHRASE);
+	char str2 [TAMANHO_BUFFER_PHRASE];
+	char str3 [TAMANHO_BUFFER_PHRASE];
 	long double integral = 0;
 	long double norma;
 	long double parcela;
@@ -2610,4 +2624,167 @@ char * antoniovandre_integraldefinida (char * str, long double a, long double b)
 		}
 
 	return antoniovandre_numeroparastring (integral);
+	}
+
+// Retorna a função mais próxima, dados os pontos e as funções em arquivos.
+
+char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivofuncoespath)
+	{
+	FILE * arquivopontos;
+	FILE * arquivofuncoes;
+	char buffer [TAMANHO_BUFFER_PHRASE];
+	char buffert [TAMANHO_BUFFER_PHRASE];
+	char buffertt [TAMANHO_BUFFER_PHRASE];
+	char bufferr [TAMANHO_BUFFER_PHRASE];
+	char buffer1 [TAMANHO_BUFFER_WORD];
+	char buffer2 [TAMANHO_BUFFER_WORD];
+	char antoniovandre_funcoes_buffer_char;
+	char antoniovandre_pontos_buffer_char;
+	long double m = VALOR_MAX;
+	long double mt;
+	long double x;
+	long double y;
+	long double yt;
+	int i;
+	int flag;
+	int flag2 = 0;
+	int flag3 = 0;
+	char tc;
+	char * err;
+
+	arquivopontos = fopen (arquivopontospath, "r");
+
+	if (arquivopontos == NULL)
+		return STRINGSAIDAERRO;
+
+	fseek (arquivopontos, 0, SEEK_END);
+
+	if (ftell (arquivopontos) > (unsigned long int) TAMANHO_MAX_ARQUIVO)
+		{
+		fclose (arquivopontos);
+		return STRINGSAIDAERROOVER;
+		}
+
+	fseek (arquivopontos, 0, SEEK_SET);
+
+	arquivofuncoes = fopen (arquivofuncoespath, "r");
+
+	if (arquivofuncoes == NULL)
+		return STRINGSAIDAERRO;
+
+	fseek (arquivopontos, 0, SEEK_END);
+
+	if (ftell (arquivofuncoes) > (unsigned long int) TAMANHO_MAX_ARQUIVO)
+		{
+		fclose (arquivofuncoes);
+		return STRINGSAIDAERROOVER;
+		}
+
+	fseek (arquivofuncoes, 0, SEEK_SET);
+
+	strcpy (bufferr, "");
+
+	while ((! feof (arquivofuncoes)) || (flag2 == 0))
+		{
+		if ((flag2 == 1) || (flag3 == 0))
+			{
+			strcpy (buffer, "");
+
+			do
+				{
+				antoniovandre_funcoes_buffer_char = fgetc (arquivofuncoes);
+
+				if ((! feof (arquivofuncoes)) && (antoniovandre_funcoes_buffer_char != DELIMITADORSTRING) && (antoniovandre_funcoes_buffer_char != ' ') && (antoniovandre_funcoes_buffer_char != '\n'))
+					strncat (buffer, & antoniovandre_funcoes_buffer_char, 1);
+				} while (((! feof (arquivofuncoes))) && (antoniovandre_funcoes_buffer_char != DELIMITADORSTRING) && (antoniovandre_funcoes_buffer_char != '\n'));
+
+			fseek (arquivopontos, 0, SEEK_SET);
+			flag2 = 0;
+			flag3 = 1;
+			mt = 0;
+			}
+
+		if (VERDADE)
+			{
+			strcpy (buffer1, "");
+			strcpy (buffer2, "");
+			flag = 0;
+
+			while (flag2 == 0)
+				{
+				antoniovandre_pontos_buffer_char = fgetc (arquivopontos);
+
+				if (antoniovandre_pontos_buffer_char != ' ')
+					if (antoniovandre_pontos_buffer_char == DELIMITADORSTRING)
+						flag = 1;
+					else
+						{
+						if ((antoniovandre_pontos_buffer_char == '\n') || (feof (arquivopontos)))
+							{
+							flag2 = 1;
+							break;
+							}
+						else
+							{
+							if (antoniovandre_pontos_buffer_char == DELIMITADORSTRING2)
+								{
+								flag = 0;
+								break;
+								}
+							else
+								{
+								if (flag == 0)
+									strncat (buffer1, & antoniovandre_pontos_buffer_char, 1);
+								else
+									strncat (buffer2, & antoniovandre_pontos_buffer_char, 1);
+								}
+							}
+						}
+					}
+
+			if (VERDADE)
+				{
+				x = strtold (buffer1, & err);
+
+				if (* err != 0) return STRINGSAIDAERRO;
+				if (x > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+				y = strtold (buffer2, & err);
+			
+				if (y > VALOR_MAX) return STRINGSAIDAERROOVER;
+				if (* err != 0) return STRINGSAIDAERRO;
+
+				strcpy (buffert, "");
+
+				for (i = 0; i < strlen (buffer); i++)
+					{
+					tc = buffer [i];
+
+					if (tc == 'x')
+						strcat (buffert, antoniovandre_numeroparastring ((long double) x));
+					else
+						strncat (buffert, & tc, 1);
+					}
+
+				strcpy (buffertt, antoniovandre_eval (buffert));
+				
+				if (! strcmp (buffertt, STRINGSAIDAERROOVER)) return STRINGSAIDAERROOVER;
+
+				yt = strtold (buffertt, & err);
+
+				if (* err == 0) mt += (long double) ((long double) y - (long double) yt); else {flag2 = 1; continue;}
+				}
+			}
+
+		if (fabs ((long double) mt) < (long double) m)
+			{
+			m = fabs ((long double) mt);
+			strcpy (bufferr, buffer);
+			}
+		}
+
+	fclose (arquivopontos);
+	fclose (arquivofuncoes);
+
+	return bufferr;
 	}
