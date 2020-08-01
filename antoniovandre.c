@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 31-07-2020.
+// Última atualização: 01-08-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -2490,7 +2490,6 @@ char * antoniovandre_eval (char * str)
 	int i;
 	int j;
 	int k;
-	int l;
 	int flag;
 	int flag2;
 	int flag3;
@@ -2544,12 +2543,18 @@ char * antoniovandre_eval (char * str)
 				tc = str2 [k];
 
 				for (j = 0; j < strlen (antoniovandre_numeros); j++)
-					for (l = 0; l < strlen (antoniovandre_letrasmaiusculas); l++)
-						if ((tc == antoniovandre_numeros [j]) || (tc == antoniovandre_letrasmaiusculas [l]))
-							{
-							flag3 = 1;
-							flag4 = 1;
-							}
+					if (tc == antoniovandre_numeros [j])
+						{
+						flag3 = 1;
+						flag4 = 1;
+						}
+
+				for (j = 0; j < strlen (antoniovandre_letrasmaiusculas); j++)
+					if (tc == antoniovandre_letrasmaiusculas [j])
+						{
+						flag3 = 1;
+						flag4 = 1;
+						}
 
 				k--;
 				} while (flag3 == 1);
