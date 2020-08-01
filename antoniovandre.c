@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 30-07-2020.
+// Última atualização: 31-07-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -2479,13 +2479,24 @@ char * antoniovandre_eval (char * str)
 	char str3 [TAMANHO_BUFFER_PHRASE];
 	char str4 [TAMANHO_BUFFER_PHRASE];
 	char str5 [TAMANHO_BUFFER_PHRASE];
+	char str6 [TAMANHO_BUFFER_WORD];
+	long double coeficiente;
 	int inicio;
 	int fim;
 	int i;
+	int j;
+	int k;
 	int flag;
 	int flag2;
+	int flag3;
+	int flag4;
+	char tc;
 
 	strcpy (str2, "");
+	strcpy (str3, "");
+	strcpy (str4, "");
+	strcpy (str5, "");
+	strcpy (str6, "");
 
 	for (i = 0; i < strlen (str); i++)
 		if (str [i] != ' ') strncat (str2, & str [i], 1);
@@ -2519,8 +2530,38 @@ char * antoniovandre_eval (char * str)
 
 		if (flag == flag2)
 			{
-			for (i = 0; i < inicio - 1; i++)
-				strncat (str3, & str2 [i], 1);
+			k = inicio - 2;
+			flag4 = 0;
+
+			do
+				{
+				flag3 = 0;
+				tc = str2 [k];
+
+				for (j = 0; j < strlen (antoniovandre_numeros); j++)
+					if (tc == antoniovandre_numeros [j])
+						{
+						flag3 = 1;
+						flag4 = 1;
+						}
+
+				k--;
+				} while (flag3 == 1);
+
+			strcpy (str6, "");
+
+			if (flag4 == 1) for (j = k; j < inicio - 1; j++) strncat (str6, & str2 [j], 1);
+
+			if (flag4 == 1)
+				for (i = 0; i < k; i++) strncat (str3, & str2 [i], 1);
+			else
+				for (i = 0; i < inicio - 1; i++) strncat (str3, & str2 [i], 1);
+
+			if (strcmp (str6, ""))
+				{
+				strcat (str3, str6);
+				strcat (str3, "*");
+				}
 
 			strcpy (str4, "");
 
