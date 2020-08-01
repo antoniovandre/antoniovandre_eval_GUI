@@ -180,6 +180,10 @@ int antoniovandre_precisao_real ()
 
 const char * antoniovandre_letras = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ";
 
+// Array de letras maiúsculas.
+
+const char * antoniovandre_letrasmaiusculas = "ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+
 // Array de letras minúsculas.
 
 const char * antoniovandre_letrasminusculas = "abcdefghijklmnopqrstuvwxyz";
@@ -2486,6 +2490,7 @@ char * antoniovandre_eval (char * str)
 	int i;
 	int j;
 	int k;
+	int l;
 	int flag;
 	int flag2;
 	int flag3;
@@ -2539,11 +2544,12 @@ char * antoniovandre_eval (char * str)
 				tc = str2 [k];
 
 				for (j = 0; j < strlen (antoniovandre_numeros); j++)
-					if (tc == antoniovandre_numeros [j])
-						{
-						flag3 = 1;
-						flag4 = 1;
-						}
+					for (l = 0; l < strlen (antoniovandre_letrasmaiusculas); l++)
+						if ((tc == antoniovandre_numeros [j]) || (tc == antoniovandre_letrasmaiusculas [l]))
+							{
+							flag3 = 1;
+							flag4 = 1;
+							}
 
 				k--;
 				} while (flag3 == 1);
