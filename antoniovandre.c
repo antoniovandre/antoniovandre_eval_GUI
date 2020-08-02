@@ -2738,12 +2738,12 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 	printf ("Reunindo metadados... ");
 
-	while (! feof (arquivofuncoes))
+	do
 		{
 		antoniovandre_funcoes_buffer_char = fgetc (arquivofuncoes);
 
-		if (antoniovandre_funcoes_buffer_char == DELIMITADORSTRING) totalfuncoes++;
-		}
+		if ((antoniovandre_funcoes_buffer_char == DELIMITADORSTRING) || (antoniovandre_funcoes_buffer_char == '\n') || (feof (arquivofuncoes))) totalfuncoes++;
+		} while (! feof (arquivofuncoes));
 
 	printf(" Ok.\n");
 
@@ -2771,7 +2771,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 			mt = 0;
 			contadorfuncoes++;
 
-			if ((contadorfuncoes == 1) || (contadorfuncoes % 10 == 0)) printf ("%.4f\%\n", (float) (contadorfuncoes / totalfuncoes));
+			if ((contadorfuncoes == 1) || (contadorfuncoes % 10 == 0)) printf ("%.4f\%\n", (float) contadorfuncoes / totalfuncoes * 1.0);
 			}
 
 		strcpy (buffer1, "");
