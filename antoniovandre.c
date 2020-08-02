@@ -21,7 +21,7 @@
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
 #define VALOR_MAX 1000000000L // Afim de evitar erros de saída.
-#define TAMANHO_MAX_ARQUIVO 1000000000 // Afim de evitar erros de saída.
+#define TAMANHO_MAX_ARQUIVO 10000000000 // Afim de evitar erros de saída.
 #define DELIMITADORSTRING ',' // Deve ser um char;
 #define DELIMITADORSTRING2 ';' // Deve ser um char, diferente de DELIMITADORSTRING;
 #define STRINGSAIDAERRO "Erro de saida de uma string."
@@ -2692,6 +2692,8 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 	char buffer2 [TAMANHO_BUFFER_WORD];
 	char antoniovandre_funcoes_buffer_char;
 	char antoniovandre_pontos_buffer_char;
+	unsigned long int totalfuncoes = 0;
+	unsigned long int contadorfuncoes = 0;
 	long double m = VALOR_MAX;
 	long double mt;
 	long double x;
@@ -2724,13 +2726,26 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 	if (arquivofuncoes == NULL)
 		return STRINGSAIDAERRO;
 
-	fseek (arquivopontos, 0, SEEK_END);
+	fseek (arquivofuncoes, 0, SEEK_END);
 
 	if (ftell (arquivofuncoes) > (unsigned long int) TAMANHO_MAX_ARQUIVO)
 		{
 		fclose (arquivofuncoes);
 		return STRINGSAIDAERROOVER;
 		}
+
+	fseek (arquivofuncoes, 0, SEEK_SET);
+
+	printf ("Reunindo metadados... ");
+
+	while (! feof (arquivofuncoes))
+		{
+		antoniovandre_funcoes_buffer_char = fgetc (arquivofuncoes);
+
+		if (antoniovandre_funcoes_buffer_char == DELIMITADORSTRING) totalfuncoes++;
+		}
+
+	printf(" Ok.\n");
 
 	fseek (arquivofuncoes, 0, SEEK_SET);
 
@@ -2754,6 +2769,9 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 			flag2 = 0;
 			flag3 = 1;
 			mt = 0;
+			contadorfuncoes++;
+
+			if ((contadorfuncoes == 1) || (contadorfuncoes % 10 == 0)) printf ("%.4f\%\n", (float) (contadorfuncoes / totalfuncoes));
 			}
 
 		strcpy (buffer1, "");
