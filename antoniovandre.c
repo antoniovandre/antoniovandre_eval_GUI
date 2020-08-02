@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 01-08-2020.
+// Última atualização: 02-08-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -2756,79 +2756,73 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 			mt = 0;
 			}
 
-		if (VERDADE)
+		strcpy (buffer1, "");
+		strcpy (buffer2, "");
+		flag = 0;
+
+		while (flag2 == 0)
 			{
-			strcpy (buffer1, "");
-			strcpy (buffer2, "");
-			flag = 0;
+			antoniovandre_pontos_buffer_char = fgetc (arquivopontos);
 
-			while (flag2 == 0)
-				{
-				antoniovandre_pontos_buffer_char = fgetc (arquivopontos);
-
-				if (antoniovandre_pontos_buffer_char != ' ')
-					if (antoniovandre_pontos_buffer_char == DELIMITADORSTRING)
-						flag = 1;
+			if (antoniovandre_pontos_buffer_char != ' ')
+				if (antoniovandre_pontos_buffer_char == DELIMITADORSTRING)
+					flag = 1;
+				else
+					{
+					if ((antoniovandre_pontos_buffer_char == '\n') || (feof (arquivopontos)))
+						{
+						flag2 = 1;
+						break;
+						}
 					else
 						{
-						if ((antoniovandre_pontos_buffer_char == '\n') || (feof (arquivopontos)))
+						if (antoniovandre_pontos_buffer_char == DELIMITADORSTRING2)
 							{
-							flag2 = 1;
+							flag = 0;
 							break;
 							}
 						else
 							{
-							if (antoniovandre_pontos_buffer_char == DELIMITADORSTRING2)
-								{
-								flag = 0;
-								break;
-								}
+							if (flag == 0)
+								strncat (buffer1, & antoniovandre_pontos_buffer_char, 1);
 							else
-								{
-								if (flag == 0)
-									strncat (buffer1, & antoniovandre_pontos_buffer_char, 1);
-								else
-									strncat (buffer2, & antoniovandre_pontos_buffer_char, 1);
-								}
+								strncat (buffer2, & antoniovandre_pontos_buffer_char, 1);
 							}
 						}
 					}
-
-			if (VERDADE)
-				{
-				x = strtold (buffer1, & err);
-
-				if (* err != 0) return STRINGSAIDAERRO;
-				if (x > VALOR_MAX) return STRINGSAIDAERROOVER;
-
-				y = strtold (buffer2, & err);
-			
-				if (y > VALOR_MAX) return STRINGSAIDAERROOVER;
-				if (* err != 0) return STRINGSAIDAERRO;
-
-				strcpy (buffert, "");
-
-				for (i = 0; i < strlen (buffer); i++)
-					{
-					tc = buffer [i];
-
-					if (tc == 'x')
-						strcat (buffert, antoniovandre_numeroparastring ((long double) x));
-					else
-						strncat (buffert, & tc, 1);
-					}
-
-				strcpy (buffertt, antoniovandre_eval (buffert));
-				
-				if (! strcmp (buffertt, STRINGSAIDAERROOVER)) return STRINGSAIDAERROOVER;
-
-				yt = strtold (buffertt, & err);
-
-				if (* err == 0) mt += (long double) ((long double) y - (long double) yt); else {flag2 = 1; continue;}
-				}
 			}
 
-		if (fabs ((long double) mt) < (long double) m)
+		x = strtold (buffer1, & err);
+
+		if (* err != 0) return STRINGSAIDAERRO;
+		if (x > VALOR_MAX) return STRINGSAIDAERROOVER;
+
+		y = strtold (buffer2, & err);
+			
+		if (y > VALOR_MAX) return STRINGSAIDAERROOVER;
+		if (* err != 0) return STRINGSAIDAERRO;
+
+		strcpy (buffert, "");
+
+		for (i = 0; i < strlen (buffer); i++)
+			{
+			tc = buffer [i];
+
+			if (tc == 'x')
+				strcat (buffert, antoniovandre_numeroparastring ((long double) x));
+			else
+				strncat (buffert, & tc, 1);
+			}
+
+		strcpy (buffertt, antoniovandre_eval (buffert));
+
+		if (! strcmp (buffertt, STRINGSAIDAERROOVER)) return STRINGSAIDAERROOVER;
+
+		yt = strtold (buffertt, & err);
+
+		if (* err == 0) mt += (long double) ((long double) y - (long double) yt); else {flag2 = 1; continue;}
+
+		if ((flag2 == 1) && (fabs ((long double) mt) < (long double) m))
 			{
 			m = fabs ((long double) mt);
 			strcpy (bufferr, buffer);
