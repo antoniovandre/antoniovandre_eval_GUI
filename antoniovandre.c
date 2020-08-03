@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 02-08-2020.
+// Última atualização: 03-08-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -35,6 +35,7 @@
 #define NUMEROPARTICOESSOMARIEMANN 100 // Para Cálculo Integral.
 #define VERDADE 1
 #define FALSIDADE 0
+#define INTERVALOPROGRESSO 100 // Para não haver flood quando mostrando progressos de processos.
 
 typedef struct {char token [TAMANHO_BUFFER_WORD]; long double valor; char comentario [TAMANHO_BUFFER_PHRASE];} tokenfuncaoconstante; // Estrutura para funções e constantes.
 
@@ -2692,8 +2693,10 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 	char buffer2 [TAMANHO_BUFFER_WORD];
 	char antoniovandre_funcoes_buffer_char;
 	char antoniovandre_pontos_buffer_char;
+	unsigned long int totalitens = 0;
+	unsigned long int totalpontos = 0;
 	unsigned long int totalfuncoes = 0;
-	unsigned long int contadorfuncoes = 0;
+	unsigned long int contadoritens = 0;
 	long double m = VALOR_MAX;
 	long double mt;
 	long double x;
@@ -2740,13 +2743,23 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 	do
 		{
+		antoniovandre_pontos_buffer_char = fgetc (arquivopontos);
+
+		if ((antoniovandre_pontos_buffer_char == DELIMITADORSTRING2) || (antoniovandre_pontos_buffer_char == '\n') || (feof (arquivopontos))) totalpontos++;
+		} while (! feof (arquivopontos));
+
+	do
+		{
 		antoniovandre_funcoes_buffer_char = fgetc (arquivofuncoes);
 
 		if ((antoniovandre_funcoes_buffer_char == DELIMITADORSTRING) || (antoniovandre_funcoes_buffer_char == '\n') || (feof (arquivofuncoes))) totalfuncoes++;
 		} while (! feof (arquivofuncoes));
 
+	totalitens = totalpontos * totalfuncoes;
+
 	printf(" Ok.\n");
 
+	fseek (arquivopontos, 0, SEEK_SET);
 	fseek (arquivofuncoes, 0, SEEK_SET);
 
 	strcpy (bufferr, "");
@@ -2769,9 +2782,6 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 			flag2 = 0;
 			flag3 = 1;
 			mt = 0;
-			contadorfuncoes++;
-
-			if ((contadorfuncoes == 1) || (contadorfuncoes % 10 == 0)) printf ("%.4f\%\n", (float) contadorfuncoes / totalfuncoes * 1.0);
 			}
 
 		strcpy (buffer1, "");
@@ -2845,6 +2855,10 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 			m = fabs ((long double) mt);
 			strcpy (bufferr, buffer);
 			}
+
+		contadoritens++;
+
+		if ((contadoritens == 1) || (contadoritens == totalitens) || (contadoritens % INTERVALOPROGRESSO == 0)) printf ("%.5f\%\n", (float) contadoritens / totalitens * 100.0);
 		}
 
 	fclose (arquivopontos);
