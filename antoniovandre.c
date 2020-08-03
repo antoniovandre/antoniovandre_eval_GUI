@@ -2787,14 +2787,14 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 					flag = 1;
 				else
 					{
-					if ((antoniovandre_pontos_buffer_char == '\n') || (feof (arquivopontos)))
+					if (feof (arquivopontos))
 						{
 						flag2 = 1;
 						break;
 						}
 					else
 						{
-						if (antoniovandre_pontos_buffer_char == DELIMITADORSTRING2)
+						if ((antoniovandre_pontos_buffer_char == DELIMITADORSTRING2) || (antoniovandre_pontos_buffer_char == '\n'))
 							{
 							flag = 0;
 							break;
