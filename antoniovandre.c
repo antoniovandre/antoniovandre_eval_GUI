@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 03-08-2020.
+// Última atualização: 04-08-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -2858,7 +2858,11 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 		contadoritens++;
 
-		if ((contadoritens == 1) || (contadoritens == totalitens) || (contadoritens % INTERVALOPROGRESSO == 0)) printf ("%.5f\%\n", (float) contadoritens / totalitens * 100.0);
+		if ((contadoritens == 1) || (contadoritens == totalitens) || (contadoritens % INTERVALOPROGRESSO == 0))
+			{
+			printf ("%.5f", (float) contadoritens / totalitens * 100.0);
+			printf ("%%\n");
+			}
 		}
 
 	fclose (arquivopontos);
