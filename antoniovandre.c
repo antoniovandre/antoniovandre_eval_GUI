@@ -2681,7 +2681,7 @@ char * antoniovandre_integraldefinida (char * str, long double a, long double b)
 
 // Retorna a função mais próxima, dados os pontos e as funções em arquivos.
 
-char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivofuncoespath)
+char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivofuncoespath, int log)
 	{
 	FILE * arquivopontos;
 	FILE * arquivofuncoes;
@@ -2709,15 +2709,21 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 	char tc;
 	char * err;
 
+	if (log == 1) printf ("Verificando validade dos arquivos... ");
+
 	arquivopontos = fopen (arquivopontospath, "r");
 
 	if (arquivopontos == NULL)
+		{
+		if (log == 1) printf ("Erro.\n");
 		return STRINGSAIDAERRO;
+		}
 
 	fseek (arquivopontos, 0, SEEK_END);
 
 	if (ftell (arquivopontos) > (unsigned long int) TAMANHO_MAX_ARQUIVO)
 		{
+		if (log == 1) printf ("Erro.\n");
 		fclose (arquivopontos);
 		return STRINGSAIDAERROOVER;
 		}
@@ -2727,19 +2733,25 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 	arquivofuncoes = fopen (arquivofuncoespath, "r");
 
 	if (arquivofuncoes == NULL)
+		{
+		if (log == 1) printf ("Erro.\n");
 		return STRINGSAIDAERRO;
+		}
 
 	fseek (arquivofuncoes, 0, SEEK_END);
 
 	if (ftell (arquivofuncoes) > (unsigned long int) TAMANHO_MAX_ARQUIVO)
 		{
+		if (log == 1) printf ("Erro.\n");
 		fclose (arquivofuncoes);
 		return STRINGSAIDAERROOVER;
 		}
 
 	fseek (arquivofuncoes, 0, SEEK_SET);
 
-	printf ("Reunindo metadados... ");
+	if (log == 1) printf("Ok.\n");
+
+	if (log == 1) printf ("Reunindo metadados... ");
 
 	do
 		{
@@ -2757,7 +2769,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 	totalitens = totalpontos * totalfuncoes;
 
-	printf(" Ok.\n");
+	if (log == 1) printf("Ok.\n");
 
 	fseek (arquivopontos, 0, SEEK_SET);
 	fseek (arquivofuncoes, 0, SEEK_SET);
@@ -2858,7 +2870,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 		contadoritens++;
 
-		if ((contadoritens == 1) || (contadoritens == totalitens) || (contadoritens % INTERVALOPROGRESSO == 0))
+		if ((log == 1) && ((contadoritens == 1) || (contadoritens == totalitens) || (contadoritens % INTERVALOPROGRESSO == 0)))
 			{
 			printf ("%.5f", (float) contadoritens / totalitens * 100.0);
 			printf ("%%\n");
