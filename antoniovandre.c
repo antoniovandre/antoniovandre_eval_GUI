@@ -2709,7 +2709,11 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 	char tc;
 	char * err;
 
-	if (log == 1) printf ("Verificando validade dos arquivos... ");
+	if (log == 1)
+		{
+		printf ("Verificando validade dos arquivos... ");
+		fflush (stdout);
+		}
 
 	arquivopontos = fopen (arquivopontospath, "r");
 
@@ -2751,7 +2755,11 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 	if (log == 1) printf("Ok.\n");
 
-	if (log == 1) printf ("Reunindo metadados... ");
+	if (log == 1)
+		{
+		printf ("Reunindo metadados... ");
+		fflush (stdout);
+		}
 
 	do
 		{
@@ -2760,12 +2768,16 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 		if ((antoniovandre_pontos_buffer_char == DELIMITADORSTRING2) || (antoniovandre_pontos_buffer_char == '\n') || (feof (arquivopontos))) totalpontos++;
 		} while (! feof (arquivopontos));
 
+	if ((antoniovandre_pontos_buffer_char == DELIMITADORSTRING2) || (antoniovandre_pontos_buffer_char == '\n')) totalpontos--;
+
 	do
 		{
 		antoniovandre_funcoes_buffer_char = fgetc (arquivofuncoes);
 
 		if ((antoniovandre_funcoes_buffer_char == DELIMITADORSTRING) || (antoniovandre_funcoes_buffer_char == '\n') || (feof (arquivofuncoes))) totalfuncoes++;
 		} while (! feof (arquivofuncoes));
+
+	if ((antoniovandre_funcoes_buffer_char == DELIMITADORSTRING) || (antoniovandre_funcoes_buffer_char == '\n')) totalfuncoes--;
 
 	totalitens = totalpontos * totalfuncoes;
 
