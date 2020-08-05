@@ -1,10 +1,10 @@
 // Proprietário: Antonio Vandré Pedrosa Furtunato Gomes (bit.ly/antoniovandre_legadoontologico).
 
-// Biblioteca C de funções e constantes pertencentes a Antonio Vandré Pedrosa Furtunato Gomes, versão de distribuição.
+// Biblioteca C de funções e constantes pertencentes a Antonio Vandré Pedrosa Furtunato Gomes, versão de distribuição para antoniovandre_eval GUI.
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 04-08-2020.
+// Última atualização: 05-08-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -2788,7 +2788,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 	strcpy (bufferr, "");
 
-	while ((! feof (arquivofuncoes)) || (flag2 == 0))
+	do
 		{
 		if ((flag2 == 1) || (flag3 == 0))
 			{
@@ -2872,6 +2872,8 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 		yt = strtold (buffertt, & err);
 
+		contadoritens++;
+
 		if (* err == 0) mt += (long double) ((long double) y - (long double) yt); else {flag2 = 1; continue;}
 
 		if ((flag2 == 1) && (fabs ((long double) mt) < (long double) m))
@@ -2880,14 +2882,14 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 			strcpy (bufferr, buffer);
 			}
 
-		contadoritens++;
-
 		if ((log == 1) && ((contadoritens == 1) || (contadoritens == totalitens) || (contadoritens % INTERVALOPROGRESSO == 0)))
 			{
-			printf ("%.5f", (float) contadoritens / totalitens * 100.0);
-			printf ("%%\n");
+			printf ("\r%.13f%% concluído.", (double) (100.0 * ((double) contadoritens / (double) totalitens)));
+			fflush (stdout);
 			}
-		}
+		} while ((! feof (arquivofuncoes)) || (flag2 == 0));
+
+	if (log == 1) printf ("\nFunção mais próxima: ");
 
 	fclose (arquivopontos);
 	fclose (arquivofuncoes);
