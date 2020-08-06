@@ -2497,6 +2497,7 @@ char * antoniovandre_eval (char * str)
 	int flag3;
 	int flag4;
 	char tc;
+	char tc2;
 
 	strcpy (str2, "");
 	strcpy (str3, "");
@@ -2508,6 +2509,18 @@ char * antoniovandre_eval (char * str)
 		if (str [i] != ' ') strncat (str2, & str [i], 1);
 
 	if (! strcmp (str2, "")) return STRINGSAIDAERRO;
+
+	for (i = 1; i < strlen (str2); i++)
+		{
+		tc = str2 [i - 1];
+		tc2 = str2 [i];
+
+		for (j = 0; j < strlen (antoniovandre_operadores); j++)
+			{
+			if ((tc == '-') && (tc2 == antoniovandre_operadores [j])) return STRINGSAIDAERRO;
+			if ((tc == antoniovandre_operadores [j]) && (tc2 == '-')) return STRINGSAIDAERRO;
+			}
+		}
 
 	do
 		{
