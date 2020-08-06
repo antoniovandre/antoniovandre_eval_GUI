@@ -2570,10 +2570,12 @@ char * antoniovandre_eval (char * str)
 			else
 				for (i = 0; i < inicio - 1; i++) strncat (str3, & str2 [i], 1);
 
+			tc = str6 [strlen (str6) - 1];
+
 			if (strcmp (str6, ""))
 				{
 				strcat (str3, str6);
-				strcat (str3, "*");
+				if (tc != '-') strcat (str3, "*");
 				}
 
 			strcpy (str4, "");
