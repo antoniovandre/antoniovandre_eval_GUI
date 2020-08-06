@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 05-08-2020.
+// Última atualização: 06-08-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -21,7 +21,7 @@
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
 #define VALOR_MAX 1000000000L // Afim de evitar erros de saída.
-#define TAMANHO_MAX_ARQUIVO 10000000000 // Afim de evitar erros de saída.
+#define TAMANHO_MAX_ARQUIVO 1000000000000 // Afim de evitar erros de saída.
 #define DELIMITADORSTRING ',' // Deve ser um char;
 #define DELIMITADORSTRING2 ';' // Deve ser um char, diferente de DELIMITADORSTRING;
 #define STRINGSAIDAERRO "Erro de saida de uma string."
@@ -36,6 +36,7 @@
 #define VERDADE 1
 #define FALSIDADE 0
 #define INTERVALOPROGRESSO 100 // Para não haver flood quando mostrando progressos de processos.
+#define INTERVALOPROGRESSO2 500000 // Para não haver flood quando mostrando progressos de processos, para processos mais rápidos.
 
 typedef struct {char token [TAMANHO_BUFFER_WORD]; long double valor; char comentario [TAMANHO_BUFFER_PHRASE];} tokenfuncaoconstante; // Estrutura para funções e constantes.
 
@@ -2702,7 +2703,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 	long double x;
 	long double y;
 	long double yt;
-	int i;
+	int i = 1;
 	int flag;
 	int flag2 = 0;
 	int flag3 = 0;
@@ -2757,7 +2758,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 	if (log == 1)
 		{
-		printf ("Reunindo metadados... ");
+		printf ("Reunindo metadados...  ");
 		fflush (stdout);
 		}
 
@@ -2766,6 +2767,32 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 		antoniovandre_pontos_buffer_char = fgetc (arquivopontos);
 
 		if ((antoniovandre_pontos_buffer_char == DELIMITADORSTRING2) || (antoniovandre_pontos_buffer_char == '\n') || (feof (arquivopontos))) totalpontos++;
+
+		if (i++ % INTERVALOPROGRESSO2 == 0)
+			{
+			switch (tc)
+				{
+				case '-':
+					tc = '\\';
+					break;
+				case '\\':
+					tc = '|';
+					break;
+				case '|':
+					tc = '/';
+					break;
+				case '/':
+					tc = '-';
+					break;
+				default:
+					tc = '-';
+				}
+
+			printf ("\b%c", tc);
+			fflush (stdout);
+
+			i = 1;
+			}
 		} while (! feof (arquivopontos));
 
 	if ((antoniovandre_pontos_buffer_char == DELIMITADORSTRING2) || (antoniovandre_pontos_buffer_char == '\n')) totalpontos--;
@@ -2775,13 +2802,39 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 		antoniovandre_funcoes_buffer_char = fgetc (arquivofuncoes);
 
 		if ((antoniovandre_funcoes_buffer_char == DELIMITADORSTRING) || (antoniovandre_funcoes_buffer_char == '\n') || (feof (arquivofuncoes))) totalfuncoes++;
+
+		if (i++ % INTERVALOPROGRESSO2 == 0)
+			{
+			switch (tc)
+				{
+				case '-':
+					tc = '\\';
+					break;
+				case '\\':
+					tc = '|';
+					break;
+				case '|':
+					tc = '/';
+					break;
+				case '/':
+					tc = '-';
+					break;
+				default:
+					tc = '-';
+				}
+
+			printf ("\b%c", tc);
+			fflush (stdout);
+
+			i = 1;
+			}
 		} while (! feof (arquivofuncoes));
 
 	if ((antoniovandre_funcoes_buffer_char == DELIMITADORSTRING) || (antoniovandre_funcoes_buffer_char == '\n')) totalfuncoes--;
 
 	totalitens = totalpontos * totalfuncoes;
 
-	if (log == 1) printf("Ok.\n");
+	if (log == 1) printf("\bOk.\n");
 
 	fseek (arquivopontos, 0, SEEK_SET);
 	fseek (arquivofuncoes, 0, SEEK_SET);
@@ -2889,7 +2942,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 			}
 		} while ((! feof (arquivofuncoes)) || (flag2 == 0));
 
-	if (log == 1) printf ("\nFunção mais próxima: ");
+	if (log == 1) printf ("\n");
 
 	fclose (arquivopontos);
 	fclose (arquivofuncoes);
