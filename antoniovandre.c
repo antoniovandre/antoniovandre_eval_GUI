@@ -1,5 +1,7 @@
 // Proprietário: Antonio Vandré Pedrosa Furtunato Gomes (bit.ly/antoniovandre_legadoontologico).
 
+// Projeto Mathematical Ramblings (bit.ly/mathematicalramblings_github).
+
 // Biblioteca C de funções e constantes pertencentes a Antonio Vandré Pedrosa Furtunato Gomes, versão de distribuição para antoniovandre_eval GUI.
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).

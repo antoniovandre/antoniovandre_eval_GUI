@@ -1,5 +1,7 @@
 // Proprietário: Antonio Vandré Pedrosa Furtunato Gomes (bit.ly/antoniovandre_legadoontologico).
 
+// Projeto Mathematical Ramblings (bit.ly/mathematicalramblings_github).
+
 // Biblioteca C de constantes auxiliares, pertencente a Antonio Vandré Pedrosa Furtunato Gomes, versão de distribuição.
 
 // As constantes devem ter seus nomes em caracteres maiúsculos.
