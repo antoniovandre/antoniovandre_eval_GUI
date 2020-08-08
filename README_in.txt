@@ -19,7 +19,7 @@ ckkxd:.  ,dxxkxo,'''''',cddc,'''''''''''
          .''''''''''''''''''''''''''''''
          .''''''''''''''''''''''''''''''
 
-परियोजना Mathematical Ramblings (mathematicalramblings.blogspot.com)।
+परियोजना Mathematical Ramblings (bit.ly/mathematicalramblings_github)।
 ____________________
 
 मालिक: Antonio Vandré Pedrosa Furtunato Gomes. (bit.ly/antoniovandre_legadoontologico)।

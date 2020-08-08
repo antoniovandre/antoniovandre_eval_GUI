@@ -19,7 +19,7 @@ ckkxd:.  ,dxxkxo,'''''',cddc,'''''''''''
          .''''''''''''''''''''''''''''''
          .''''''''''''''''''''''''''''''
 
-Mathematical Ramblings مشروع (mathematicalramblings.blogspot.com).
+Mathematical Ramblings مشروع (bit.ly/mathematicalramblings_github).
 ____________________
 
 
