@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 06-08-2020.
+// Última atualização: 13-08-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -198,7 +198,11 @@ const char * antoniovandre_numeros = ".-0123456789";
 
 // Array de operadores.
 
-const char * antoniovandre_operadores = "+-*/^%@#$";
+const char * antoniovandre_operadores = "+-*/^%@#$><";
+
+// Array de operadores especiais.
+
+const char * antoniovandre_operadoresespeciais = "%@#$><";
 
 // Remover letras de uma string.
 
@@ -2461,6 +2465,20 @@ char * antoniovandre_evalcelula (char * str)
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
+
+				if ((strt [posicoes_operadores [i]] == '>') && (flag == 0) && (flag2 == 0))
+					{
+					(valort > valort2) ? (valor = valort) : (valor = valort2);
+					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					break;
+					}
+
+				if ((strt [posicoes_operadores [i]] == '<') && (flag == 0) && (flag2 == 0))
+					{
+					(valort < valort2) ? (valor = valort) : (valor = valort2);
+					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					break;
+					}
 				}
 
 		strcpy (strt4, "");
@@ -2517,9 +2535,21 @@ char * antoniovandre_eval (char * str)
 		tc = str2 [i - 1];
 		tc2 = str2 [i];
 
+		flag = 0;
+
 		for (j = 0; j < strlen (antoniovandre_operadores); j++)
 			{
 			if ((tc == '-') && (tc2 == antoniovandre_operadores [j])) return STRINGSAIDAERRO;
+
+			for (k = 0; k < strlen (antoniovandre_operadoresespeciais); k++)
+				if (tc == antoniovandre_operadoresespeciais [k])
+					{
+					flag = 1;
+					break;
+					}
+
+			if (flag == 1) break;
+
 			if ((tc == antoniovandre_operadores [j]) && (tc2 == '-')) return STRINGSAIDAERRO;
 			}
 		}

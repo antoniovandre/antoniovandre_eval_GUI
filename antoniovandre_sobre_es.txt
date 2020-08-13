@@ -41,6 +41,10 @@ Operadores disponibles para "antoniovandre_eval":
 "#": combinaciones (Análisis Combinatorio).
 
 "$": redondeando al orden de magnitud.
+
+">": máximo.
+
+"<": mínimo.
 _____
 
 Los paréntesis se pueden usar en "antoniovandre_eval".

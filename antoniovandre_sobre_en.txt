@@ -41,6 +41,10 @@ Operators available for "antoniovandre_eval":
 "#": combinations (Combinatory Analysis).
 
 "$": rounding to the order of magnitude.
+
+">": maximum.
+
+"<": minimum.
 _____
 
 Parentheses can be used in "antoniovandre_eval".

@@ -41,6 +41,10 @@ Operadores disponíveis para "antoniovandre_eval":
 "#": combinações (Análise Combinatória).
 
 "$": arredondamento para a ordem de grandeza.
+
+">": máximo.
+
+"<": mínimo.
 _____
 
 Parênteses podem ser utilizados em "antoniovandre_eval".
