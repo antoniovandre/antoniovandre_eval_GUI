@@ -2506,7 +2506,6 @@ char * antoniovandre_eval (char * str)
 	char str4 [TAMANHO_BUFFER_PHRASE];
 	char str5 [TAMANHO_BUFFER_PHRASE];
 	char str6 [TAMANHO_BUFFER_WORD];
-	long double coeficiente;
 	int inicio;
 	int fim;
 	int i;
@@ -2535,11 +2534,11 @@ char * antoniovandre_eval (char * str)
 		tc = str2 [i - 1];
 		tc2 = str2 [i];
 
-		flag = 0;
-
 		for (j = 0; j < strlen (antoniovandre_operadores); j++)
 			{
 			if ((tc == '-') && (tc2 == antoniovandre_operadores [j])) return STRINGSAIDAERRO;
+
+			flag = 0;
 
 			for (k = 0; k < strlen (antoniovandre_operadoresespeciais); k++)
 				if (tc == antoniovandre_operadoresespeciais [k])
@@ -2615,13 +2614,17 @@ char * antoniovandre_eval (char * str)
 			else
 				for (i = 0; i < inicio - 1; i++) strncat (str3, & str2 [i], 1);
 
-			tc = str6 [strlen (str6) - 1];
+			i = strlen (str6);
+
+			tc = str6 [i - 1];
 
 			if (strcmp (str6, ""))
 				{
 				strcat (str3, str6);
 				if (tc != '-') strcat (str3, "*");
 				}
+
+			if (!strcmp (str3, "-")) strcpy (str3, "-1*");
 
 			strcpy (str4, "");
 
