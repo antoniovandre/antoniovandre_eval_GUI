@@ -4,7 +4,9 @@
 
 # Arquivo meta para o Python GUI para "antoniovandre_eval", versão de distribuição.
 
-# Última atualização: 23-07-2020.
+# Última atualização: 13-08-2020.
+
+TIMEOUTMENSAGEM = "6"
 
 import tkinter as tk
 
@@ -74,6 +76,15 @@ def clicked2 ():
 	with open ("/usr/share/antoniovandre_sobre.txt", "r") as fa:
 		stringajuda = fa.read ()
 
+	cmd = 'wget -T ' + TIMEOUTMENSAGEM + ' -qO- https://bit.ly/antoniovandreevalguimensagemdl 2>> /dev/null > HOME/avmtemp'
+
+	os.system (cmd)
+
+	with open ('HOME/avmtemp') as fb:
+		stringmensagem = fb.read ()
+
+	os.system ('rm HOME/avmtemp')
+
 	windowajuda = Tk ()
 
 	windowajuda.resizable (False, False)
@@ -93,6 +104,8 @@ def clicked2 ():
 	T.config (yscrollcommand=S.set)
 
 	T.insert (tk.INSERT, stringajuda)
+
+	T.insert (tk.INSERT, stringmensagem)
 
 	windowajuda.mainloop ()
 
