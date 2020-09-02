@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 13-08-2020.
+// Última atualização: 02-09-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -39,6 +39,7 @@
 #define FALSIDADE 0
 #define INTERVALOPROGRESSO 100 // Para não haver flood quando mostrando progressos de processos.
 #define INTERVALOPROGRESSO2 500000 // Para não haver flood quando mostrando progressos de processos, para processos mais rápidos.
+#define APROXIMACAO 0.0000000001L // Para verificação de aproximação numérica.
 
 typedef struct {char token [TAMANHO_BUFFER_WORD]; long double valor; char comentario [TAMANHO_BUFFER_PHRASE];} tokenfuncaoconstante; // Estrutura para funções e constantes.
 
@@ -198,11 +199,11 @@ const char * antoniovandre_numeros = ".-0123456789";
 
 // Array de operadores.
 
-const char * antoniovandre_operadores = "+-*/^%@#$><";
+const char * antoniovandre_operadores = "+-*/^%@#$><:~";
 
 // Array de operadores especiais.
 
-const char * antoniovandre_operadoresespeciais = "%@#$><";
+const char * antoniovandre_operadoresespeciais = "%@#$><:~";
 
 // Remover letras de uma string.
 
@@ -1475,7 +1476,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) fabs (argumento));
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) fabsl (argumento));
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -2479,6 +2480,24 @@ char * antoniovandre_evalcelula (char * str)
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
+
+				if ((strt [posicoes_operadores [i]] == ':') && (flag == 0) && (flag2 == 0))
+					{
+					valor = logl (valort) / logl (valort2);
+					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					break;
+					}
+
+				if ((strt [posicoes_operadores [i]] == '~') && (flag == 0) && (flag2 == 0))
+					{
+					if (fabsl (logl (valort) - logl (valort2)) < APROXIMACAO)
+						valor = 1;
+					else
+						valor = 0;
+
+					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					break;
+					}
 				}
 
 		strcpy (strt4, "");
@@ -2979,9 +2998,9 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 		if (* err == 0) mt += (long double) ((long double) y - (long double) yt); else {flag2 = 1; continue;}
 
-		if ((flag2 == 1) && (fabs ((long double) mt) < (long double) m))
+		if ((flag2 == 1) && (fabsl ((long double) mt) < (long double) m))
 			{
-			m = fabs ((long double) mt);
+			m = fabsl ((long double) mt);
 			strcpy (bufferr, buffer);
 			}
 

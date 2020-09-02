@@ -45,6 +45,10 @@ Operadores disponibles para "antoniovandre_eval":
 ">": máximo.
 
 "<": mínimo.
+
+":": logaritmo base.
+
+"~": devuelve "1" si es un valor aproximado y "0" si no es así.
 _____
 
 Los paréntesis se pueden usar en "antoniovandre_eval".

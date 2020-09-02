@@ -45,6 +45,10 @@ Operators available for "antoniovandre_eval":
 ">": maximum.
 
 "<": minimum.
+
+":": base logarithm.
+
+"~": returns "1" if it is an approximate value, and "0" if not.
 _____
 
 Parentheses can be used in "antoniovandre_eval".

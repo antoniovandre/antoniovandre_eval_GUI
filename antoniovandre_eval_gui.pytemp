@@ -4,9 +4,7 @@
 
 # Arquivo meta para o Python GUI para "antoniovandre_eval", versão de distribuição.
 
-# Última atualização: 13-08-2020.
-
-TIMEOUTMENSAGEM = "6"
+# Última atualização: 02-09-2020.
 
 import tkinter as tk
 
@@ -76,7 +74,7 @@ def clicked2 ():
 	with open ("/usr/share/antoniovandre_sobre.txt", "r") as fa:
 		stringajuda = fa.read ()
 
-	cmd = 'wget -T ' + TIMEOUTMENSAGEM + ' -qO- https://bit.ly/antoniovandreevalguimensagemdl 2>> /dev/null > HOME/avmtemp'
+	cmd = 'wget -T TIMEOUTMENSAGEM -qO- https://bit.ly/antoniovandreevalguimensagemdl 2>> /dev/null > HOME/avmtemp'
 
 	os.system (cmd)
 
