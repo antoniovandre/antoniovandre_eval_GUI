@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 02-09-2020.
+// Última atualização: 03-10-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -42,6 +42,8 @@
 #define APROXIMACAO 0.0000000001L // Para verificação de aproximação numérica.
 
 typedef struct {char token [TAMANHO_BUFFER_WORD]; long double valor; char comentario [TAMANHO_BUFFER_PHRASE];} tokenfuncaoconstante; // Estrutura para funções e constantes.
+
+typedef struct {long double real; long double img;} numerocomplexo; // Estrutura número complexo.
 
 #define ARQUIVO_MATHSOBRE "/usr/share/antoniovandre_sobre.txt"
 // #define ARQUIVO_MATH_ESTATISTICAS "antoniovandre_math_estatisticas.txt"
@@ -1476,7 +1478,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) fabsl (argumento));
+			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) fabs (argumento));
 			}
 
 	for (i = 0; i < strlen (str); i++)
@@ -2339,6 +2341,7 @@ char * antoniovandre_evalcelula (char * str)
 						flag4 = 1;
 						}
 					}
+
 				if ((strt [i] == antoniovandre_operadores [j]) && flag3 == 0) posicoes_operadores [contador++] = i;
 				}
 
@@ -2400,7 +2403,21 @@ char * antoniovandre_evalcelula (char * str)
 
 				if (strt [posicoes_operadores [i]] == '^')
 					{
-					valor = powl ((long double) valort, (long double) valort2);
+					if (fabsl ((long double) valort2) < 1)
+						{
+						if (valort < 0)
+							{
+							if (fmodl ((1 / valort2), 2) == 0)
+								return STRINGSAIDAERRO;
+							else
+								valor = (-1) * powl (fabsl ((long double) valort), (long double) valort2);
+							}
+						else
+							valor = powl ((long double) valort, (long double) valort2);
+						}
+					else
+						valor = powl ((long double) valort, (long double) valort2);
+
 					if (isnan (valor) || isinf (valor)) return STRINGSAIDAERRO;
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
@@ -2523,10 +2540,12 @@ char * antoniovandre_eval (char * str)
 	char str2 [TAMANHO_BUFFER_PHRASE];
 	char str3 [TAMANHO_BUFFER_PHRASE];
 	char str4 [TAMANHO_BUFFER_PHRASE];
+	char str4t [TAMANHO_BUFFER_PHRASE];
 	char str5 [TAMANHO_BUFFER_PHRASE];
 	char str6 [TAMANHO_BUFFER_WORD];
 	int inicio;
 	int fim;
+	int pos;
 	int i;
 	int j;
 	int k;
@@ -2534,6 +2553,9 @@ char * antoniovandre_eval (char * str)
 	int flag2;
 	int flag3;
 	int flag4;
+	int flag5;
+	int flag6;
+	int flag7;
 	char tc;
 	char tc2;
 
@@ -2572,6 +2594,8 @@ char * antoniovandre_eval (char * str)
 			}
 		}
 
+	flag7 = 0;
+
 	do
 		{
 		inicio = 0;
@@ -2593,6 +2617,21 @@ char * antoniovandre_eval (char * str)
 				flag2 = 1;
 				break;
 				}
+			}
+
+		flag6 = 0;
+
+		if (str2 [inicio] == '-')
+			for (i = inicio + 1; i <= fim; i++)
+				{
+				for (j = 0; j < strlen (antoniovandre_operadores); j++)
+					if (str2 [i] == antoniovandre_operadores [j])
+						{
+						flag6 = 1;
+						break;
+						}
+
+			if (flag6 == 1) break;
 			}
 
 		strcpy (str3, "");
@@ -2621,6 +2660,13 @@ char * antoniovandre_eval (char * str)
 						flag4 = 1;
 						}
 
+				if (tc == '-')
+					{
+					k--;
+					flag4 = 1;
+					break;
+					}
+
 				k--;
 				} while (flag3 == 1);
 
@@ -2640,7 +2686,7 @@ char * antoniovandre_eval (char * str)
 			if (strcmp (str6, ""))
 				{
 				strcat (str3, str6);
-				if (tc != '-') strcat (str3, "*");
+				strcat (str3, "*");
 				}
 
 			if (!strcmp (str3, "-")) strcpy (str3, "-1*");
@@ -2650,10 +2696,44 @@ char * antoniovandre_eval (char * str)
 			for (i = inicio; i <= fim; i++)
 				strncat (str4, & str2 [i], 1);
 
-			strcpy (str5, antoniovandre_evalcelula (str4));
+			pos = 0; flag5 = 0;
+
+			if ((flag6 == 1) && (flag7 == 0))
+				for (i = 1; i < strlen (str4); i++)
+					{
+					if (str4 [i] == '^')
+						pos = i;
+
+					for (j = 0; j < strlen (antoniovandre_operadores); j++)
+						if (str4 [i] == antoniovandre_operadores [j])
+							if (i > pos)
+								{
+								flag5 = 1;
+								break;
+								}
+
+					if ((i == strlen (str4) - 1) && (pos != 0)) flag5 = 1;
+
+					if (flag5 == 1) break;
+					}
+
+			flag7 = flag;
+
+			if (flag5 == 1)
+				{
+				strcpy (str4t, "");
+
+				for (i = 1; i < strlen (str4); i++)
+					strncat (str4t, & str4 [i], 1);
+
+				strcpy (str5, antoniovandre_evalcelula (str4t));
+				}
+			else
+				strcpy (str5, antoniovandre_evalcelula (str4));
 
 			if (! strcmp (str5, STRINGSAIDAERRO)) return STRINGSAIDAERRO;
 			if (! strcmp (str5, STRINGSAIDAERROOVER)) return STRINGSAIDAERROOVER;
+
 
 			for (i = 0; i < strlen (str5); i++)
 				strncat (str3, & str5 [i], 1);
@@ -2661,8 +2741,16 @@ char * antoniovandre_eval (char * str)
 			for (i = fim + 2; i < strlen (str2); i++)
 				strncat (str3, & str2 [i], 1);
 
-			strcpy (str2, str3);
+			if (flag5 == 1)
+				{
+				strcpy (str2, "-1*");
+				strcat (str2, str3);
+				}
+			else
+				strcpy (str2, str3);
 			}
+		else
+			return STRINGSAIDAERRO;
 		} while (! ((flag == 0) && (flag2 == 0)));
 
 	return antoniovandre_evalcelula (str2);
@@ -2998,9 +3086,9 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 		if (* err == 0) mt += (long double) ((long double) y - (long double) yt); else {flag2 = 1; continue;}
 
-		if ((flag2 == 1) && (fabsl ((long double) mt) < (long double) m))
+		if ((flag2 == 1) && (fabs ((long double) mt) < (long double) m))
 			{
-			m = fabsl ((long double) mt);
+			m = fabs ((long double) mt);
 			strcpy (bufferr, buffer);
 			}
 
@@ -3017,4 +3105,28 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 	fclose (arquivofuncoes);
 
 	return bufferr;
+	}
+
+// Produto de números complexos.
+
+numerocomplexo antoniovandre_produtocomplexo (numerocomplexo * numeroscomplexos, int numeroargumentos)
+	{
+	numerocomplexo result;
+	long double a;
+	long double b;
+	int i;
+
+	a = 1;
+	b = 0;
+
+	for (i = 0; i < numeroargumentos; i++)
+		{
+		result.real = a * numeroscomplexos [i].real - b * numeroscomplexos [i].img;
+
+		result.img = b * numeroscomplexos [i].real + a * numeroscomplexos [i].img;
+
+		a = result.real; b = result.img;
+		}
+
+	return result;
 	}
