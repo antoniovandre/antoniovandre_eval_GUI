@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 03-10-2020.
+// Última atualização: 04-10-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -40,6 +40,7 @@
 #define INTERVALOPROGRESSO 100 // Para não haver flood quando mostrando progressos de processos.
 #define INTERVALOPROGRESSO2 500000 // Para não haver flood quando mostrando progressos de processos, para processos mais rápidos.
 #define APROXIMACAO 0.0000000001L // Para verificação de aproximação numérica.
+#define APROXIMACAO2 0.0001L // Para verificação de aproximação numérica. Segunda opção.
 
 typedef struct {char token [TAMANHO_BUFFER_WORD]; long double valor; char comentario [TAMANHO_BUFFER_PHRASE];} tokenfuncaoconstante; // Estrutura para funções e constantes.
 
@@ -2407,10 +2408,12 @@ char * antoniovandre_evalcelula (char * str)
 						{
 						if (valort < 0)
 							{
-							if (fmodl ((1 / valort2), 2) == 0)
+							if ((fmodl ((1 / valort2), 2) > (-1) * APROXIMACAO2) && (fmodl ((1 / valort2), 2) < APROXIMACAO2))
 								return STRINGSAIDAERRO;
-							else
+							else if ((fmodl ((1 / valort2), 2) > 1 + (-1) * APROXIMACAO2) && (fmodl ((1 / valort2), 2) < 1 + APROXIMACAO2))
 								valor = (-1) * powl (fabsl ((long double) valort), (long double) valort2);
+							else
+								valor = powl ((long double) valort, (long double) valort2);
 							}
 						else
 							valor = powl ((long double) valort, (long double) valort2);
