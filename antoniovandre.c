@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 04-10-2020.
+// Última atualização: 05-10-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -2549,7 +2549,6 @@ char * antoniovandre_eval (char * str)
 	char str6 [TAMANHO_BUFFER_WORD];
 	int inicio;
 	int fim;
-	int pos;
 	int i;
 	int j;
 	int k;
@@ -2558,10 +2557,6 @@ char * antoniovandre_eval (char * str)
 	int flag3;
 	int flag4;
 	int flag5;
-	int flag6;
-	int flag7;
-	int flag8;
-	int flag9;
 	char tc;
 	char tc2;
 
@@ -2600,8 +2595,6 @@ char * antoniovandre_eval (char * str)
 			}
 		}
 
-	flag7 = 0; flag8 = 0;
-
 	do
 		{
 		inicio = 0;
@@ -2625,28 +2618,13 @@ char * antoniovandre_eval (char * str)
 				}
 			}
 
-		flag6 = 0;
-
-		if (str2 [inicio] == '-')
-			for (i = inicio + 1; i <= fim; i++)
-				{
-				for (j = 0; j < strlen (antoniovandre_operadores); j++)
-					if (str2 [i] == antoniovandre_operadores [j])
-						{
-						flag6 = 1;
-						break;
-						}
-
-			if (flag6 == 1) break;
-			}
-
 		strcpy (str3, "");
 
 		if (flag == flag2)
 			{
 			k = inicio - 2;
 			flag4 = 0;
-			flag9 = 0;
+			flag5 = 0;
 
 			do
 				{
@@ -2669,7 +2647,7 @@ char * antoniovandre_eval (char * str)
 
 				if (tc == '-')
 					{
-					if (k == inicio - 2) flag9 = 1;
+					if (k == inicio - 2) flag5 = 1;
 
 					flag4 = 1;
 					}
@@ -2681,7 +2659,7 @@ char * antoniovandre_eval (char * str)
 
 			if (flag4 == 1)
 				{
-				if (flag9 == 1)
+				if (flag5 == 1)
 					strcat (str6, "-1");
 				else
 					for (j = k; j < inicio - 1; j++) strncat (str6, & str2 [j], 1);
@@ -2698,54 +2676,22 @@ char * antoniovandre_eval (char * str)
 				strcat (str3, "*");
 				}
 
-			if (flag8 == 1)
-				{
-				if (strcmp (str3, ""))
-					strcat (str3, "*-1*");
-				else
-					strcpy (str3, "-1*");
-				}	
-
 			strcpy (str4, "");
 
 			for (i = inicio; i <= fim; i++)
 				strncat (str4, & str2 [i], 1);
 
-			pos = 0; flag5 = 0;
+			strcpy (str4t, "");
 
-			if ((flag6 == 1) && (flag7 == 0))
-				for (i = 1; i < strlen (str4); i++)
-					{
-					if (str4 [i] == '^')
-						pos = i;
-
-					for (j = 0; j < strlen (antoniovandre_operadores); j++)
-						if (str4 [i] == antoniovandre_operadores [j])
-							if (i > pos)
-								{
-								flag5 = 1;
-								break;
-								}
-
-					if ((i == strlen (str4) - 1) && (pos != 0)) flag5 = 1;
-
-					if (flag5 == 1) break;
-					}
-
-			flag8 = flag5;
-			flag7 = flag;
-
-			if (flag5 == 1)
+			if (str4 [0] == '-')
 				{
-				strcpy (str4t, "");
-
-				for (i = 1; i < strlen (str4); i++)
-					strncat (str4t, & str4 [i], 1);
-
-				strcpy (str5, antoniovandre_evalcelula (str4t));
+				tc = '0';
+				strncat (str4t, & tc, 1);
+				strcat (str4t, str4);
+				strcpy (str4, str4t);
 				}
-			else
-				strcpy (str5, antoniovandre_evalcelula (str4));
+
+			strcpy (str5, antoniovandre_evalcelula (str4));
 
 			if (! strcmp (str5, STRINGSAIDAERRO)) return STRINGSAIDAERRO;
 			if (! strcmp (str5, STRINGSAIDAERROOVER)) return STRINGSAIDAERROOVER;
@@ -2757,31 +2703,13 @@ char * antoniovandre_eval (char * str)
 			for (i = fim + 2; i < strlen (str2); i++)
 				strncat (str3, & str2 [i], 1);
 
-			if (flag5 == 1)
-				{
-				strcpy (str2, "");
-				tc = TOKENINICIOEVAL;
-				strncat (str2, & tc, 1);
-				strcat (str2, "-1*");
-				strcat (str2, str3);
-				tc = TOKENFIMEVAL;
-				strncat (str2, & tc, 1);
-				}
-			else
-				strcpy (str2, str3);
+			strcpy (str2, str3);
 			}
 		else
 			return STRINGSAIDAERRO;
 		} while (! ((flag == 0) && (flag2 == 0)));
 
-	if ((str2 [0] == TOKENINICIOEVAL) && (str2 [strlen (str2) - 1] == TOKENFIMEVAL))
-		{
-		strcpy (str2t, "");
-		for (i = 1; i < strlen (str2) - 1; i++) strncat (str2t, & str2 [i], 1);
-		return antoniovandre_evalcelula (str2t);
-		}
-	else
-		return antoniovandre_evalcelula (str2);
+	return antoniovandre_evalcelula (str2);
 	}
 
 // Derivada em um ponto.
