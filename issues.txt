@@ -1,6 +1,0 @@
-antoniovandre_eval GUI issues.
-
-Última atualização: 07-10-2020.
-_____
-
-Problemas com a exponenciação, recomendo ainda não utilizar.
