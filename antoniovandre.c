@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 05-10-2020.
+// Última atualização: 10-10-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -207,6 +207,10 @@ const char * antoniovandre_operadores = "+-*/^%@#$><:~";
 // Array de operadores especiais.
 
 const char * antoniovandre_operadoresespeciais = "%@#$><:~";
+
+// Array de operadores prioritários.
+
+const char * antoniovandre_operadoresprioritarios = "^";
 
 // Remover letras de uma string.
 
@@ -2544,7 +2548,6 @@ char * antoniovandre_eval (char * str)
 	char str2t [TAMANHO_BUFFER_PHRASE];
 	char str3 [TAMANHO_BUFFER_PHRASE];
 	char str4 [TAMANHO_BUFFER_PHRASE];
-	char str4t [TAMANHO_BUFFER_PHRASE];
 	char str5 [TAMANHO_BUFFER_PHRASE];
 	char str6 [TAMANHO_BUFFER_WORD];
 	int inicio;
@@ -2556,7 +2559,6 @@ char * antoniovandre_eval (char * str)
 	int flag2;
 	int flag3;
 	int flag4;
-	int flag5;
 	char tc;
 	char tc2;
 
@@ -2570,6 +2572,45 @@ char * antoniovandre_eval (char * str)
 		if (str [i] != ' ') strncat (str2, & str [i], 1);
 
 	if (! strcmp (str2, "")) return STRINGSAIDAERRO;
+
+	if (str2 [0] == '-')
+		{
+		i = 1;
+
+		do
+			{
+			flag = 0;
+
+			for (j = 0; j < strlen (antoniovandre_numeros); j++)
+				if (str2 [i] == antoniovandre_numeros [j]) flag = 1;
+
+			if (flag == 1) i++;
+			} while (flag == 1);
+
+		flag = 0;
+
+		for (j = 0; j < strlen (antoniovandre_operadoresprioritarios); j++)
+			if (str2 [i] == antoniovandre_operadoresprioritarios [j])
+				flag = 1;
+
+		if (flag == 1)
+			{
+			strcpy (str2t, "-");
+			tc = TOKENINICIOEVAL;
+			strncat (str2t, & tc, 1);
+
+			for (j = 1; j < i; j++)
+				strncat (str2t, & str2 [j], 1);
+
+			tc = TOKENFIMEVAL;
+			strncat (str2t, & tc, 1);
+
+			for (j = i; j < strlen (str2); j++)
+				strncat (str2t, & str2 [j], 1);
+
+			strcpy (str2, str2t);
+			}
+		}
 
 	for (i = 1; i < strlen (str2); i++)
 		{
@@ -2624,7 +2665,6 @@ char * antoniovandre_eval (char * str)
 			{
 			k = inicio - 2;
 			flag4 = 0;
-			flag5 = 0;
 
 			do
 				{
@@ -2645,57 +2685,39 @@ char * antoniovandre_eval (char * str)
 						flag4 = 1;
 						}
 
-				if (tc == '-')
-					{
-					if (k == inicio - 2) flag5 = 1;
-
-					flag4 = 1;
-					}
-
 				k--;
 				} while (flag3 == 1);
 
 			strcpy (str6, "");
 
-			if (flag4 == 1)
-				{
-				if (flag5 == 1)
-					strcat (str6, "-1");
-				else
-					for (j = k; j < inicio - 1; j++) strncat (str6, & str2 [j], 1);
-				}
+			if (flag4 == 1) for (j = k; j < inicio - 1; j++) strncat (str6, & str2 [j], 1);
 
 			if (flag4 == 1)
 				for (i = 0; i < k; i++) strncat (str3, & str2 [i], 1);
 			else
 				for (i = 0; i < inicio - 1; i++) strncat (str3, & str2 [i], 1);
 
+			i = strlen (str6);
+
+			tc = str6 [i - 1];
+
 			if (strcmp (str6, ""))
 				{
 				strcat (str3, str6);
-				strcat (str3, "*");
+				if (tc != '-') strcat (str3, "*");
 				}
+
+			if (!strcmp (str3, "-")) strcpy (str3, "-1*");
 
 			strcpy (str4, "");
 
 			for (i = inicio; i <= fim; i++)
 				strncat (str4, & str2 [i], 1);
 
-			strcpy (str4t, "");
-
-			if (str4 [0] == '-')
-				{
-				tc = '0';
-				strncat (str4t, & tc, 1);
-				strcat (str4t, str4);
-				strcpy (str4, str4t);
-				}
-
 			strcpy (str5, antoniovandre_evalcelula (str4));
 
 			if (! strcmp (str5, STRINGSAIDAERRO)) return STRINGSAIDAERRO;
 			if (! strcmp (str5, STRINGSAIDAERROOVER)) return STRINGSAIDAERROOVER;
-
 
 			for (i = 0; i < strlen (str5); i++)
 				strncat (str3, & str5 [i], 1);
