@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 10-10-2020.
+// Última atualização: 11-10-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -2817,6 +2817,8 @@ char * antoniovandre_integraldefinida (char * str, long double a, long double b)
 
 // Retorna a função mais próxima, dados os pontos e as funções em arquivos.
 
+// Retorna a função mais próxima, dados os pontos e as funções em arquivos.
+
 char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivofuncoespath, int log)
 	{
 	FILE * arquivopontos;
@@ -3070,14 +3072,16 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 			strcpy (bufferr, buffer);
 			}
 
-		if ((log == 1) && ((contadoritens == 1) || (contadoritens == totalitens) || (contadoritens % INTERVALOPROGRESSO == 0)))
+		if ((log == 1) && ((contadoritens == 1) || (contadoritens == totalitens - totalpontos) || (contadoritens % INTERVALOPROGRESSO == 0)))
 			{
-			printf ("\r%.13f%% concluído.", (double) (100.0 * ((double) contadoritens / (double) totalitens)));
+			printf ("\r%.13f%% concluído.", (double) (100.0 * (double) ((double) (contadoritens) / (double) (totalitens - (double) totalpontos))));
+
 			fflush (stdout);
 			}
+
 		} while ((! feof (arquivofuncoes)) || (flag2 == 0));
 
-	if (log == 1) printf ("\n");
+	if (log == 1) {printf ("\n"); fflush (stdout);}
 
 	fclose (arquivopontos);
 	fclose (arquivofuncoes);
