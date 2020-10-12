@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 11-10-2020.
+// Última atualização: 12-10-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -24,6 +24,7 @@
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
 #define VALOR_MAX 1000000000L // Afim de evitar erros de saída.
 #define TAMANHO_MAX_ARQUIVO 1000000000000 // Afim de evitar erros de saída.
+#define OPERADORMULTIPLICACAO '*'
 #define DELIMITADORSTRING ',' // Deve ser um char;
 #define DELIMITADORSTRING2 ';' // Deve ser um char, diferente de DELIMITADORSTRING;
 #define STRINGSAIDAERRO "Erro de saida de uma string."
@@ -2362,7 +2363,7 @@ char * antoniovandre_evalcelula (char * str)
 					if (strt [posicoes_operadores [j]] == '^') flag2 = 1;
 
 				for (j = 0; j < TAMANHO_BUFFER_PHRASE; j++)
-					if (((strt [posicoes_operadores [j]] == '*') || (strt [posicoes_operadores [j]] == '/'))) flag = 1;
+					if (((strt [posicoes_operadores [j]] == OPERADORMULTIPLICACAO) || (strt [posicoes_operadores [j]] == '/'))) flag = 1;
 
 				strcpy (strt2, "");
 
@@ -2430,7 +2431,7 @@ char * antoniovandre_evalcelula (char * str)
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == '*') && (flag2 == 0))
+				if ((strt [posicoes_operadores [i]] == OPERADORMULTIPLICACAO) && (flag2 == 0))
 					{
 					valor = (long double) valort * (long double) valort2;
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
@@ -2573,40 +2574,56 @@ char * antoniovandre_eval (char * str)
 
 	if (! strcmp (str2, "")) return STRINGSAIDAERRO;
 
-	if (str2 [0] == '-')
+	for (i = 0; i < strlen (str2); i++)
+	if ((i == 0) && (str2 [0] == '-') || ((i == 1) && (str2 [i] == '-') && (str2 [i - 1] == TOKENINICIOEVAL)) || (((i > 1) && (str2 [i] == '-') && (str2 [i - 1] == TOKENINICIOEVAL)) && ! ((str2 [i] == '1') && (str2 [i - 1] == '-') && (str2 [i - 2] == TOKENINICIOEVAL))))
 		{
-		i = 1;
+		j = i + 1;
 
 		do
 			{
 			flag = 0;
 
-			for (j = 0; j < strlen (antoniovandre_numeros); j++)
-				if (str2 [i] == antoniovandre_numeros [j]) flag = 1;
+			for (k = 0; k < strlen (antoniovandre_numeros); k++)
+				if (str2 [j] == antoniovandre_numeros [k]) flag = 1;
 
-			if (flag == 1) i++;
+			if (flag == 1) j++;
 			} while (flag == 1);
 
 		flag = 0;
 
-		for (j = 0; j < strlen (antoniovandre_operadoresprioritarios); j++)
-			if (str2 [i] == antoniovandre_operadoresprioritarios [j])
+		for (k = 0; k < strlen (antoniovandre_operadoresprioritarios); k++)
+			if (str2 [j] == antoniovandre_operadoresprioritarios [k])
 				flag = 1;
 
 		if (flag == 1)
 			{
-			strcpy (str2t, "-");
+			strcpy (str2t, "");
+
+			for (k = 0; k < i; k++)
+				strncat (str2t, & str2 [k], 1);
+
 			tc = TOKENINICIOEVAL;
 			strncat (str2t, & tc, 1);
 
-			for (j = 1; j < i; j++)
-				strncat (str2t, & str2 [j], 1);
+			strcat (str2t, "-1");
 
 			tc = TOKENFIMEVAL;
 			strncat (str2t, & tc, 1);
 
-			for (j = i; j < strlen (str2); j++)
-				strncat (str2t, & str2 [j], 1);
+			tc = OPERADORMULTIPLICACAO;
+			strncat (str2t, & tc, 1);
+
+			tc = TOKENINICIOEVAL;
+			strncat (str2t, & tc, 1);
+
+			for (k = i + 1; k < j; k++)
+				strncat (str2t, & str2 [k], 1);
+
+			tc = TOKENFIMEVAL;
+			strncat (str2t, & tc, 1);
+
+			for (k = j; k < strlen (str2); k++)
+				strncat (str2t, & str2 [k], 1);
 
 			strcpy (str2, str2t);
 			}
