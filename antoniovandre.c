@@ -2561,6 +2561,7 @@ char * antoniovandre_eval (char * str)
 	int flag2;
 	int flag3;
 	int flag4;
+	int contador;
 	char tc;
 	char tc2;
 
@@ -2575,59 +2576,70 @@ char * antoniovandre_eval (char * str)
 
 	if (! strcmp (str2, "")) return STRINGSAIDAERRO;
 
-	for (i = 0; i < strlen (str2); i++)
-	if ((i == 0) && (str2 [0] == '-') || ((i == 1) && (str2 [i] == '-') && (str2 [i - 1] == TOKENINICIOEVAL)) || (((i > 1) && (str2 [i] == '-') && (str2 [i - 1] == TOKENINICIOEVAL)) && ! ((str2 [i] == '1') && (str2 [i - 1] == '-') && (str2 [i - 2] == TOKENINICIOEVAL))))
-		{
-		j = i + 1;
+	contador = 0;
 
-		do
+	for (i = 0; i < strlen (str2); i++)
+		{
+		flag2 = 0;
+
+		if ((i >= 1) && (str2 [i] == '-') && (str2 [i - 1] == TOKENINICIOEVAL))  flag2 = 1;
+
+		if (((i == 0) && (str2 [0] == '-') || (flag2 == 1)) && ! ((i > 1) && (str2 [i] == '1') && (str2 [i - 1] == '-') && (str2 [i - 2] == TOKENINICIOEVAL)))
 			{
+			j = i + 1;
+
+			if (str2 [i] == TOKENINICIOEVAL) contador++;
+			if (str2 [i] == TOKENFIMEVAL) contador--;
+
+			do
+				{
+				flag = 0;
+
+				for (k = 0; k < strlen (antoniovandre_numeros); k++)
+					for (l = 0; l < strlen (antoniovandre_letras); l++)
+						if ((! ((flag2 == 1) && (contador == -1))) && ((str2 [j] == antoniovandre_numeros [k]) || (str2 [j] == antoniovandre_letras [l]) || (str2 [j] == TOKENINICIOEVAL) || (str2 [j] == TOKENFIMEVAL))) flag = 1;
+
+				if (flag == 1) j++;
+				} while (flag == 1);
+
 			flag = 0;
 
-			for (k = 0; k < strlen (antoniovandre_numeros); k++)
-				for (l = 0; l < strlen (antoniovandre_letras); l++)
-					if ((str2 [j] == antoniovandre_numeros [k]) || (str2 [j] == antoniovandre_letras [l]) || (str2 [j] == TOKENINICIOEVAL) || (str2 [j] == TOKENFIMEVAL)) flag = 1;
+			for (k = 0; k < strlen (antoniovandre_operadoresprioritarios); k++)
+				if (str2 [j] == antoniovandre_operadoresprioritarios [k])
+					flag = 1;
 
-			if (flag == 1) j++;
-			} while (flag == 1);
+			if (flag == 1)
+				{
+				strcpy (str2t, "");
 
-		flag = 0;
+				for (k = 0; k < i; k++)
+					strncat (str2t, & str2 [k], 1);
 
-		for (k = 0; k < strlen (antoniovandre_operadoresprioritarios); k++)
-			if (str2 [j] == antoniovandre_operadoresprioritarios [k])
-				flag = 1;
+				tc = TOKENINICIOEVAL;
+				strncat (str2t, & tc, 1);
 
-		if (flag == 1)
-			{
-			strcpy (str2t, "");
+				strcat (str2t, "-1");
 
-			for (k = 0; k < i; k++)
-				strncat (str2t, & str2 [k], 1);
+				tc = TOKENFIMEVAL;
+				strncat (str2t, & tc, 1);
 
-			tc = TOKENINICIOEVAL;
-			strncat (str2t, & tc, 1);
+				tc = OPERADORMULTIPLICACAO;
+				strncat (str2t, & tc, 1);
 
-			strcat (str2t, "-1");
+				tc = TOKENINICIOEVAL;
+				strncat (str2t, & tc, 1);
 
-			tc = TOKENFIMEVAL;
-			strncat (str2t, & tc, 1);
+				for (k = i + 1; k < j; k++)
+					strncat (str2t, & str2 [k], 1);
 
-			tc = OPERADORMULTIPLICACAO;
-			strncat (str2t, & tc, 1);
+				tc = TOKENFIMEVAL;
+				strncat (str2t, & tc, 1);
 
-			tc = TOKENINICIOEVAL;
-			strncat (str2t, & tc, 1);
+				for (k = j; k < strlen (str2); k++)
+					strncat (str2t, & str2 [k], 1);
 
-			for (k = i + 1; k < j; k++)
-				strncat (str2t, & str2 [k], 1);
-
-			tc = TOKENFIMEVAL;
-			strncat (str2t, & tc, 1);
-
-			for (k = j; k < strlen (str2); k++)
-				strncat (str2t, & str2 [k], 1);
-
-			strcpy (str2, str2t);
+				strcpy (str2, str2t);
+				}
 			}
 		}
 
