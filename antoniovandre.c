@@ -2556,6 +2556,7 @@ char * antoniovandre_eval (char * str)
 	int i;
 	int j;
 	int k;
+	int l;
 	int flag;
 	int flag2;
 	int flag3;
@@ -2584,7 +2585,8 @@ char * antoniovandre_eval (char * str)
 			flag = 0;
 
 			for (k = 0; k < strlen (antoniovandre_numeros); k++)
-				if (str2 [j] == antoniovandre_numeros [k]) flag = 1;
+				for (l = 0; l < strlen (antoniovandre_letras); l++)
+					if ((str2 [j] == antoniovandre_numeros [k]) || (str2 [j] == antoniovandre_letras [l]) || (str2 [j] == TOKENINICIOEVAL) || (str2 [j] == TOKENFIMEVAL)) flag = 1;
 
 			if (flag == 1) j++;
 			} while (flag == 1);
