@@ -2561,6 +2561,7 @@ char * antoniovandre_eval (char * str)
 	int flag2;
 	int flag3;
 	int flag4;
+	int flag5;
 	int contador;
 	char tc;
 	char tc2;
@@ -2752,6 +2753,19 @@ char * antoniovandre_eval (char * str)
 
 			for (i = 0; i < strlen (str5); i++)
 				strncat (str3, & str5 [i], 1);
+
+			flag5 = 0;
+
+			for (i = 0; i < strlen (antoniovandre_numeros); i++)
+				for (j = 0; j < strlen (antoniovandre_letras); j++)
+					if ((str2 [fim + 2] == antoniovandre_numeros [i]) || (str2 [fim + 2] == antoniovandre_letras [j]))
+						flag5 = 1;
+
+			if (flag5 == 1)
+				{
+				tc = OPERADORMULTIPLICACAO;
+				strncat (str3, & tc, 1);
+				}
 
 			for (i = fim + 2; i < strlen (str2); i++)
 				strncat (str3, & str2 [i], 1);
