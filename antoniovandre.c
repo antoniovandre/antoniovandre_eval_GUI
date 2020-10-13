@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 12-10-2020.
+// Última atualização: 13-10-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -2642,6 +2642,34 @@ char * antoniovandre_eval (char * str)
 
 				strcpy (str2, str2t);
 				}
+			}
+		}
+
+	for (i = 1; i < strlen (str2); i++)
+		{
+		flag = 0;
+		flag2 = 0;
+
+		for (j = 0; j < strlen (antoniovandre_letrasminusculas); j++)
+			if (str2 [i] == antoniovandre_letrasminusculas [j]) flag = 1;
+
+		for (j = 0; j < strlen (antoniovandre_letrasmaiusculas); j++)
+			if (str2 [i - 1] == antoniovandre_letrasmaiusculas [j]) flag2 = 1;
+
+		if ((flag == 1) && (flag2 == 1))
+			{
+			strcpy (str2t, "");
+
+			for (j = 0; j < i; j++)
+				strncat (str2t, & str2 [j], 1);
+
+			tc = OPERADORMULTIPLICACAO;
+			strncat (str2t, & tc, 1);
+
+			for (j = i; j < strlen (str2); j++)
+				strncat (str2t, & str2 [j], 1);
+
+			strcpy (str2, str2t);
 			}
 		}
 
