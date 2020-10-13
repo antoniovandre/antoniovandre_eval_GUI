@@ -24,6 +24,7 @@
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
 #define VALOR_MAX 1000000000L // Afim de evitar erros de saída.
 #define TAMANHO_MAX_ARQUIVO 1000000000000 // Afim de evitar erros de saída.
+#define OPERADORSUBTRACAO '-'
 #define OPERADORMULTIPLICACAO '*'
 #define DELIMITADORSTRING ',' // Deve ser um char;
 #define DELIMITADORSTRING2 ';' // Deve ser um char, diferente de DELIMITADORSTRING;
@@ -287,7 +288,7 @@ int antoniovandre_monomio (char * str)
 				if (str [i - 1] == antoniovandre_letras [j]) return 0;
 		}
 
-	for (i = 1; i < strlen (str); i++) if (str [i] == '-') return 0;
+	for (i = 1; i < strlen (str); i++) if (str [i] == OPERADORSUBTRACAO) return 0;
 
 	for (i = 0; i < strlen (str); i++)
 		{if (str [i] == '.') contador++; if (contador == 2) return 0;}
@@ -2324,7 +2325,7 @@ char * antoniovandre_evalcelula (char * str)
 		{
 		tc2 = antoniovandre_operadores [i];
 
-		if ((tc == tc2) && (tc2 != '-'))
+		if ((tc == tc2) && (tc2 != OPERADORSUBTRACAO))
 			return STRINGSAIDAERRO;
 		}
 
@@ -2341,7 +2342,7 @@ char * antoniovandre_evalcelula (char * str)
 
 				for (k = 0; k < strlen (antoniovandre_letrasminusculas); k++)
 					{
-					if (((i == 0) && (antoniovandre_operadores [j] == '-')) || ((contador > 0) && (posicoes_operadores [contador - 1] == i - 1) && (antoniovandre_operadores [j] == '-')) || ((i > 0) && (strt [i - 1] == antoniovandre_letrasminusculas [k]) && (antoniovandre_operadores [j] == '-')))
+					if (((i == 0) && (antoniovandre_operadores [j] == OPERADORSUBTRACAO)) || ((contador > 0) && (posicoes_operadores [contador - 1] == i - 1) && (antoniovandre_operadores [j] == OPERADORSUBTRACAO)) || ((i > 0) && (strt [i - 1] == antoniovandre_letrasminusculas [k]) && (antoniovandre_operadores [j] == OPERADORSUBTRACAO)))
 						{
 						flag3 = 1;
 						flag4 = 1;
@@ -2454,7 +2455,7 @@ char * antoniovandre_evalcelula (char * str)
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == '-') && (flag == 0) && (flag2 == 0))
+				if ((strt [posicoes_operadores [i]] == OPERADORSUBTRACAO) && (flag == 0) && (flag2 == 0))
 					{
 					valor = (long double) valort - (long double) valort2;
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
@@ -2583,9 +2584,9 @@ char * antoniovandre_eval (char * str)
 		{
 		flag2 = 0;
 
-		if ((i >= 1) && (str2 [i] == '-') && (str2 [i - 1] == TOKENINICIOEVAL))  flag2 = 1;
+		if ((i >= 1) && (str2 [i] == OPERADORSUBTRACAO) && (str2 [i - 1] == TOKENINICIOEVAL))  flag2 = 1;
 
-		if (((i == 0) && (str2 [0] == '-') || (flag2 == 1)) && ! ((i > 1) && (str2 [i] == '1') && (str2 [i - 1] == '-') && (str2 [i - 2] == TOKENINICIOEVAL)))
+		if (((i == 0) && (str2 [0] == OPERADORSUBTRACAO) || (flag2 == 1)) && ! ((i > 1) && (str2 [i] == '1') && (str2 [i - 1] == OPERADORSUBTRACAO) && (str2 [i - 2] == TOKENINICIOEVAL)))
 			{
 			j = i + 1;
 
@@ -2651,7 +2652,7 @@ char * antoniovandre_eval (char * str)
 
 		for (j = 0; j < strlen (antoniovandre_operadores); j++)
 			{
-			if ((tc == '-') && (tc2 == antoniovandre_operadores [j])) return STRINGSAIDAERRO;
+			if ((tc == OPERADORSUBTRACAO) && (tc2 == antoniovandre_operadores [j])) return STRINGSAIDAERRO;
 
 			flag = 0;
 
@@ -2664,7 +2665,7 @@ char * antoniovandre_eval (char * str)
 
 			if (flag == 1) break;
 
-			if ((tc == antoniovandre_operadores [j]) && (tc2 == '-')) return STRINGSAIDAERRO;
+			if ((tc == antoniovandre_operadores [j]) && (tc2 == OPERADORSUBTRACAO)) return STRINGSAIDAERRO;
 			}
 		}
 
@@ -2736,7 +2737,7 @@ char * antoniovandre_eval (char * str)
 			if (strcmp (str6, ""))
 				{
 				strcat (str3, str6);
-				if (tc != '-') strcat (str3, "*");
+				if (tc != OPERADORSUBTRACAO) strcat (str3, "*");
 				}
 
 			if (!strcmp (str3, "-")) strcpy (str3, "-1*");
@@ -2758,10 +2759,10 @@ char * antoniovandre_eval (char * str)
 
 			for (i = 0; i < strlen (antoniovandre_numeros); i++)
 				for (j = 0; j < strlen (antoniovandre_letras); j++)
-					if ((str2 [fim + 2] == antoniovandre_numeros [i]) || (str2 [fim + 2] == antoniovandre_letras [j]))
+					if (((str2 [fim + 2] == antoniovandre_numeros [i] && (str2 [fim + 2] != OPERADORSUBTRACAO))) || (str2 [fim + 2] == antoniovandre_letras [j]))
 						flag5 = 1;
 
-			if (flag5 == 1)
+			if ((flag5 == 1) && (flag == 1))
 				{
 				tc = OPERADORMULTIPLICACAO;
 				strncat (str3, & tc, 1);
@@ -2862,8 +2863,6 @@ char * antoniovandre_integraldefinida (char * str, long double a, long double b)
 
 // Retorna a função mais próxima, dados os pontos e as funções em arquivos.
 
-// Retorna a função mais próxima, dados os pontos e as funções em arquivos.
-
 char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivofuncoespath, int log)
 	{
 	FILE * arquivopontos;
@@ -2954,7 +2953,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 			{
 			switch (tc)
 				{
-				case '-':
+				case OPERADORSUBTRACAO:
 					tc = '\\';
 					break;
 				case '\\':
@@ -2964,10 +2963,10 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 					tc = '/';
 					break;
 				case '/':
-					tc = '-';
+					tc = OPERADORSUBTRACAO;
 					break;
 				default:
-					tc = '-';
+					tc = OPERADORSUBTRACAO;
 				}
 
 			printf ("\b%c", tc);
@@ -2989,7 +2988,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 			{
 			switch (tc)
 				{
-				case '-':
+				case OPERADORSUBTRACAO:
 					tc = '\\';
 					break;
 				case '\\':
@@ -2999,10 +2998,10 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 					tc = '/';
 					break;
 				case '/':
-					tc = '-';
+					tc = OPERADORSUBTRACAO;
 					break;
 				default:
-					tc = '-';
+					tc = OPERADORSUBTRACAO;
 				}
 
 			printf ("\b%c", tc);
