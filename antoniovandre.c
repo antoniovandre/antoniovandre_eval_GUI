@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 13-10-2020.
+// Última atualização: 18-10-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -43,6 +43,7 @@
 #define INTERVALOPROGRESSO2 500000 // Para não haver flood quando mostrando progressos de processos, para processos mais rápidos.
 #define APROXIMACAO 0.0000000001L // Para verificação de aproximação numérica.
 #define APROXIMACAO2 0.0001L // Para verificação de aproximação numérica. Segunda opção.
+#define MAXNUMERADORFRACOES 100 // Para a conversão de números em frações. Útil para, dentre outras coisas, calcular potências de bases negativas.
 
 typedef struct {char token [TAMANHO_BUFFER_WORD]; long double valor; char comentario [TAMANHO_BUFFER_PHRASE];} tokenfuncaoconstante; // Estrutura para funções e constantes.
 
@@ -361,7 +362,7 @@ char * antoniovandre_numeroparastring (long double numero)
 			strcat (strr, ".");
 			}
 
-		algarismo = (int) ((int) ((long double) numero / (long double) fator) % 10);
+		algarismo = (int) fmodl (((long double) numero / (long double) fator), 10);
 
 		fator /= (long double) 10;
 
@@ -2297,6 +2298,7 @@ char * antoniovandre_evalcelula (char * str)
 	long double valort;
 	long double valort2;
 	int contador;
+	int contador2;
 	int i;
 	int j;
 	int k;
@@ -2304,6 +2306,7 @@ char * antoniovandre_evalcelula (char * str)
 	int flag2;
 	int flag3;
 	int flag4;
+	int flag5;
 	int ponteiro;
 	int ponteiroinicio;
 	int ponteirofim;
@@ -2410,19 +2413,32 @@ char * antoniovandre_evalcelula (char * str)
 
 				if (strt [posicoes_operadores [i]] == '^')
 					{
-					if (fabsl ((long double) valort2) < 1)
+					if (valort < 0)
 						{
-						if (valort < 0)
-							{
-							if ((fmodl ((1 / valort2), 2) > (-1) * APROXIMACAO2) && (fmodl ((1 / valort2), 2) < APROXIMACAO2))
-								return STRINGSAIDAERRO;
-							else if ((fmodl ((1 / valort2), 2) > 1 + (-1) * APROXIMACAO2) && (fmodl ((1 / valort2), 2) < 1 + APROXIMACAO2))
-								valor = (-1) * powl (fabsl ((long double) valort), (long double) valort2);
-							else
-								valor = powl ((long double) valort, (long double) valort2);
-							}
+						if (fmodl (valort2, 2) == 0)
+							valor = powl (fabsl ((long double) valort), (long double) valort2);
 						else
-							valor = powl ((long double) valort, (long double) valort2);
+							{
+							contador2 = 1; flag5 = 0;
+
+							do
+								{
+								if ((fmodl ((contador2 / valort2), 2) > 1 + (-1) * APROXIMACAO2) && (fmodl ((contador2 / valort2), 2) < 1 + APROXIMACAO2))
+									{
+									if (fmodl (contador2, 2) == 0)
+										valor = powl (fabsl ((long double) valort), (long double) valort2);
+									else
+										valor = (-1) * powl (fabsl ((long double) valort), (long double) valort2);
+
+									flag5 = 1;
+									}
+
+								contador2++;
+								} while ((contador2 <= MAXNUMERADORFRACOES) && (flag5 == 0));
+
+							if (flag5 == 0) return STRINGSAIDAERRO;
+
+							}
 						}
 					else
 						valor = powl ((long double) valort, (long double) valort2);
