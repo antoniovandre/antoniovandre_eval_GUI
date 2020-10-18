@@ -43,7 +43,8 @@
 #define INTERVALOPROGRESSO2 500000 // Para não haver flood quando mostrando progressos de processos, para processos mais rápidos.
 #define APROXIMACAO 0.0000000001L // Para verificação de aproximação numérica.
 #define APROXIMACAO2 0.0001L // Para verificação de aproximação numérica. Segunda opção.
-#define MAXNUMERADORFRACOES 100 // Para a conversão de números em frações. Útil para, dentre outras coisas, calcular potências de bases negativas.
+#define MAXNUMERADORFRACOES 200 // Para a conversão de números em frações. Útil para, dentre outras coisas, calcular potências de bases negativas.
+#define MAXPRECISAO 19 // Afim de evitar erros de saída.
 
 typedef struct {char token [TAMANHO_BUFFER_WORD]; long double valor; char comentario [TAMANHO_BUFFER_PHRASE];} tokenfuncaoconstante; // Estrutura para funções e constantes.
 
@@ -184,7 +185,7 @@ int antoniovandre_precisao_real ()
 
 	fclose (fileprecisaoreal);
 
-	return antoniovandre_precisao_real_valor;
+	if (antoniovandre_precisao_real_valor > MAXPRECISAO) return MAXPRECISAO; else return antoniovandre_precisao_real_valor;
 	}
 
 // Array de letras.
