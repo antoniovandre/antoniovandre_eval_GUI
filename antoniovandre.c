@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 19-10-2020.
+// Última atualização: 20-10-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -2680,6 +2680,9 @@ char * antoniovandre_eval (char * str)
 					tc = TOKENINICIOEVAL;
 					strncat (str2t, & tc, 1);
 
+					tc = TOKENINICIOEVAL;
+					strncat (str2t, & tc, 1);
+
 					strcat (str2t, "-1");
 
 					tc = TOKENFIMEVAL;
@@ -2690,6 +2693,12 @@ char * antoniovandre_eval (char * str)
 
 					for (k = 0; k <= l; k++)
 						strncat (str2t, & str2 [k], 1);
+
+					for (k = i + 1; k < j; k++)
+						strncat (str2t, & str2 [k], 1);
+
+					tc = TOKENFIMEVAL;
+					strncat (str2t, & tc, 1);
 					}
 				else
 					{
@@ -2706,16 +2715,16 @@ char * antoniovandre_eval (char * str)
 
 					tc = OPERADORMULTIPLICACAO;
 					strncat (str2t, & tc, 1);
+
+					tc = TOKENINICIOEVAL;
+					strncat (str2t, & tc, 1);
+
+					for (k = i + 1; k < j; k++)
+						strncat (str2t, & str2 [k], 1);
+
+					tc = TOKENFIMEVAL;
+					strncat (str2t, & tc, 1);
 					}
-
-				tc = TOKENINICIOEVAL;
-				strncat (str2t, & tc, 1);
-
-				for (k = i + 1; k < j; k++)
-					strncat (str2t, & str2 [k], 1);
-
-				tc = TOKENFIMEVAL;
-				strncat (str2t, & tc, 1);
 
 				for (k = j; k < strlen (str2); k++)
 					strncat (str2t, & str2 [k], 1);
