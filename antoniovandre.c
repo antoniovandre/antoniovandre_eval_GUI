@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 18-10-2020.
+// Última atualização: 19-10-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -42,8 +42,8 @@
 #define INTERVALOPROGRESSO 100 // Para não haver flood quando mostrando progressos de processos.
 #define INTERVALOPROGRESSO2 500000 // Para não haver flood quando mostrando progressos de processos, para processos mais rápidos.
 #define APROXIMACAO 0.0000000001L // Para verificação de aproximação numérica.
-#define APROXIMACAO2 0.0001L // Para verificação de aproximação numérica. Segunda opção.
-#define MAXNUMERADORFRACOES 300 // Para a conversão de números em frações. Útil para, dentre outras coisas, calcular potências de bases negativas.
+#define APROXIMACAO2 0.000001L // Para verificação de aproximação numérica. Segunda opção.
+#define MAXNUMERADORFRACOES 100000 // Para a conversão de números em frações. Útil para, dentre outras coisas, calcular potências de bases negativas.
 #define MAXPRECISAO 19 // Afim de evitar erros de saída.
 
 typedef struct {char token [TAMANHO_BUFFER_WORD]; long double valor; char comentario [TAMANHO_BUFFER_PHRASE];} tokenfuncaoconstante; // Estrutura para funções e constantes.
@@ -2440,7 +2440,6 @@ char * antoniovandre_evalcelula (char * str)
 								} while ((contador2 <= MAXNUMERADORFRACOES) && (flag5 == 0));
 
 							if (flag5 == 0) return STRINGSAIDAERRO;
-
 							}
 						}
 					else
@@ -2569,6 +2568,7 @@ char * antoniovandre_eval (char * str)
 	char str2t [TAMANHO_BUFFER_PHRASE];
 	char str3 [TAMANHO_BUFFER_PHRASE];
 	char str4 [TAMANHO_BUFFER_PHRASE];
+	char str4t [TAMANHO_BUFFER_PHRASE];
 	char str5 [TAMANHO_BUFFER_PHRASE];
 	char str6 [TAMANHO_BUFFER_WORD];
 	int inicio;
@@ -2577,6 +2577,7 @@ char * antoniovandre_eval (char * str)
 	int j;
 	int k;
 	int l;
+	int m;
 	int flag;
 	int flag2;
 	int flag3;
@@ -2587,8 +2588,10 @@ char * antoniovandre_eval (char * str)
 	char tc2;
 
 	strcpy (str2, "");
+	strcpy (str2t, "");
 	strcpy (str3, "");
 	strcpy (str4, "");
+	strcpy (str4t, "");
 	strcpy (str5, "");
 	strcpy (str6, "");
 
@@ -2596,6 +2599,30 @@ char * antoniovandre_eval (char * str)
 		if (str [i] != ' ') strncat (str2, & str [i], 1);
 
 	if (! strcmp (str2, "")) return STRINGSAIDAERRO;
+
+	for (i = 1; i < strlen (str2); i++)
+		{
+		tc = str2 [i - 1];
+		tc2 = str2 [i];
+
+		for (j = 0; j < strlen (antoniovandre_operadores); j++)
+			{
+			if ((tc == OPERADORSUBTRACAO) && (tc2 == antoniovandre_operadores [j])) return STRINGSAIDAERRO;
+
+			flag = 0;
+
+			for (k = 0; k < strlen (antoniovandre_operadoresespeciais); k++)
+				if (tc == antoniovandre_operadoresespeciais [k])
+					{
+					flag = 1;
+					break;
+					}
+
+			if (flag == 1) break;
+
+			if ((tc == antoniovandre_operadores [j]) && (tc2 == OPERADORSUBTRACAO)) return STRINGSAIDAERRO;
+			}
+		}
 
 	contador = 0;
 
@@ -2605,7 +2632,7 @@ char * antoniovandre_eval (char * str)
 
 		if ((i >= 1) && (str2 [i] == OPERADORSUBTRACAO) && (str2 [i - 1] == TOKENINICIOEVAL))  flag2 = 1;
 
-		if (((i == 0) && (str2 [0] == OPERADORSUBTRACAO) || (flag2 == 1)) && ! ((i > 1) && (str2 [i] == '1') && (str2 [i - 1] == OPERADORSUBTRACAO) && (str2 [i - 2] == TOKENINICIOEVAL)))
+		if ((((i == 0) && (str2 [0] == OPERADORSUBTRACAO)) || (flag2 == 1)) && ! ((i > 1) && (str2 [i] == '1') && (str2 [i - 1] == OPERADORSUBTRACAO) && (str2 [i - 2] == TOKENINICIOEVAL)))
 			{
 			j = i + 1;
 
@@ -2623,29 +2650,63 @@ char * antoniovandre_eval (char * str)
 				if (flag == 1) j++;
 				} while (flag == 1);
 
-			flag = 0;
+			flag = 0; flag3 = 1;
 
 			for (k = 0; k < strlen (antoniovandre_operadoresprioritarios); k++)
 				if (str2 [j] == antoniovandre_operadoresprioritarios [k])
+					{
 					flag = 1;
+
+					l = j - 1;
+
+					do
+						{
+						flag3 = 0;
+
+						for (m = 0; m < strlen (antoniovandre_numeros); m++)
+							if (str2 [l] == antoniovandre_numeros [m])
+								flag3 = 1;
+
+						l--;
+						} while ((flag3 == 1) && ((str2 [l] != TOKENINICIOEVAL) || (l > 0)));
+					}
 
 			if (flag == 1)
 				{
 				strcpy (str2t, "");
 
-				for (k = 0; k < i; k++)
-					strncat (str2t, & str2 [k], 1);
+				if (flag3 == 1)
+					{
+					tc = TOKENINICIOEVAL;
+					strncat (str2t, & tc, 1);
 
-				tc = TOKENINICIOEVAL;
-				strncat (str2t, & tc, 1);
+					strcat (str2t, "-1");
 
-				strcat (str2t, "-1");
+					tc = TOKENFIMEVAL;
+					strncat (str2t, & tc, 1);
 
-				tc = TOKENFIMEVAL;
-				strncat (str2t, & tc, 1);
+					tc = OPERADORMULTIPLICACAO;
+					strncat (str2t, & tc, 1);
 
-				tc = OPERADORMULTIPLICACAO;
-				strncat (str2t, & tc, 1);
+					for (k = 0; k <= l; k++)
+						strncat (str2t, & str2 [k], 1);
+					}
+				else
+					{
+					for (k = 0; k < i; k++)
+						strncat (str2t, & str2 [k], 1);
+
+					tc = TOKENINICIOEVAL;
+					strncat (str2t, & tc, 1);
+
+					strcat (str2t, "-1");
+
+					tc = TOKENFIMEVAL;
+					strncat (str2t, & tc, 1);
+
+					tc = OPERADORMULTIPLICACAO;
+					strncat (str2t, & tc, 1);
+					}
 
 				tc = TOKENINICIOEVAL;
 				strncat (str2t, & tc, 1);
@@ -2658,11 +2719,11 @@ char * antoniovandre_eval (char * str)
 
 				for (k = j; k < strlen (str2); k++)
 					strncat (str2t, & str2 [k], 1);
-
-				strcpy (str2, str2t);
 				}
 			}
 		}
+
+	if (strcmp (str2t, "")) strcpy (str2, str2t);
 
 	for (i = 1; i < strlen (str2); i++)
 		{
@@ -2689,30 +2750,6 @@ char * antoniovandre_eval (char * str)
 				strncat (str2t, & str2 [j], 1);
 
 			strcpy (str2, str2t);
-			}
-		}
-
-	for (i = 1; i < strlen (str2); i++)
-		{
-		tc = str2 [i - 1];
-		tc2 = str2 [i];
-
-		for (j = 0; j < strlen (antoniovandre_operadores); j++)
-			{
-			if ((tc == OPERADORSUBTRACAO) && (tc2 == antoniovandre_operadores [j])) return STRINGSAIDAERRO;
-
-			flag = 0;
-
-			for (k = 0; k < strlen (antoniovandre_operadoresespeciais); k++)
-				if (tc == antoniovandre_operadoresespeciais [k])
-					{
-					flag = 1;
-					break;
-					}
-
-			if (flag == 1) break;
-
-			if ((tc == antoniovandre_operadores [j]) && (tc2 == OPERADORSUBTRACAO)) return STRINGSAIDAERRO;
 			}
 		}
 
@@ -2794,7 +2831,23 @@ char * antoniovandre_eval (char * str)
 			for (i = inicio; i <= fim; i++)
 				strncat (str4, & str2 [i], 1);
 
-			strcpy (str5, antoniovandre_evalcelula (str4));
+			i = 0; contador = 0; strcpy (str4t, "");
+
+			do
+				{
+				if (str4 [i++] == OPERADORSUBTRACAO) contador++; else break;
+				} while (i < strlen (str4));
+
+			if (contador % 2 == 1)
+				{
+				tc = OPERADORSUBTRACAO;
+				strncat (str4t, & tc, 1);
+				}
+
+			for (i = contador; i < strlen (str4); i++)
+				strncat (str4t, & str4 [i], 1);
+
+			strcpy (str5, antoniovandre_evalcelula (str4t));
 
 			if (! strcmp (str5, STRINGSAIDAERRO)) return STRINGSAIDAERRO;
 			if (! strcmp (str5, STRINGSAIDAERROOVER)) return STRINGSAIDAERROOVER;
