@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 20-10-2020.
+// Última atualização: 26-10-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -24,8 +24,13 @@
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
 #define VALOR_MAX 1000000000L // Afim de evitar erros de saída.
 #define TAMANHO_MAX_ARQUIVO 1000000000000 // Afim de evitar erros de saída.
+#define NUMEROZERO 0
+#define NUMEROUM 1
 #define OPERADORSUBTRACAO '-'
 #define OPERADORMULTIPLICACAO '*'
+#define STRINGMENOSUM "-1"
+#define ESPACOBRANCO ' '
+#define STRINGVAZIA ""
 #define DELIMITADORSTRING ',' // Deve ser um char;
 #define DELIMITADORSTRING2 ';' // Deve ser um char, diferente de DELIMITADORSTRING;
 #define STRINGSAIDAERRO "Erro de saida de uma string."
@@ -46,9 +51,11 @@
 #define MAXNUMERADORFRACOES 100000 // Para a conversão de números em frações. Útil para, dentre outras coisas, calcular potências de bases negativas.
 #define MAXPRECISAO 19 // Afim de evitar erros de saída.
 
-typedef struct {char token [TAMANHO_BUFFER_WORD]; long double valor; char comentario [TAMANHO_BUFFER_PHRASE];} tokenfuncaoconstante; // Estrutura para funções e constantes.
+typedef long double TIPONUMEROREAL;
 
-typedef struct {long double real; long double img;} numerocomplexo; // Estrutura número complexo.
+typedef struct {char token [TAMANHO_BUFFER_WORD]; TIPONUMEROREAL valor; char comentario [TAMANHO_BUFFER_PHRASE];} tokenfuncaoconstante; // Estrutura para funções e constantes.
+
+typedef struct {TIPONUMEROREAL real; TIPONUMEROREAL img;} numerocomplexo; // Estrutura número complexo.
 
 #define ARQUIVO_MATHSOBRE "/usr/share/antoniovandre_sobre.txt"
 // #define ARQUIVO_MATH_ESTATISTICAS "antoniovandre_math_estatisticas.txt"
@@ -85,12 +92,12 @@ int antoniovandre_salvarmathestatisticas (char * cabecalho)
 	FILE * filemathestatisticas;
 	char antoniovandre_estatisticas_buffer [TAMANHO_BUFFER_WORD];
 	unsigned long int antoniovandre_estatisticas_contador;
-	int flag = 0;
-	int flag2 = 0;
+	int flag = NUMEROZERO;
+	int flag2 = NUMEROZERO;
 	char tc;
 	char tc2;
 
-	strcpy (antoniovandre_estatisticas_buffer, "");
+	strcpy (antoniovandre_estatisticas_buffer, STRINGVAZIA);
 
 	filemathestatisticas = fopen (ARQUIVO_MATH_ESTATISTICAS, "r+");
 
@@ -104,10 +111,10 @@ int antoniovandre_salvarmathestatisticas (char * cabecalho)
 			return -1;
 			}
 
-		flag2 = 1;
+		flag2 = NUMEROUM;
 		}
 
-	while ((! feof (filemathestatisticas)) && flag2 == 0)
+	while ((! feof (filemathestatisticas)) && flag2 == NUMEROZERO)
 		{
 		fscanf (filemathestatisticas, "%s", antoniovandre_estatisticas_buffer);
 
@@ -138,11 +145,11 @@ int antoniovandre_salvarmathestatisticas (char * cabecalho)
 						} while (! feof (filemathestatisticas));
 				}
 
-			flag = 1;
+			flag = NUMEROUM;
 			}
 		}
 
-	if (flag == 0)
+	if (flag == NUMEROZERO)
 		{
 		char cabecalho_buffer [strlen (cabecalho)];
 
@@ -163,7 +170,7 @@ int antoniovandre_precisao_real ()
 	char antoniovandre_precisao_real_buffer [TAMANHO_BUFFER_WORD];
 	int antoniovandre_precisao_real_valor;
 
-	strcpy (antoniovandre_precisao_real_buffer, "");
+	strcpy (antoniovandre_precisao_real_buffer, STRINGVAZIA);
 
 	fileprecisaoreal = fopen(ARQUIVO_PRECISAO_REAL, "r");
 
@@ -177,7 +184,7 @@ int antoniovandre_precisao_real ()
 
 	antoniovandre_precisao_real_valor = atoi (antoniovandre_precisao_real_buffer);
 
-	if (antoniovandre_precisao_real_valor == 0)
+	if (antoniovandre_precisao_real_valor == NUMEROZERO)
 		{
 		printf ("Erro ao ler arquivo de precisão real.\n");
 		return -1;
@@ -226,18 +233,18 @@ char * antoniovandre_removerletras (char * str)
 	int i;
 	int j;
 	int flag;
-	int contador = 0;
+	int contador = NUMEROZERO;
 
-	strcpy (strf, "");
+	strcpy (strf, STRINGVAZIA);
 
-	for (i = 0; i < tam1; i++)
+	for (i = NUMEROZERO; i < tam1; i++)
 		{
-		flag = 0;
+		flag = NUMEROZERO;
 
-		for (j = 0; j < tam2; j++)
-			if (str [i] == antoniovandre_letras [j]) flag = 1;
+		for (j = NUMEROZERO; j < tam2; j++)
+			if (str [i] == antoniovandre_letras [j]) flag = NUMEROUM;
 
-		if (flag == 0) strf [contador++] = str [i];
+		if (flag == NUMEROZERO) strf [contador++] = str [i];
 		}
 
 	return strf;
@@ -254,16 +261,16 @@ char * antoniovandre_removernumeros (char * str)
 	int j;
 	int flag;
 
-	strcpy (strf, "");
+	strcpy (strf, STRINGVAZIA);
 
-	for (i = 0; i < tam1; i++)
+	for (i = NUMEROZERO; i < tam1; i++)
 		{
-		flag = 0;
+		flag = NUMEROZERO;
 
-		for (j = 0; j < tam2; j++)
-			if (str [i] == antoniovandre_numeros [j]) flag = 1;
+		for (j = NUMEROZERO; j < tam2; j++)
+			if (str [i] == antoniovandre_numeros [j]) flag = NUMEROUM;
 
-		if (flag == 0) strncat (strf, & str [i], 1);
+		if (flag == NUMEROZERO) strncat (strf, & str [i], 1);
 		}
 
 	return strf;
@@ -273,51 +280,51 @@ char * antoniovandre_removernumeros (char * str)
 
 int antoniovandre_monomio (char * str)
 	{
-	int contador = 0;
+	int contador = NUMEROZERO;
 	int flag;
 	int i;
 	int j;
 
-	for (i = 1; i < strlen (str); i++)
+	for (i = NUMEROUM; i < strlen (str); i++)
 		{
-		flag = 0;
+		flag = NUMEROZERO;
 
-		for (j = 0; j < strlen (antoniovandre_numeros); j++)
-			if (str [i] == antoniovandre_numeros [j]) flag = 1;
+		for (j = NUMEROZERO; j < strlen (antoniovandre_numeros); j++)
+			if (str [i] == antoniovandre_numeros [j]) flag = NUMEROUM;
 
-		if (flag == 1)
-			for (j = 0; j < strlen (antoniovandre_letras); j++)
-				if (str [i - 1] == antoniovandre_letras [j]) return 0;
+		if (flag == NUMEROUM)
+			for (j = NUMEROZERO; j < strlen (antoniovandre_letras); j++)
+				if (str [i - 1] == antoniovandre_letras [j]) return NUMEROZERO;
 		}
 
-	for (i = 1; i < strlen (str); i++) if (str [i] == OPERADORSUBTRACAO) return 0;
+	for (i = NUMEROUM; i < strlen (str); i++) if (str [i] == OPERADORSUBTRACAO) return NUMEROZERO;
 
-	for (i = 0; i < strlen (str); i++)
-		{if (str [i] == '.') contador++; if (contador == 2) return 0;}
+	for (i = NUMEROZERO; i < strlen (str); i++)
+		{if (str [i] == '.') contador++; if (contador == 2) return NUMEROZERO;}
 
-	if (strcmp (antoniovandre_removerletras (antoniovandre_removernumeros (str)), "") || (! strcmp (str, "-")))
-		return 0;
+	if (strcmp (antoniovandre_removerletras (antoniovandre_removernumeros (str)), STRINGVAZIA) || (! strcmp (str, "-")))
+		return NUMEROZERO;
 	else
 		return -1;
 	}
 
 // Parte numérica de um monômio.
 
-long double antoniovandre_partenumericamonomio (char * str)
+TIPONUMEROREAL antoniovandre_partenumericamonomio (char * str)
 	{
 	char * err;
 
 	if (antoniovandre_monomio (str))
 		{
-		if (! strcmp (antoniovandre_removerletras (str), ""))
+		if (! strcmp (antoniovandre_removerletras (str), STRINGVAZIA))
 			return 1;
-		else if (! strcmp (antoniovandre_removerletras (str), "-") && strlen (str) != 1)
+		else if (! strcmp (antoniovandre_removerletras (str), "-") && strlen (str) != NUMEROUM)
 			return -1;
 		else
 			return (strtold (antoniovandre_removerletras (str), & err));
 		}
 	else
-		return 0;
+		return NUMEROZERO;
 	}
 
 // Parte literal de um monômio.
@@ -332,19 +339,19 @@ char * antoniovandre_parteliteralmonomio (char * str)
 
 // Número para string.
 
-char * antoniovandre_numeroparastring (long double numero)
+char * antoniovandre_numeroparastring (TIPONUMEROREAL numero)
 	{
 	int precisao = antoniovandre_precisao_real ();
 	int potencia_min = (-1) * precisao;
 	int potencia_max = log10 (VALOR_MAX);
-	long double fator = powl (10, potencia_max);
+	TIPONUMEROREAL fator = powl (10, potencia_max);
 	char strr [TAMANHO_BUFFER_WORD];
 	int algarismo;
 	int i;
-	int flag = 0;
-	int contador = 0;
+	int flag = NUMEROZERO;
+	int contador = NUMEROZERO;
 
-	strcpy (strr, "");
+	strcpy (strr, STRINGVAZIA);
 
 	if (numero < 0)
 		{
@@ -363,13 +370,13 @@ char * antoniovandre_numeroparastring (long double numero)
 			strcat (strr, ".");
 			}
 
-		algarismo = (int) fmodl (((long double) numero / (long double) fator), 10);
+		algarismo = (int) fmodl (((TIPONUMEROREAL) numero / (TIPONUMEROREAL) fator), 10);
 
-		fator /= (long double) 10;
+		fator /= (TIPONUMEROREAL) 10;
 
-		if (algarismo != 0) flag = 1;
+		if (algarismo != NUMEROZERO) flag = NUMEROUM;
 
-		if (flag == 1) contador++;
+		if (flag == NUMEROUM) contador++;
 
 		if ((flag == 1 || i < 0) && (contador <= precisao))
 			{
@@ -426,24 +433,24 @@ int antoniovandre_compararstringssemorden (char * str1, char * str2)
 	int i;
 	int j;
 
-	for (i = 0; i < tam1; i++)
+	for (i = NUMEROZERO; i < tam1; i++)
 		{
 		c = str1 [i];
 
-		contador1 = 0;
+		contador1 = NUMEROZERO;
 
-		for (j = 0; j < tam1; j++) if (c == str1 [j]) contador1++;
+		for (j = NUMEROZERO; j < tam1; j++) if (c == str1 [j]) contador1++;
 
-		contador2 = 0;
+		contador2 = NUMEROZERO;
 
-		for (j = 0; j < tam2; j++) if (c == str2 [j]) contador2++;
+		for (j = NUMEROZERO; j < tam2; j++) if (c == str2 [j]) contador2++;
 
 		if (contador1 != contador2) return -1;
 		}
 
 	if (tam1 != tam2) return -1;
 
-	return 0;
+	return NUMEROZERO;
 	}
 
 // Enésima substring de uma string separada por delimitadores. Inicia-se contando do 0;
@@ -452,17 +459,17 @@ char * antoniovandre_nthsubstr (char * str, int n)
 	{
 	char * strf = (char *) malloc (TAMANHO_BUFFER_PHRASE);
 	int tam = strlen (str);
-	int inicio = 0;
-	int fim = 0;
-	int ponteiro = 0;
-	int shifti = 0;
-	int shiftf = 0;
-	int contador = 0;
+	int inicio = NUMEROZERO;
+	int fim = NUMEROZERO;
+	int ponteiro = NUMEROZERO;
+	int shifti = NUMEROZERO;
+	int shiftf = NUMEROZERO;
+	int contador = NUMEROZERO;
 	int i;
 
-	strcpy (strf, "");
+	strcpy (strf, STRINGVAZIA);
 
-	for (i = 0; i < tam; i++)
+	for (i = NUMEROZERO; i < tam; i++)
 		if (str [i] == DELIMITADORSTRING)
 			if (n == contador++)
 				{
@@ -472,16 +479,16 @@ char * antoniovandre_nthsubstr (char * str, int n)
 			else
 				ponteiro = i;
 
-	if (fim == 0)
+	if (fim == NUMEROZERO)
 		{
 		inicio = ponteiro;
 		fim = tam - 1;
 		}
 
-	if (inicio != 0) shifti = 1;
-	if (fim != tam - 1) shiftf = 1;
+	if (inicio != NUMEROZERO) shifti = NUMEROUM;
+	if (fim != tam - 1) shiftf = NUMEROUM;
 
-	contador = 0;
+	contador = NUMEROZERO;
 
 	for (i = inicio + shifti; i <= fim - shiftf; i++) strf [contador++] = str [i];
 
@@ -499,82 +506,82 @@ unsigned long int antoniovandre_fatorial (unsigned long int n)
 
 char * antoniovandre_reduzirtermossemelhantes (char * args)
 	{
-	int nargs = 1;
+	int nargs = NUMEROUM;
 	char strf [TAMANHO_BUFFER_WORD];
 	char parteliteral [TAMANHO_BUFFER_WORD];
 	char strt [TAMANHO_BUFFER_WORD];
 	int i;
 	int j;
 	int flag;
-	int contador = 0;
+	int contador = NUMEROZERO;
 
-	for (i = 0; i < strlen (args); i++) if (args [i] == DELIMITADORSTRING) nargs++;
+	for (i = NUMEROZERO; i < strlen (args); i++) if (args [i] == DELIMITADORSTRING) nargs++;
 
 	char * strlit [nargs];
-	long double coefs [nargs];
+	TIPONUMEROREAL coefs [nargs];
 
-	strcpy (strf, "");
-	strcpy (parteliteral, "");
-	strcpy (strt, "");
+	strcpy (strf, STRINGVAZIA);
+	strcpy (parteliteral, STRINGVAZIA);
+	strcpy (strt, STRINGVAZIA);
 
-	for (i = 0; i < nargs; i++)
+	for (i = NUMEROZERO; i < nargs; i++)
 		{
 		strlit [i] = (char *) malloc (TAMANHO_BUFFER_WORD);
-		strcpy (strlit [i], "");
+		strcpy (strlit [i], STRINGVAZIA);
 		}
 
-	for (i = 0; i < nargs; i++)
+	for (i = NUMEROZERO; i < nargs; i++)
 		{
-		flag = 0; j = 0;
+		flag = NUMEROZERO; j = NUMEROZERO;
 
 		while (flag == 0 && j++ < TENTATIVASLOGICAS)
-			if (antoniovandre_monomio (antoniovandre_nthsubstr (args, i))) flag = 1;
+			if (antoniovandre_monomio (antoniovandre_nthsubstr (args, i))) flag = NUMEROUM;
 
-		if (flag == 1)
+		if (flag == NUMEROUM)
 			{
 			strcpy (parteliteral, antoniovandre_parteliteralmonomio (antoniovandre_nthsubstr (args, i)));
 
-			flag = 0;
+			flag = NUMEROZERO;
 
-			for (j = 0; j < contador; j++)
+			for (j = NUMEROZERO; j < contador; j++)
 				if (! antoniovandre_compararstringssemorden (strlit [j], parteliteral))
 					{
-					coefs [j] += (long double) antoniovandre_partenumericamonomio (antoniovandre_nthsubstr (args, i));
-					flag = 1;
+					coefs [j] += (TIPONUMEROREAL) antoniovandre_partenumericamonomio (antoniovandre_nthsubstr (args, i));
+					flag = NUMEROUM;
 					break;
 					}
-			if (flag == 0)
+			if (flag == NUMEROZERO)
 				{
 				strcpy (strlit [contador], parteliteral);
-				coefs [contador++] = (long double) antoniovandre_partenumericamonomio (antoniovandre_nthsubstr (args, i));
+				coefs [contador++] = (TIPONUMEROREAL) antoniovandre_partenumericamonomio (antoniovandre_nthsubstr (args, i));
 				}
 			}
 		else
 			return (STRINGSAIDAERRO);
 		}
 
-	flag = 0;
+	flag = NUMEROZERO;
 
-	for (i = 0; i < contador; i++)
-		if (coefs [i] != 0)
+	for (i = NUMEROZERO; i < contador; i++)
+		if (coefs [i] != NUMEROZERO)
 			{
 			strcpy (strt, antoniovandre_numeroparastring (coefs [i]));
 
 			if (! strcmp (strt, STRINGSAIDAERROOVER)) return (STRINGSAIDAERROOVER);
 
-			if (i == 0) 
+			if (i == NUMEROZERO) 
 				memmove (strf, strt, strlen (antoniovandre_numeroparastring (coefs [i])));
 			else
 				strcat (strf, strt);
 			strcat (strf, strlit [i]);
-			if (i < contador - 1) strf [strlen (strf)] = ' ';
+			if (i < contador - 1) strf [strlen (strf)] = ESPACOBRANCO;
 
-			flag = 1;
+			flag = NUMEROUM;
 			}
 
-	for (i = 0; i < nargs; i++) free (strlit [i]);
+	for (i = NUMEROZERO; i < nargs; i++) free (strlit [i]);
 
-	if (flag == 1)
+	if (flag == NUMEROUM)
 		return (strf);
 	else
 		return (antoniovandre_numeroparastring (0));
@@ -584,7 +591,7 @@ char * antoniovandre_reduzirtermossemelhantes (char * args)
 
 char * antoniovandre_valornumericopolinomio (char * args)
 	{
-	int nargs = 1;
+	int nargs = NUMEROUM;
 	int indice_inicio = -1;
 	char strt [TAMANHO_BUFFER_WORD];
 	char strt2 [TAMANHO_BUFFER_WORD];
@@ -593,26 +600,26 @@ char * antoniovandre_valornumericopolinomio (char * args)
 	char str3 [TAMANHO_BUFFER_WORD];
 	char str4 [TAMANHO_BUFFER_PHRASE];
 	char str5 [TAMANHO_BUFFER_PHRASE];
-	long double coef;
-	long double fator;
+	TIPONUMEROREAL coef;
+	TIPONUMEROREAL fator;
 	int i;
 	int j;
 	int k;
 	int contador;
 	int flag;
-	int flag2 = 0;
+	int flag2 = NUMEROZERO;
 	char c = DELIMITADORSTRING;
 	char * err;
 
-	strcpy (strt, "");
-	strcpy (strt2, "");
-	strcpy (str, "");
-	strcpy (str2, "");
-	strcpy (str3, "");
-	strcpy (str4, "");
-	strcpy (str5, "");
+	strcpy (strt, STRINGVAZIA);
+	strcpy (strt2, STRINGVAZIA);
+	strcpy (str, STRINGVAZIA);
+	strcpy (str2, STRINGVAZIA);
+	strcpy (str3, STRINGVAZIA);
+	strcpy (str4, STRINGVAZIA);
+	strcpy (str5, STRINGVAZIA);
 
-	for (i = 0; i < strlen (args); i++)
+	for (i = NUMEROZERO; i < strlen (args); i++)
 		{
 		if (args [i] == DELIMITADORSTRING) nargs++;
 		if ((args [i] == '=') && (indice_inicio == -1)) indice_inicio = nargs - 1;
@@ -620,53 +627,53 @@ char * antoniovandre_valornumericopolinomio (char * args)
 
 	if (indice_inicio != -1)
 		{
-		if (indice_inicio == 0) return STRINGSAIDAERRO;
+		if (indice_inicio == NUMEROZERO) return STRINGSAIDAERRO;
 
 		for (i = indice_inicio; i < nargs; i++)
 			{
-			flag = 0; contador = 0;
+			flag = NUMEROZERO; contador = NUMEROZERO;
 
-			while ((flag == 0) && (contador++ < TENTATIVASLOGICAS))
+			while ((flag == NUMEROZERO) && (contador++ < TENTATIVASLOGICAS))
 				{
 				strcpy (strt, antoniovandre_nthsubstr (args, i));
 
-				if (strt [1] == '=') flag = 1;
+				if (strt [1] == '=') flag = NUMEROUM;
 				}
 
-			if (flag == 0) return STRINGSAIDAERRO;
+			if (flag == NUMEROZERO) return STRINGSAIDAERRO;
 
-			flag = 0;
+			flag = NUMEROZERO;
 
-			for (j = 0; j < strlen (antoniovandre_letras); j++)
-				if (strt [0] == antoniovandre_letras [j]) flag = 1;
+			for (j = NUMEROZERO; j < strlen (antoniovandre_letras); j++)
+				if (strt [0] == antoniovandre_letras [j]) flag = NUMEROUM;
 
-			if (flag == 0) return STRINGSAIDAERRO;
+			if (flag == NUMEROZERO) return STRINGSAIDAERRO;
 
-			strcpy (strt2, "");
+			strcpy (strt2, STRINGVAZIA);
 
 			for (j = 2; j < strlen (strt); j++) strncat (strt2, & strt [j], 1);
 
 			fator = strtold (strt2, & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (fator > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			for (j = 0; j < indice_inicio; j++)
+			for (j = NUMEROZERO; j < indice_inicio; j++)
 				{
-				flag = 0; contador = 0;
+				flag = NUMEROZERO; contador = NUMEROZERO;
 
-				while ((flag == 0) && (contador++ < TENTATIVASLOGICAS))
+				while ((flag == NUMEROZERO) && (contador++ < TENTATIVASLOGICAS))
 					{
-					if (flag2 == 0)
+					if (flag2 == NUMEROZERO)
 						strcpy (str, antoniovandre_nthsubstr (args, j));
 					else
 						strcpy (str, antoniovandre_nthsubstr (str5, j));
 
-					if (antoniovandre_monomio (str)) flag = 1;
+					if (antoniovandre_monomio (str)) flag = NUMEROUM;
 					}
 
-				if (flag == 0) return STRINGSAIDAERRO;
+				if (flag == NUMEROZERO) return STRINGSAIDAERRO;
 
 				coef = antoniovandre_partenumericamonomio (str);
 
@@ -674,9 +681,9 @@ char * antoniovandre_valornumericopolinomio (char * args)
 
 				strcpy (str2, antoniovandre_parteliteralmonomio (str));
 
-				strcpy (str3, "");
+				strcpy (str3, STRINGVAZIA);
 
-				for (k = 0; k < strlen (str2); k++)
+				for (k = NUMEROZERO; k < strlen (str2); k++)
 					if (strt [0] == str2 [k])
 						coef *= fator;
 					else
@@ -691,9 +698,9 @@ char * antoniovandre_valornumericopolinomio (char * args)
 
 			str4 [strlen (str4) - 1] = '\0';
 			strcpy (str5, str4);
-			strcpy (str4, "");
+			strcpy (str4, STRINGVAZIA);
 
-			flag2 = 1;
+			flag2 = NUMEROUM;
 			}
 		}
 
@@ -711,19 +718,19 @@ int antoniovandre_expressao (char * str)
 	int i;
 	int j;
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		{
-		flag = 0;
+		flag = NUMEROZERO;
 
-		for (j = 0; j < strlen (antoniovandre_numeros); j++) if (str [i] == antoniovandre_numeros [j]) flag = 1;
+		for (j = NUMEROZERO; j < strlen (antoniovandre_numeros); j++) if (str [i] == antoniovandre_numeros [j]) flag = NUMEROUM;
 
-		for (j = 0; j < strlen (antoniovandre_letras); j++) if (str [i] == antoniovandre_letras [j]) flag = 1;
+		for (j = NUMEROZERO; j < strlen (antoniovandre_letras); j++) if (str [i] == antoniovandre_letras [j]) flag = NUMEROUM;
 
-		for (j = 0; j < strlen (antoniovandre_operadores); j++) if (str [i] == antoniovandre_operadores [j]) flag = 1;
+		for (j = NUMEROZERO; j < strlen (antoniovandre_operadores); j++) if (str [i] == antoniovandre_operadores [j]) flag = NUMEROUM;
 
-		if ((str [i] == TOKENINICIOEVAL) || (str [i] == TOKENFIMEVAL)) flag = 1;
+		if ((str [i] == TOKENINICIOEVAL) || (str [i] == TOKENFIMEVAL)) flag = NUMEROUM;
 
-		if (flag == 0) return 0;
+		if (flag == NUMEROZERO) return NUMEROZERO;
 		}
 
 	return 1;
@@ -736,7 +743,7 @@ char * antoniovandre_substring (char * str, int inicio, int fim)
 	char strt [TAMANHO_BUFFER_PHRASE];
 	int i;
 
-	strcpy (strt, "");
+	strcpy (strt, STRINGVAZIA);
 
 	for (i = inicio; i <= fim; i++)
 		strncat (strt, & str [i], 1);
@@ -750,23 +757,23 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	{
 	tokenfuncaoconstante funcoesconstantes [TAMANHO_BUFFER_SMALL];
 	int tamanhotokenfuncaoconstante;
-	int tamanhotokenfuncaoconstantemax = 0;
+	int tamanhotokenfuncaoconstantemax = NUMEROZERO;
 	int tokenid = -1;
 	int tokeninicio;
-	long double resultado;
-	long double argumento;
-	long double coeficiente;
+	TIPONUMEROREAL resultado;
+	TIPONUMEROREAL argumento;
+	TIPONUMEROREAL coeficiente;
 	char buffer [TAMANHO_BUFFER_WORD];
 	int i;
 	int j;
 	char * err;
 	char * err2;
 
-	for (i = 0; i < TAMANHO_BUFFER_SMALL; i++)
+	for (i = NUMEROZERO; i < TAMANHO_BUFFER_SMALL; i++)
 		{
-		strcpy (funcoesconstantes [i].token, "");
-		funcoesconstantes [i].valor = (long double) 0;
-		strcpy (funcoesconstantes [i].comentario, "");
+		strcpy (funcoesconstantes [i].token, STRINGVAZIA);
+		funcoesconstantes [i].valor = (TIPONUMEROREAL) 0;
+		strcpy (funcoesconstantes [i].comentario, STRINGVAZIA);
 		}
 
 	strcpy (funcoesconstantes [0].token, "arccossec");
@@ -815,35 +822,35 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	strcpy (funcoesconstantes [14].comentario, "Função logaritmo natural.");
 
 	strcpy (funcoesconstantes [15].token, "PI");
-	funcoesconstantes [15].valor = (long double) M_PIl;
+	funcoesconstantes [15].valor = (TIPONUMEROREAL) M_PIl;
 	strcpy (funcoesconstantes [15].comentario, "Constante pi, razão entre o comprimento e o diâmetro de uma circunferência.");
 
 	strcpy (funcoesconstantes [16].token, "E");
-	funcoesconstantes [16].valor = (long double) M_El;
+	funcoesconstantes [16].valor = (TIPONUMEROREAL) M_El;
 	strcpy (funcoesconstantes [16].comentario, "Constante e, base do logaritmo natural.");
 
 	strcpy (funcoesconstantes [17].token, FISICA_C_SI);
-	funcoesconstantes [17].valor = (long double) FISICA_C_SI_VALOR;
+	funcoesconstantes [17].valor = (TIPONUMEROREAL) FISICA_C_SI_VALOR;
 	strcpy (funcoesconstantes [17].comentario, FISICA_C_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [18].token, FISICA_G_SI);
-	funcoesconstantes [18].valor = (long double) FISICA_G_SI_VALOR;
+	funcoesconstantes [18].valor = (TIPONUMEROREAL) FISICA_G_SI_VALOR;
 	strcpy (funcoesconstantes [18].comentario, FISICA_G_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [19].token, FISICA_QE_SI);
-	funcoesconstantes [19].valor = (long double) FISICA_QE_SI_VALOR;
+	funcoesconstantes [19].valor = (TIPONUMEROREAL) FISICA_QE_SI_VALOR;
 	strcpy (funcoesconstantes [19].comentario, FISICA_QE_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [20].token, FISICA_H_SI);
-	funcoesconstantes [20].valor = (long double) FISICA_H_SI_VALOR;
+	funcoesconstantes [20].valor = (TIPONUMEROREAL) FISICA_H_SI_VALOR;
 	strcpy (funcoesconstantes [20].comentario, FISICA_H_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [21].token, FISICA_HH_SI);
-	funcoesconstantes [21].valor = (long double) FISICA_HH_SI_VALOR;
+	funcoesconstantes [21].valor = (TIPONUMEROREAL) FISICA_HH_SI_VALOR;
 	strcpy (funcoesconstantes [21].comentario, FISICA_HH_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [22].token, FISICA_K_SI);
-	funcoesconstantes [22].valor = (long double) FISICA_K_SI_VALOR;
+	funcoesconstantes [22].valor = (TIPONUMEROREAL) FISICA_K_SI_VALOR;
 	strcpy (funcoesconstantes [22].comentario, FISICA_K_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [23].token, "senh");
@@ -886,17 +893,17 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	strcpy (funcoesconstantes [35].comentario, "Função fatorial.");
 
 	strcpy (funcoesconstantes [36].token, FISICA_ME_SI);
-	funcoesconstantes [36].valor = (long double) FISICA_ME_SI_VALOR;
+	funcoesconstantes [36].valor = (TIPONUMEROREAL) FISICA_ME_SI_VALOR;
 	strcpy (funcoesconstantes [36].comentario, FISICA_ME_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [37].token, FISICA_MP_SI);
-	funcoesconstantes [37].valor = (long double) FISICA_MP_SI_VALOR;
+	funcoesconstantes [37].valor = (TIPONUMEROREAL) FISICA_MP_SI_VALOR;
 	strcpy (funcoesconstantes [37].comentario, FISICA_MP_SI_COMENTARIO);
 
 //	Trecho incompatível com alguns compiladores.
 
 /*	strcpy (funcoesconstantes [38].token, FISICA_A_SI);
-	funcoesconstantes [38].valor = (long double) FISICA_A_SI_VALOR;
+	funcoesconstantes [38].valor = (TIPONUMEROREAL) FISICA_A_SI_VALOR;
 	strcpy (funcoesconstantes [38].comentario, FISICA_A_SI_COMENTARIO);*/
 
 	strcpy (funcoesconstantes [39].token, "modulo");
@@ -939,31 +946,31 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	strcpy (funcoesconstantes [51].comentario, "Função para converter temperatura em Fahrenheit para Celsius.");
 
 	strcpy (funcoesconstantes [52].token, FISICA_AM_SI);
-	funcoesconstantes [52].valor = (long double) FISICA_AM_SI_VALOR;
+	funcoesconstantes [52].valor = (TIPONUMEROREAL) FISICA_AM_SI_VALOR;
 	strcpy (funcoesconstantes [52].comentario, FISICA_AM_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [53].token, FISICA_KE_SI);
-	funcoesconstantes [53].valor = (long double) FISICA_KE_SI_VALOR;
+	funcoesconstantes [53].valor = (TIPONUMEROREAL) FISICA_KE_SI_VALOR;
 	strcpy (funcoesconstantes [53].comentario, FISICA_KE_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [54].token, MATEMATICA_P);
-	funcoesconstantes [54].valor = (long double) MATEMATICA_P_VALOR;
+	funcoesconstantes [54].valor = (TIPONUMEROREAL) MATEMATICA_P_VALOR;
 	strcpy (funcoesconstantes [54].comentario, MATEMATICA_P_COMENTARIO);
 
 	strcpy (funcoesconstantes [55].token, MATEMATICA_C);
-	funcoesconstantes [55].valor = (long double) MATEMATICA_C_VALOR;
+	funcoesconstantes [55].valor = (TIPONUMEROREAL) MATEMATICA_C_VALOR;
 	strcpy (funcoesconstantes [55].comentario, MATEMATICA_C_COMENTARIO);
 
 	strcpy (funcoesconstantes [56].token, MATEMATICA_EMC);
-	funcoesconstantes [56].valor = (long double) MATEMATICA_EMC_VALOR;
+	funcoesconstantes [56].valor = (TIPONUMEROREAL) MATEMATICA_EMC_VALOR;
 	strcpy (funcoesconstantes [56].comentario, MATEMATICA_EMC_COMENTARIO);
 
 	strcpy (funcoesconstantes [57].token, MATEMATICA_T);
-	funcoesconstantes [57].valor = (long double) MATEMATICA_T_VALOR;
+	funcoesconstantes [57].valor = (TIPONUMEROREAL) MATEMATICA_T_VALOR;
 	strcpy (funcoesconstantes [57].comentario, MATEMATICA_T_COMENTARIO);
 
 	strcpy (funcoesconstantes [58].token, FISICA_R_SI);
-	funcoesconstantes [58].valor = (long double) FISICA_R_SI_VALOR;
+	funcoesconstantes [58].valor = (TIPONUMEROREAL) FISICA_R_SI_VALOR;
 	strcpy (funcoesconstantes [58].comentario, FISICA_R_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [59].token, "piso");
@@ -973,47 +980,47 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	strcpy (funcoesconstantes [60].comentario, "Função teto.");
 
 	strcpy (funcoesconstantes [61].token, FISICA_SB_SI);
-	funcoesconstantes [61].valor = (long double) FISICA_SB_SI_VALOR;
+	funcoesconstantes [61].valor = (TIPONUMEROREAL) FISICA_SB_SI_VALOR;
 	strcpy (funcoesconstantes [61].comentario, FISICA_SB_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [62].token, FISICA_PM_SI);
-	funcoesconstantes [62].valor = (long double) FISICA_PM_SI_VALOR;
+	funcoesconstantes [62].valor = (TIPONUMEROREAL) FISICA_PM_SI_VALOR;
 	strcpy (funcoesconstantes [62].comentario, FISICA_PM_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [63].token, FISICA_PE_SI);
-	funcoesconstantes [63].valor = (long double) FISICA_PE_SI_VALOR;
+	funcoesconstantes [63].valor = (TIPONUMEROREAL) FISICA_PE_SI_VALOR;
 	strcpy (funcoesconstantes [63].comentario, FISICA_PE_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [64].token, FISICA_B_SI);
-	funcoesconstantes [64].valor = (long double) FISICA_B_SI_VALOR;
+	funcoesconstantes [64].valor = (TIPONUMEROREAL) FISICA_B_SI_VALOR;
 	strcpy (funcoesconstantes [64].comentario, FISICA_B_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [65].token, FISICA_MN_SI);
-	funcoesconstantes [65].valor = (long double) FISICA_MN_SI_VALOR;
+	funcoesconstantes [65].valor = (TIPONUMEROREAL) FISICA_MN_SI_VALOR;
 	strcpy (funcoesconstantes [65].comentario, FISICA_MN_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [66].token, MATEMATICA_FA);
-	funcoesconstantes [66].valor = (long double) MATEMATICA_FA_VALOR;
+	funcoesconstantes [66].valor = (TIPONUMEROREAL) MATEMATICA_FA_VALOR;
 	strcpy (funcoesconstantes [66].comentario, MATEMATICA_FA_COMENTARIO);
 
 	strcpy (funcoesconstantes [67].token, MATEMATICA_FS);
-	funcoesconstantes [67].valor = (long double) MATEMATICA_FS_VALOR;
+	funcoesconstantes [67].valor = (TIPONUMEROREAL) MATEMATICA_FS_VALOR;
 	strcpy (funcoesconstantes [67].comentario, MATEMATICA_FS_COMENTARIO);
 
 	strcpy (funcoesconstantes [68].token, MATEMATICA_CO);
-	funcoesconstantes [68].valor = (long double) MATEMATICA_CO_VALOR;
+	funcoesconstantes [68].valor = (TIPONUMEROREAL) MATEMATICA_CO_VALOR;
 	strcpy (funcoesconstantes [68].comentario, MATEMATICA_CO_COMENTARIO);
 
 	strcpy (funcoesconstantes [69].token, MATEMATICA_K);
-	funcoesconstantes [69].valor = (long double) MATEMATICA_K_VALOR;
+	funcoesconstantes [69].valor = (TIPONUMEROREAL) MATEMATICA_K_VALOR;
 	strcpy (funcoesconstantes [69].comentario, MATEMATICA_K_COMENTARIO);
 
 	strcpy (funcoesconstantes [70].token, MATEMATICA_GK);
-	funcoesconstantes [70].valor = (long double) MATEMATICA_GK_VALOR;
+	funcoesconstantes [70].valor = (TIPONUMEROREAL) MATEMATICA_GK_VALOR;
 	strcpy (funcoesconstantes [70].comentario, MATEMATICA_GK_COMENTARIO);
 
-	for (i = 0; i < strlen (str); i++)
-		for (j = 0; j < TAMANHO_BUFFER_SMALL; j++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
+		for (j = NUMEROZERO; j < TAMANHO_BUFFER_SMALL; j++)
 			if (! strcmp (antoniovandre_substring (str, i, i + strlen (funcoesconstantes [j].token) - 1), funcoesconstantes [j].token))
 				{
 				tamanhotokenfuncaoconstante = strlen (funcoesconstantes [j].token);
@@ -1027,55 +1034,55 @@ char * antoniovandre_evalcelulafuncao (char * str)
 				}
 
 	if (tokenid != -1)
-		if (funcoesconstantes [tokenid].valor != 0)
+		if (funcoesconstantes [tokenid].valor != NUMEROZERO)
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (tokeninicio > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, tokeninicio - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, tokeninicio - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}	
 				}
 
-			if (strcmp (antoniovandre_substring (str, tokeninicio + tamanhotokenfuncaoconstantemax, strlen (str) - 1), "")) return STRINGSAIDAERRO;
+			if (strcmp (antoniovandre_substring (str, tokeninicio + tamanhotokenfuncaoconstantemax, strlen (str) - 1), STRINGVAZIA)) return STRINGSAIDAERRO;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * funcoesconstantes [tokenid].valor);
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * funcoesconstantes [tokenid].valor);
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 3), "teto"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 4, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			if (argumento <= 0)
+			if (argumento <= NUMEROZERO)
 				resultado = (long int) argumento;
 			else
 				{
@@ -1085,35 +1092,35 @@ char * antoniovandre_evalcelulafuncao (char * str)
 						resultado = (long int) argumento + 1;
 				}
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) resultado);
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) resultado);
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 3), "piso"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 4, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			if (argumento >= 0)
+			if (argumento >= NUMEROZERO)
 				resultado = (long int) argumento;
 			else
 				{
@@ -1123,1162 +1130,1162 @@ char * antoniovandre_evalcelulafuncao (char * str)
 						resultado = (long int) argumento - 1;
 				}
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) resultado);
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) resultado);
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 20), "fahrenheitparacelsius"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 21, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) (5 * (argumento - 32) / 9));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) (5 * (argumento - 32) / 9));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 19), "fahrenheitparakelvin"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 20, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) ((5 * (argumento - 32) / 9) + 273.15));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((5 * (argumento - 32) / 9) + 273.15));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 20), "celsiusparafahrenheit"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 21, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) ((9 * argumento / 5) + 32));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((9 * argumento / 5) + 32));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 16), "celsiusparakelvin"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 17, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) (argumento - 273.15));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) (argumento - 273.15));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 19), "kelvinparafahrenheit"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 20, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) ((9 * (argumento - 273.15) / 5) + 32));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((9 * (argumento - 273.15) / 5) + 32));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 16), "kelvinparacelsius"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 17, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) (argumento + 273.15));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) (argumento + 273.15));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 12), "gradoparagrau"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 13, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) argumento * 9 / 10);
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) argumento * 9 / 10);
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 11), "gradopararad"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 12, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) argumento * M_PIl / 200);
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) argumento * M_PIl / 200);
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 12), "grauparagrado"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 13, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) argumento * 10 / 9);
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) argumento * 10 / 9);
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 10), "graupararad"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 11, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) argumento * M_PIl / 180);
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) argumento * M_PIl / 180);
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 11), "radparagrado"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 12, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) argumento * 200 / M_PIl);
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) argumento * 200 / M_PIl);
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 10), "radparagrau"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 11, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) argumento * 180 / M_PIl);
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) argumento * 180 / M_PIl);
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 5), "modulo"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 6, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) fabs (argumento));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) fabsl (argumento));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 7), "fatorial"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 8, strlen (str) - 1), & err);
 
-			if ((* err != 0) || ((argumento != (long int) argumento) || argumento < 0)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || ((argumento != (long int) argumento) || argumento < 0)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) coeficiente * (long double) antoniovandre_fatorial ((unsigned long int) argumento));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) antoniovandre_fatorial ((unsigned long int) argumento));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 9), "arccossech"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 10, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (argumento == 0)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (argumento == NUMEROZERO)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((long double) (logl ((long double) (1 + (long double) powl (1 + (long double) powl ((long double) argumento, 2), 0.5)) / ((long double) argumento))))));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((TIPONUMEROREAL) (logl ((TIPONUMEROREAL) (1 + (TIPONUMEROREAL) powl (1 + (TIPONUMEROREAL) powl ((TIPONUMEROREAL) argumento, 2), 0.5)) / ((TIPONUMEROREAL) argumento))))));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 6), "arcsech"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 7, strlen (str) - 1), & err);
 
-			if ((* err != 0) || ((argumento <= 0) || (argumento > 1))) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || ((argumento <= NUMEROZERO) || (argumento > 1))) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((long double) (logl ((long double) (1 + (long double) powl (1 - (long double) powl ((long double) argumento, 2), 0.5)) / ((long double) argumento))))));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((TIPONUMEROREAL) (logl ((TIPONUMEROREAL) (1 + (TIPONUMEROREAL) powl (1 - (TIPONUMEROREAL) powl ((TIPONUMEROREAL) argumento, 2), 0.5)) / ((TIPONUMEROREAL) argumento))))));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 7), "arccotgh"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 8, strlen (str) - 1), & err);
 
-			if ((* err != 0) || ((argumento >= -1) && (argumento <= 1))) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || ((argumento >= -1) && (argumento <= NUMEROUM))) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((long double) ((logl ((long double) ((long double) argumento + 1) / ((long double) argumento - 1))) / 2))));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((TIPONUMEROREAL) ((logl ((TIPONUMEROREAL) ((TIPONUMEROREAL) argumento + 1) / ((TIPONUMEROREAL) argumento - 1))) / 2))));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 5), "arctgh"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 6, strlen (str) - 1), & err);
 
-			if ((* err != 0) || ((argumento <= -1) || (argumento >= 1))) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || ((argumento <= -1) || (argumento >= NUMEROUM))) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((long double) ((logl ((long double) (1 + (long double) argumento) / (1 - (long double) argumento))) / 2))));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((TIPONUMEROREAL) ((logl ((TIPONUMEROREAL) (1 + (TIPONUMEROREAL) argumento) / (1 - (TIPONUMEROREAL) argumento))) / 2))));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 6), "arccosh"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 7, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (argumento < 1)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (argumento < 1)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((long double) logl ((long double) (argumento + powl ((long double) (powl ((long double) argumento, 2) - 1), 0.5))))));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((TIPONUMEROREAL) logl ((TIPONUMEROREAL) (argumento + powl ((TIPONUMEROREAL) (powl ((TIPONUMEROREAL) argumento, 2) - 1), 0.5))))));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 6), "arcsenh"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 7, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((long double) logl ((long double) (argumento + powl ((long double) (powl ((long double) argumento, 2) + 1), 0.5))))));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((TIPONUMEROREAL) logl ((TIPONUMEROREAL) (argumento + powl ((TIPONUMEROREAL) (powl ((TIPONUMEROREAL) argumento, 2) + 1), 0.5))))));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 6), "cossech"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 7, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (argumento == 0)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (argumento == NUMEROZERO)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) (2 / (powl (M_El, (long double) argumento) - powl (M_El, ((-1) * (long double) argumento))))));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) (2 / (powl (M_El, (TIPONUMEROREAL) argumento) - powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))))));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 3), "sech"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 4, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) (2 / (powl (M_El, (long double) argumento) + powl (M_El, ((-1) * (long double) argumento))))));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) (2 / (powl (M_El, (TIPONUMEROREAL) argumento) + powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))))));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 4), "cotgh"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 5, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (argumento == 0)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (argumento == NUMEROZERO)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((powl (M_El, (long double) argumento) + powl (M_El, ((-1) * (long double) argumento))) / (powl (M_El, (long double) argumento) - powl (M_El, ((-1) * (long double) argumento))))));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((powl (M_El, (TIPONUMEROREAL) argumento) + powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))) / (powl (M_El, (TIPONUMEROREAL) argumento) - powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))))));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 2), "tgh"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 3, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((powl (M_El, (long double) argumento) - powl (M_El, ((-1) * (long double) argumento))) / (powl (M_El, (long double) argumento) + powl (M_El, ((-1) * (long double) argumento))))));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((powl (M_El, (TIPONUMEROREAL) argumento) - powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))) / (powl (M_El, (TIPONUMEROREAL) argumento) + powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))))));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 3), "senh"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 4, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (argumento == 0)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (argumento == NUMEROZERO)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((powl (M_El, (long double) argumento) - powl (M_El, ((-1) * (long double) argumento))) / 2)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((powl (M_El, (TIPONUMEROREAL) argumento) - powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))) / 2)));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 3), "cosh"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 4, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (argumento == 0)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (argumento == NUMEROZERO)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * (long double) ((powl (M_El, (long double) argumento) + powl (M_El, ((-1) * (long double) argumento))) / 2)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((powl (M_El, (TIPONUMEROREAL) argumento) + powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))) / 2)));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 8), "arccossec"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 9, strlen (str) - 1), & err);
 
-			if ((* err != 0) || ((argumento > -1) && (argumento < 1))) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || ((argumento > -1) && (argumento < 1))) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * asinl (1 / (long double) argumento)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * asinl (1 / (TIPONUMEROREAL) argumento)));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 5), "arcsec"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 6, strlen (str) - 1), & err);
 
-			if ((* err != 0) || ((argumento > -1) && (argumento < 1))) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || ((argumento > -1) && (argumento < 1))) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * acosl (1 / (long double) argumento)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * acosl (1 / (TIPONUMEROREAL) argumento)));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 6), "arccotg"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 7, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			if (argumento == 0) resultado = (long double) coeficiente * M_PI_2l; else if (argumento < 0) resultado = (long double) coeficiente * (atanl (1 / (long double) argumento) + M_PIl); else resultado = (long double) coeficiente * atanl (1 / (long double) argumento);
+			if (argumento == NUMEROZERO) resultado = (TIPONUMEROREAL) coeficiente * M_PI_2l; else if (argumento < 0) resultado = (TIPONUMEROREAL) coeficiente * (atanl (1 / (TIPONUMEROREAL) argumento) + M_PIl); else resultado = (TIPONUMEROREAL) coeficiente * atanl (1 / (TIPONUMEROREAL) argumento);
 
-			return antoniovandre_numeroparastring ((long double) resultado);
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) resultado);
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 4), "arctg"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 5, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * atanl ((long double) argumento)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * atanl ((TIPONUMEROREAL) argumento)));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 5), "arccos"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 6, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (argumento < -1) || (argumento > 1)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (argumento < -1) || (argumento > 1)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * acosl ((long double) argumento)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * acosl ((TIPONUMEROREAL) argumento)));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 5), "arcsen"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 6, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (argumento < -1) || (argumento > 1)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (argumento < -1) || (argumento > 1)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * asinl ((long double) argumento)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * asinl ((TIPONUMEROREAL) argumento)));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 5), "cossec"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 6, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (fmodl (argumento, M_PIl) == 0)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (fmodl (argumento, M_PIl) == NUMEROZERO)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente / sinl ((long double) argumento)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente / sinl ((TIPONUMEROREAL) argumento)));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 2), "sec"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 3, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (fmodl (argumento, M_PIl) == strtold (antoniovandre_numeroparastring (M_PI_2l), & err2))) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (fmodl (argumento, M_PIl) == strtold (antoniovandre_numeroparastring (M_PI_2l), & err2))) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente / cosl ((long double) argumento)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente / cosl ((TIPONUMEROREAL) argumento)));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 2), "sen"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 3, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * sinl ((long double) argumento)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * sinl ((TIPONUMEROREAL) argumento)));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 2), "cos"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 3, strlen (str) - 1), & err);
 
-			if (* err != 0) return STRINGSAIDAERRO;
+			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * cosl ((long double) argumento)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * cosl ((TIPONUMEROREAL) argumento)));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 3), "cotg"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 4, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (fmodl (argumento, M_PIl) == 0)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (fmodl (argumento, M_PIl) == NUMEROZERO)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente / tanl ((long double) argumento)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente / tanl ((TIPONUMEROREAL) argumento)));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 1), "tg"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 2, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (fmodl (argumento, M_PIl) == strtold (antoniovandre_numeroparastring (M_PI_2l), & err2))) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (fmodl (argumento, M_PIl) == strtold (antoniovandre_numeroparastring (M_PI_2l), & err2))) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * tanl ((long double) argumento)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * tanl ((TIPONUMEROREAL) argumento)));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 6), "logdois"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 7, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (argumento <= 0)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (argumento <= NUMEROZERO)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * logl ((long double) argumento) / M_LN2l));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * logl ((TIPONUMEROREAL) argumento) / M_LN2l));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 5), "logdez"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 6, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (argumento <= 0)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (argumento <= NUMEROZERO)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * logl ((long double) argumento) / M_LN10l));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * logl ((TIPONUMEROREAL) argumento) / M_LN10l));
 			}
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (! strcmp (antoniovandre_substring (str, i, i + 1), "ln"))
 			{
-			coeficiente = 1;
+			coeficiente = NUMEROUM;
 
 			if (i > 0)
 				{
-				strcpy (buffer, antoniovandre_substring (str, 0, i - 1));
+				strcpy (buffer, antoniovandre_substring (str, NUMEROZERO, i - 1));
 
 				if (! strcmp (buffer, "-"))
 					coeficiente = -1;
 				else
 					{
 					coeficiente = strtold (buffer, & err);
-					if (* err != 0) return STRINGSAIDAERRO;
+					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
 					}
 				}
 
 			argumento = strtold (antoniovandre_substring (str, i + 2, strlen (str) - 1), & err);
 
-			if ((* err != 0) || (argumento <= 0)) return STRINGSAIDAERRO;
+			if ((* err != NUMEROZERO) || (argumento <= NUMEROZERO)) return STRINGSAIDAERRO;
 
 			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-			return antoniovandre_numeroparastring ((long double) ((long double) coeficiente * logl ((long double) argumento)));
+			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * logl ((TIPONUMEROREAL) argumento)));
 			}
 
 	strtold (str, & err);
 
-	if ((* err != 0) || (! strcmp (str, "")))
+	if ((* err != NUMEROZERO) || (! strcmp (str, STRINGVAZIA)))
 		return STRINGSAIDAERRO;
 	else
 		return str;
@@ -2295,9 +2302,9 @@ char * antoniovandre_evalcelula (char * str)
 	char strtv2 [TAMANHO_BUFFER_WORD];
 	char strt4 [TAMANHO_BUFFER_PHRASE];
 	int posicoes_operadores [TAMANHO_BUFFER_PHRASE];
-	long double valor;
-	long double valort;
-	long double valort2;
+	TIPONUMEROREAL valor;
+	TIPONUMEROREAL valort;
+	TIPONUMEROREAL valort2;
 	int contador;
 	int contador2;
 	int i;
@@ -2313,19 +2320,19 @@ char * antoniovandre_evalcelula (char * str)
 	int ponteirofim;
 	int finalponteirocelula;
 	char * err;
-	char tc = ' ';
+	char tc = ESPACOBRANCO;
 	char tc2;
 
-	strcpy (strt, "");
+	strcpy (strt, STRINGVAZIA);
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (str [i] != tc) strncat (strt, & str [i], 1);
 
-	if (! strcmp (strt, "")) return STRINGSAIDAERRO;
+	if (! strcmp (strt, STRINGVAZIA)) return STRINGSAIDAERRO;
 
 	tc = strt [0];
 
-	for (i = 0; i < strlen (antoniovandre_operadores); i++)
+	for (i = NUMEROZERO; i < strlen (antoniovandre_operadores); i++)
 		{
 		tc2 = antoniovandre_operadores [i];
 
@@ -2335,54 +2342,54 @@ char * antoniovandre_evalcelula (char * str)
 
 	while (VERDADE)
 		{
-		for (i = 0; i < TAMANHO_BUFFER_PHRASE; i++) posicoes_operadores [i] = -1;
+		for (i = NUMEROZERO; i < TAMANHO_BUFFER_PHRASE; i++) posicoes_operadores [i] = -1;
 
-		contador = 0; flag4 = 0;
+		contador = NUMEROZERO; flag4 = NUMEROZERO;
 
-		for (i = 0; i < strlen (strt); i++)
-			for (j = 0; j < strlen (antoniovandre_operadores); j++)
+		for (i = NUMEROZERO; i < strlen (strt); i++)
+			for (j = NUMEROZERO; j < strlen (antoniovandre_operadores); j++)
 				{
-				flag3 = 0;
+				flag3 = NUMEROZERO;
 
-				for (k = 0; k < strlen (antoniovandre_letrasminusculas); k++)
+				for (k = NUMEROZERO; k < strlen (antoniovandre_letrasminusculas); k++)
 					{
-					if (((i == 0) && (antoniovandre_operadores [j] == OPERADORSUBTRACAO)) || ((contador > 0) && (posicoes_operadores [contador - 1] == i - 1) && (antoniovandre_operadores [j] == OPERADORSUBTRACAO)) || ((i > 0) && (strt [i - 1] == antoniovandre_letrasminusculas [k]) && (antoniovandre_operadores [j] == OPERADORSUBTRACAO)))
+					if (((i == NUMEROZERO) && (antoniovandre_operadores [j] == OPERADORSUBTRACAO)) || ((contador > 0) && (posicoes_operadores [contador - 1] == i - 1) && (antoniovandre_operadores [j] == OPERADORSUBTRACAO)) || ((i > 0) && (strt [i - 1] == antoniovandre_letrasminusculas [k]) && (antoniovandre_operadores [j] == OPERADORSUBTRACAO)))
 						{
-						flag3 = 1;
-						flag4 = 1;
+						flag3 = NUMEROUM;
+						flag4 = NUMEROUM;
 						}
 					}
 
-				if ((strt [i] == antoniovandre_operadores [j]) && flag3 == 0) posicoes_operadores [contador++] = i;
+				if ((strt [i] == antoniovandre_operadores [j]) && flag3 == NUMEROZERO) posicoes_operadores [contador++] = i;
 				}
 
 		if (posicoes_operadores [0] == -1) break;
 
-		for (i = 0; i < TAMANHO_BUFFER_PHRASE; i++)
+		for (i = NUMEROZERO; i < TAMANHO_BUFFER_PHRASE; i++)
 			if (posicoes_operadores [i] > 0)
 				{
-				flag = 0;
-				flag2 = 0;
+				flag = NUMEROZERO;
+				flag2 = NUMEROZERO;
 
-				for (j = 0; j < TAMANHO_BUFFER_PHRASE; j++)
-					if (strt [posicoes_operadores [j]] == '^') flag2 = 1;
+				for (j = NUMEROZERO; j < TAMANHO_BUFFER_PHRASE; j++)
+					if (strt [posicoes_operadores [j]] == '^') flag2 = NUMEROUM;
 
-				for (j = 0; j < TAMANHO_BUFFER_PHRASE; j++)
-					if (((strt [posicoes_operadores [j]] == OPERADORMULTIPLICACAO) || (strt [posicoes_operadores [j]] == '/'))) flag = 1;
+				for (j = NUMEROZERO; j < TAMANHO_BUFFER_PHRASE; j++)
+					if (((strt [posicoes_operadores [j]] == OPERADORMULTIPLICACAO) || (strt [posicoes_operadores [j]] == '/'))) flag = NUMEROUM;
 
-				strcpy (strt2, "");
+				strcpy (strt2, STRINGVAZIA);
 
 				if (i > 0)
 					ponteiro = posicoes_operadores [i - 1] + 1;
 				else
-					ponteiro = 0;
+					ponteiro = NUMEROZERO;
 
 				ponteiroinicio = ponteiro;
 
 				for (j = ponteiro; j < posicoes_operadores [i]; j++)
 					strncat (strt2, & strt [j], 1);
 
-				strcpy (strt3, "");
+				strcpy (strt3, STRINGVAZIA);
 
 				if (posicoes_operadores [i + 1] == -1)
 					ponteiro = strlen (strt);
@@ -2394,7 +2401,7 @@ char * antoniovandre_evalcelula (char * str)
 				for (j = posicoes_operadores [i] + 1; j < ponteiro; j++)
 					strncat (strt3, & strt [j], 1);
 
-				if ((! strcmp (strt2, "")) || (! strcmp (strt3, "")))
+				if ((! strcmp (strt2, STRINGVAZIA)) || (! strcmp (strt3, STRINGVAZIA)))
 					return STRINGSAIDAERRO;
 
 				strcpy (strtv1, antoniovandre_evalcelulafuncao (strt2));
@@ -2407,146 +2414,146 @@ char * antoniovandre_evalcelula (char * str)
 				if (! strcmp (strtv2, STRINGSAIDAERROOVER)) return STRINGSAIDAERROOVER;
 
 				valort = strtold (strtv1, & err);
-				if (* err != 0) return STRINGSAIDAERRO;
+				if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 				valort2 = strtold (strtv2, & err);
-				if (* err != 0) return STRINGSAIDAERRO;
+				if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 				if (strt [posicoes_operadores [i]] == '^')
 					{
 					if (valort < 0)
 						{
-						if (fmodl (fabsl (valort2), 2) == 0)
-							valor = powl (fabsl ((long double) valort), (long double) valort2);
-						else if (fmodl (fabsl (valort2), 2) == 1)
-							valor = (-1) * powl (fabsl ((long double) valort), (long double) valort2);
+						if (fmodl (fabsl (valort2), 2) == NUMEROZERO)
+							valor = powl (fabsl ((TIPONUMEROREAL) valort), (TIPONUMEROREAL) valort2);
+						else if (fmodl (fabsl (valort2), 2) == NUMEROUM)
+							valor = (-1) * powl (fabsl ((TIPONUMEROREAL) valort), (TIPONUMEROREAL) valort2);
 						else
 							{
-							contador2 = 1; flag5 = 0;
+							contador2 = NUMEROUM; flag5 = NUMEROZERO;
 
 							do
 								{
 								if ((fmodl ((contador2 / fabsl (valort2)), 2) > 1 + (-1) * APROXIMACAO2) && (fmodl ((contador2 / fabsl (valort2)), 2) < 1 + APROXIMACAO2))
 									{
-									if (fmodl (contador2, 2) == 0)
-										valor = powl (fabsl ((long double) valort), (long double) valort2);
+									if (fmodl (contador2, 2) == NUMEROZERO)
+										valor = powl (fabsl ((TIPONUMEROREAL) valort), (TIPONUMEROREAL) valort2);
 									else
-										valor = (-1) * powl (fabsl ((long double) valort), (long double) valort2);
+										valor = (-1) * powl (fabsl ((TIPONUMEROREAL) valort), (TIPONUMEROREAL) valort2);
 
-									flag5 = 1;
+									flag5 = NUMEROUM;
 									}
 
 								contador2++;
-								} while ((contador2 <= MAXNUMERADORFRACOES) && (flag5 == 0));
+								} while ((contador2 <= MAXNUMERADORFRACOES) && (flag5 == NUMEROZERO));
 
-							if (flag5 == 0) return STRINGSAIDAERRO;
+							if (flag5 == NUMEROZERO) return STRINGSAIDAERRO;
 							}
 						}
 					else
-						valor = powl ((long double) valort, (long double) valort2);
+						valor = powl ((TIPONUMEROREAL) valort, (TIPONUMEROREAL) valort2);
 
 					if (isnan (valor) || isinf (valor)) return STRINGSAIDAERRO;
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == OPERADORMULTIPLICACAO) && (flag2 == 0))
+				if ((strt [posicoes_operadores [i]] == OPERADORMULTIPLICACAO) && (flag2 == NUMEROZERO))
 					{
-					valor = (long double) valort * (long double) valort2;
+					valor = (TIPONUMEROREAL) valort * (TIPONUMEROREAL) valort2;
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == '/') && (flag2 == 0))
+				if ((strt [posicoes_operadores [i]] == '/') && (flag2 == NUMEROZERO))
 					{
-					if (valort2 == 0) return STRINGSAIDAERRO;
+					if (valort2 == NUMEROZERO) return STRINGSAIDAERRO;
 
-					valor = (long double) valort / (long double) valort2;
+					valor = (TIPONUMEROREAL) valort / (TIPONUMEROREAL) valort2;
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == '+') && (flag == 0) && (flag2 == 0))
+				if ((strt [posicoes_operadores [i]] == '+') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
-					valor = (long double) valort + (long double) valort2;
+					valor = (TIPONUMEROREAL) valort + (TIPONUMEROREAL) valort2;
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == OPERADORSUBTRACAO) && (flag == 0) && (flag2 == 0))
+				if ((strt [posicoes_operadores [i]] == OPERADORSUBTRACAO) && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
-					valor = (long double) valort - (long double) valort2;
+					valor = (TIPONUMEROREAL) valort - (TIPONUMEROREAL) valort2;
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == '%') && (flag == 0) && (flag2 == 0))
+				if ((strt [posicoes_operadores [i]] == '%') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
-					valor = fmodl ((long double) valort, (long double) valort2);
+					valor = fmodl ((TIPONUMEROREAL) valort, (TIPONUMEROREAL) valort2);
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == '@') && (flag == 0) && (flag2 == 0))
-					{
-					if ((valort != (long int) valort) || (valort < 0) || (valort2 != (long int) valort2) || (valort2 < 0) || (valort < valort2)) return STRINGSAIDAERRO;
-					valor = (long double) antoniovandre_fatorial ((unsigned long int) valort) / antoniovandre_fatorial ((unsigned long int) (valort - valort2));
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
-					break;
-					}
-
-				if ((strt [posicoes_operadores [i]] == '#') && (flag == 0) && (flag2 == 0))
+				if ((strt [posicoes_operadores [i]] == '@') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
 					if ((valort != (long int) valort) || (valort < 0) || (valort2 != (long int) valort2) || (valort2 < 0) || (valort < valort2)) return STRINGSAIDAERRO;
-					valor = (long double) antoniovandre_fatorial ((unsigned long int) valort) / (antoniovandre_fatorial ((unsigned long int) (valort - valort2)) * antoniovandre_fatorial ((unsigned long int) (valort2)));
+					valor = (TIPONUMEROREAL) antoniovandre_fatorial ((unsigned long int) valort) / antoniovandre_fatorial ((unsigned long int) (valort - valort2));
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == '$') && (flag == 0) && (flag2 == 0))
+				if ((strt [posicoes_operadores [i]] == '#') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
+					{
+					if ((valort != (long int) valort) || (valort < 0) || (valort2 != (long int) valort2) || (valort2 < 0) || (valort < valort2)) return STRINGSAIDAERRO;
+					valor = (TIPONUMEROREAL) antoniovandre_fatorial ((unsigned long int) valort) / (antoniovandre_fatorial ((unsigned long int) (valort - valort2)) * antoniovandre_fatorial ((unsigned long int) (valort2)));
+					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					break;
+					}
+
+				if ((strt [posicoes_operadores [i]] == '$') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
 					if (valort2 != (int) valort2) return STRINGSAIDAERRO;
-					valor = roundl ((long double) valort / powl (10, valort2)) * powl (10, valort2);
+					valor = roundl ((TIPONUMEROREAL) valort / powl (10, valort2)) * powl (10, valort2);
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == '>') && (flag == 0) && (flag2 == 0))
+				if ((strt [posicoes_operadores [i]] == '>') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
 					(valort > valort2) ? (valor = valort) : (valor = valort2);
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == '<') && (flag == 0) && (flag2 == 0))
+				if ((strt [posicoes_operadores [i]] == '<') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
 					(valort < valort2) ? (valor = valort) : (valor = valort2);
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == ':') && (flag == 0) && (flag2 == 0))
+				if ((strt [posicoes_operadores [i]] == ':') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
 					valor = logl (valort) / logl (valort2);
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == '~') && (flag == 0) && (flag2 == 0))
+				if ((strt [posicoes_operadores [i]] == '~') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
 					if (fabsl (logl (valort) - logl (valort2)) < APROXIMACAO)
-						valor = 1;
+						valor = NUMEROUM;
 					else
-						valor = 0;
+						valor = NUMEROZERO;
 
 					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
 					break;
 					}
 				}
 
-		strcpy (strt4, "");
+		strcpy (strt4, STRINGVAZIA);
 
-		for (i = 0; i < ponteiroinicio; i++)
+		for (i = NUMEROZERO; i < ponteiroinicio; i++)
 			strncat (strt4, & strt [i], 1);
 
 		strcat (strt4, antoniovandre_numeroparastring (valor));
@@ -2587,52 +2594,52 @@ char * antoniovandre_eval (char * str)
 	char tc;
 	char tc2;
 
-	strcpy (str2, "");
-	strcpy (str2t, "");
-	strcpy (str3, "");
-	strcpy (str4, "");
-	strcpy (str4t, "");
-	strcpy (str5, "");
-	strcpy (str6, "");
+	strcpy (str2, STRINGVAZIA);
+	strcpy (str2t, STRINGVAZIA);
+	strcpy (str3, STRINGVAZIA);
+	strcpy (str4, STRINGVAZIA);
+	strcpy (str4t, STRINGVAZIA);
+	strcpy (str5, STRINGVAZIA);
+	strcpy (str6, STRINGVAZIA);
 
-	for (i = 0; i < strlen (str); i++)
-		if (str [i] != ' ') strncat (str2, & str [i], 1);
+	for (i = NUMEROZERO; i < strlen (str); i++)
+		if (str [i] != ESPACOBRANCO) strncat (str2, & str [i], 1);
 
-	if (! strcmp (str2, "")) return STRINGSAIDAERRO;
+	if (! strcmp (str2, STRINGVAZIA)) return STRINGSAIDAERRO;
 
-	for (i = 1; i < strlen (str2); i++)
+	for (i = NUMEROUM; i < strlen (str2); i++)
 		{
 		tc = str2 [i - 1];
 		tc2 = str2 [i];
 
-		for (j = 0; j < strlen (antoniovandre_operadores); j++)
+		for (j = NUMEROZERO; j < strlen (antoniovandre_operadores); j++)
 			{
 			if ((tc == OPERADORSUBTRACAO) && (tc2 == antoniovandre_operadores [j])) return STRINGSAIDAERRO;
 
-			flag = 0;
+			flag = NUMEROZERO;
 
-			for (k = 0; k < strlen (antoniovandre_operadoresespeciais); k++)
+			for (k = NUMEROZERO; k < strlen (antoniovandre_operadoresespeciais); k++)
 				if (tc == antoniovandre_operadoresespeciais [k])
 					{
-					flag = 1;
+					flag = NUMEROUM;
 					break;
 					}
 
-			if (flag == 1) break;
+			if (flag == NUMEROUM) break;
 
 			if ((tc == antoniovandre_operadores [j]) && (tc2 == OPERADORSUBTRACAO)) return STRINGSAIDAERRO;
 			}
 		}
 
-	contador = 0;
+	contador = NUMEROZERO;
 
-	for (i = 0; i < strlen (str2); i++)
+	for (i = NUMEROZERO; i < strlen (str2); i++)
 		{
-		flag2 = 0;
+		flag2 = NUMEROZERO;
 
-		if ((i >= 1) && (str2 [i] == OPERADORSUBTRACAO) && (str2 [i - 1] == TOKENINICIOEVAL))  flag2 = 1;
+		if ((i >= NUMEROUM) && (str2 [i] == OPERADORSUBTRACAO) && (str2 [i - 1] == TOKENINICIOEVAL))  flag2 = NUMEROUM;
 
-		if ((((i == 0) && (str2 [0] == OPERADORSUBTRACAO)) || (flag2 == 1)) && ! ((i > 1) && (str2 [i] == '1') && (str2 [i - 1] == OPERADORSUBTRACAO) && (str2 [i - 2] == TOKENINICIOEVAL)))
+		if ((((i == NUMEROZERO) && (str2 [0] == OPERADORSUBTRACAO)) || (flag2 == NUMEROUM)) && ! ((i > 1) && (str2 [i] == '1') && (str2 [i - 1] == OPERADORSUBTRACAO) && (str2 [i - 2] == TOKENINICIOEVAL)))
 			{
 			j = i + 1;
 
@@ -2641,41 +2648,41 @@ char * antoniovandre_eval (char * str)
 
 			do
 				{
-				flag = 0;
+				flag = NUMEROZERO;
 
-				for (k = 0; k < strlen (antoniovandre_numeros); k++)
-					for (l = 0; l < strlen (antoniovandre_letras); l++)
-						if ((! ((flag2 == 1) && (contador == -1))) && ((str2 [j] == antoniovandre_numeros [k]) || (str2 [j] == antoniovandre_letras [l]) || (str2 [j] == TOKENINICIOEVAL) || (str2 [j] == TOKENFIMEVAL))) flag = 1;
+				for (k = NUMEROZERO; k < strlen (antoniovandre_numeros); k++)
+					for (l = NUMEROZERO; l < strlen (antoniovandre_letras); l++)
+						if ((! ((flag2 == NUMEROUM) && (contador == -1))) && ((str2 [j] == antoniovandre_numeros [k]) || (str2 [j] == antoniovandre_letras [l]) || (str2 [j] == TOKENINICIOEVAL) || (str2 [j] == TOKENFIMEVAL))) flag = NUMEROUM;
 
-				if (flag == 1) j++;
-				} while (flag == 1);
+				if (flag == NUMEROUM) j++;
+				} while (flag == NUMEROUM);
 
-			flag = 0; flag3 = 1;
+			flag = NUMEROZERO; flag3 = NUMEROUM;
 
-			for (k = 0; k < strlen (antoniovandre_operadoresprioritarios); k++)
+			for (k = NUMEROZERO; k < strlen (antoniovandre_operadoresprioritarios); k++)
 				if (str2 [j] == antoniovandre_operadoresprioritarios [k])
 					{
-					flag = 1;
+					flag = NUMEROUM;
 
 					l = j - 1;
 
 					do
 						{
-						flag3 = 0;
+						flag3 = NUMEROZERO;
 
-						for (m = 0; m < strlen (antoniovandre_numeros); m++)
+						for (m = NUMEROZERO; m < strlen (antoniovandre_numeros); m++)
 							if (str2 [l] == antoniovandre_numeros [m])
-								flag3 = 1;
+								flag3 = NUMEROUM;
 
 						l--;
-						} while ((flag3 == 1) && ((str2 [l] != TOKENINICIOEVAL) || (l > 0)));
+						} while ((flag3 == NUMEROUM) && ((str2 [l] != TOKENINICIOEVAL) || (l > 0)));
 					}
 
-			if (flag == 1)
+			if (flag == NUMEROUM)
 				{
-				strcpy (str2t, "");
+				strcpy (str2t, STRINGVAZIA);
 
-				if (flag3 == 1)
+				if (flag3 == NUMEROUM)
 					{
 					tc = TOKENINICIOEVAL;
 					strncat (str2t, & tc, 1);
@@ -2683,7 +2690,7 @@ char * antoniovandre_eval (char * str)
 					tc = TOKENINICIOEVAL;
 					strncat (str2t, & tc, 1);
 
-					strcat (str2t, "-1");
+					strcat (str2t, STRINGMENOSUM);
 
 					tc = TOKENFIMEVAL;
 					strncat (str2t, & tc, 1);
@@ -2691,7 +2698,7 @@ char * antoniovandre_eval (char * str)
 					tc = OPERADORMULTIPLICACAO;
 					strncat (str2t, & tc, 1);
 
-					for (k = 0; k <= l; k++)
+					for (k = NUMEROZERO; k <= l; k++)
 						strncat (str2t, & str2 [k], 1);
 
 					for (k = i + 1; k < j; k++)
@@ -2702,13 +2709,13 @@ char * antoniovandre_eval (char * str)
 					}
 				else
 					{
-					for (k = 0; k < i; k++)
+					for (k = NUMEROZERO; k < i; k++)
 						strncat (str2t, & str2 [k], 1);
 
 					tc = TOKENINICIOEVAL;
 					strncat (str2t, & tc, 1);
 
-					strcat (str2t, "-1");
+					strcat (str2t, STRINGMENOSUM);
 
 					tc = TOKENFIMEVAL;
 					strncat (str2t, & tc, 1);
@@ -2732,24 +2739,24 @@ char * antoniovandre_eval (char * str)
 			}
 		}
 
-	if (strcmp (str2t, "")) strcpy (str2, str2t);
+	if (strcmp (str2t, STRINGVAZIA)) strcpy (str2, str2t);
 
-	for (i = 1; i < strlen (str2); i++)
+	for (i = NUMEROUM; i < strlen (str2); i++)
 		{
-		flag = 0;
-		flag2 = 0;
+		flag = NUMEROZERO;
+		flag2 = NUMEROZERO;
 
-		for (j = 0; j < strlen (antoniovandre_letrasminusculas); j++)
-			if (str2 [i] == antoniovandre_letrasminusculas [j]) flag = 1;
+		for (j = NUMEROZERO; j < strlen (antoniovandre_letrasminusculas); j++)
+			if (str2 [i] == antoniovandre_letrasminusculas [j]) flag = NUMEROUM;
 
-		for (j = 0; j < strlen (antoniovandre_letrasmaiusculas); j++)
-			if (str2 [i - 1] == antoniovandre_letrasmaiusculas [j]) flag2 = 1;
+		for (j = NUMEROZERO; j < strlen (antoniovandre_letrasmaiusculas); j++)
+			if (str2 [i - 1] == antoniovandre_letrasmaiusculas [j]) flag2 = NUMEROUM;
 
-		if ((flag == 1) && (flag2 == 1))
+		if ((flag == NUMEROUM) && (flag2 == NUMEROUM))
 			{
-			strcpy (str2t, "");
+			strcpy (str2t, STRINGVAZIA);
 
-			for (j = 0; j < i; j++)
+			for (j = NUMEROZERO; j < i; j++)
 				strncat (str2t, & str2 [j], 1);
 
 			tc = OPERADORMULTIPLICACAO;
@@ -2764,70 +2771,70 @@ char * antoniovandre_eval (char * str)
 
 	do
 		{
-		inicio = 0;
+		inicio = NUMEROZERO;
 		fim = strlen (str2) - 1;
-		flag = 0;
-		flag2 = 0;
+		flag = NUMEROZERO;
+		flag2 = NUMEROZERO;
 
-		for (i = 0; i < strlen (str2); i++)
+		for (i = NUMEROZERO; i < strlen (str2); i++)
 			{
 			if (str2 [i] == TOKENINICIOEVAL)
 				{
 				inicio = i + 1;
-				flag = 1;
+				flag = NUMEROUM;
 				}
 
 			if (str2 [i] == TOKENFIMEVAL)
 				{
 				fim = i - 1;
-				flag2 = 1;
+				flag2 = NUMEROUM;
 				break;
 				}
 			}
 
-		strcpy (str3, "");
+		strcpy (str3, STRINGVAZIA);
 
 		if (flag == flag2)
 			{
 			k = inicio - 2;
-			flag4 = 0;
+			flag4 = NUMEROZERO;
 
 			do
 				{
-				flag3 = 0;
+				flag3 = NUMEROZERO;
 				tc = str2 [k];
 
-				for (j = 0; j < strlen (antoniovandre_numeros); j++)
+				for (j = NUMEROZERO; j < strlen (antoniovandre_numeros); j++)
 					if (tc == antoniovandre_numeros [j])
 						{
-						flag3 = 1;
-						flag4 = 1;
+						flag3 = NUMEROUM;
+						flag4 = NUMEROUM;
 						}
 
-				for (j = 0; j < strlen (antoniovandre_letrasmaiusculas); j++)
+				for (j = NUMEROZERO; j < strlen (antoniovandre_letrasmaiusculas); j++)
 					if (tc == antoniovandre_letrasmaiusculas [j])
 						{
-						flag3 = 1;
-						flag4 = 1;
+						flag3 = NUMEROUM;
+						flag4 = NUMEROUM;
 						}
 
 				k--;
-				} while (flag3 == 1);
+				} while (flag3 == NUMEROUM);
 
-			strcpy (str6, "");
+			strcpy (str6, STRINGVAZIA);
 
-			if (flag4 == 1) for (j = k; j < inicio - 1; j++) strncat (str6, & str2 [j], 1);
+			if (flag4 == NUMEROUM) for (j = k; j < inicio - 1; j++) strncat (str6, & str2 [j], 1);
 
-			if (flag4 == 1)
-				for (i = 0; i < k; i++) strncat (str3, & str2 [i], 1);
+			if (flag4 == NUMEROUM)
+				for (i = NUMEROZERO; i < k; i++) strncat (str3, & str2 [i], 1);
 			else
-				for (i = 0; i < inicio - 1; i++) strncat (str3, & str2 [i], 1);
+				for (i = NUMEROZERO; i < inicio - 1; i++) strncat (str3, & str2 [i], 1);
 
 			i = strlen (str6);
 
 			tc = str6 [i - 1];
 
-			if (strcmp (str6, ""))
+			if (strcmp (str6, STRINGVAZIA))
 				{
 				strcat (str3, str6);
 				if (tc != OPERADORSUBTRACAO) strcat (str3, "*");
@@ -2835,19 +2842,19 @@ char * antoniovandre_eval (char * str)
 
 			if (!strcmp (str3, "-")) strcpy (str3, "-1*");
 
-			strcpy (str4, "");
+			strcpy (str4, STRINGVAZIA);
 
 			for (i = inicio; i <= fim; i++)
 				strncat (str4, & str2 [i], 1);
 
-			i = 0; contador = 0; strcpy (str4t, "");
+			i = NUMEROZERO; contador = NUMEROZERO; strcpy (str4t, STRINGVAZIA);
 
 			do
 				{
 				if (str4 [i++] == OPERADORSUBTRACAO) contador++; else break;
 				} while (i < strlen (str4));
 
-			if (contador % 2 == 1)
+			if (contador % 2 == NUMEROUM)
 				{
 				tc = OPERADORSUBTRACAO;
 				strncat (str4t, & tc, 1);
@@ -2861,17 +2868,17 @@ char * antoniovandre_eval (char * str)
 			if (! strcmp (str5, STRINGSAIDAERRO)) return STRINGSAIDAERRO;
 			if (! strcmp (str5, STRINGSAIDAERROOVER)) return STRINGSAIDAERROOVER;
 
-			for (i = 0; i < strlen (str5); i++)
+			for (i = NUMEROZERO; i < strlen (str5); i++)
 				strncat (str3, & str5 [i], 1);
 
-			flag5 = 0;
+			flag5 = NUMEROZERO;
 
-			for (i = 0; i < strlen (antoniovandre_numeros); i++)
-				for (j = 0; j < strlen (antoniovandre_letras); j++)
+			for (i = NUMEROZERO; i < strlen (antoniovandre_numeros); i++)
+				for (j = NUMEROZERO; j < strlen (antoniovandre_letras); j++)
 					if (((str2 [fim + 2] == antoniovandre_numeros [i] && (str2 [fim + 2] != OPERADORSUBTRACAO))) || (str2 [fim + 2] == antoniovandre_letras [j]))
-						flag5 = 1;
+						flag5 = NUMEROUM;
 
-			if ((flag5 == 1) && (flag == 1))
+			if ((flag5 == NUMEROUM) && (flag == NUMEROUM))
 				{
 				tc = OPERADORMULTIPLICACAO;
 				strncat (str3, & tc, 1);
@@ -2884,73 +2891,73 @@ char * antoniovandre_eval (char * str)
 			}
 		else
 			return STRINGSAIDAERRO;
-		} while (! ((flag == 0) && (flag2 == 0)));
+		} while (! ((flag == NUMEROZERO) && (flag2 == NUMEROZERO)));
 
 	return antoniovandre_evalcelula (str2);
 	}
 
 // Derivada em um ponto.
 
-char * antoniovandre_derivada (char * str, long double ponto)
+char * antoniovandre_derivada (char * str, TIPONUMEROREAL ponto)
 	{
 	char str2 [TAMANHO_BUFFER_PHRASE];
 	char str3 [TAMANHO_BUFFER_PHRASE];
-	long double valorsup;
-	long double valorinf;
+	TIPONUMEROREAL valorsup;
+	TIPONUMEROREAL valorinf;
 	int i;
 	char * err;
 
 	if (ponto > VALOR_MAX) return STRINGSAIDAERROOVER;
 
-	strcpy (str2, "");
+	strcpy (str2, STRINGVAZIA);
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (str [i] == VARIAVELDESUBSTITUICAO)
-			strcat (str2, antoniovandre_numeroparastring ((long double) ((long double) ponto + (long double) EPSILON)));
+			strcat (str2, antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) ponto + (TIPONUMEROREAL) EPSILON)));
 		else
 			strncat (str2, & str [i], 1);
 
 	valorsup = strtold (antoniovandre_eval (str2), & err);
 
-	if (* err != 0) return STRINGSAIDAERRO;
+	if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-	strcpy (str3, "");
+	strcpy (str3, STRINGVAZIA);
 
-	for (i = 0; i < strlen (str); i++)
+	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (str [i] == VARIAVELDESUBSTITUICAO)
-			strcat (str3, antoniovandre_numeroparastring ((long double) ((long double) ponto - (long double) EPSILON)));
+			strcat (str3, antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) ponto - (TIPONUMEROREAL) EPSILON)));
 		else
 			strncat (str3, & str [i], 1);
 
 	valorinf = strtold (antoniovandre_eval (str3), & err);
 
-	if (* err != 0) return STRINGSAIDAERRO;
+	if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-	return antoniovandre_numeroparastring ((long double) ((long double) valorsup - (long double) valorinf) / (long double) (2 * (long double) EPSILON));
+	return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) valorsup - (TIPONUMEROREAL) valorinf) / (TIPONUMEROREAL) (2 * (TIPONUMEROREAL) EPSILON));
 	}
 
 // Integral definida.
 
-char * antoniovandre_integraldefinida (char * str, long double a, long double b)
+char * antoniovandre_integraldefinida (char * str, TIPONUMEROREAL a, TIPONUMEROREAL b)
 	{
 	char str2 [TAMANHO_BUFFER_PHRASE];
 	char str3 [TAMANHO_BUFFER_PHRASE];
-	long double integral = 0;
-	long double norma;
-	long double parcela;
+	TIPONUMEROREAL integral = NUMEROZERO;
+	TIPONUMEROREAL norma;
+	TIPONUMEROREAL parcela;
 	int i;
 	int j;
 	char * err;
 
-	norma = (long double) ( (long double) b - (long double) a) / (long double) NUMEROPARTICOESSOMARIEMANN;
+	norma = (TIPONUMEROREAL) ( (TIPONUMEROREAL) b - (TIPONUMEROREAL) a) / (TIPONUMEROREAL) NUMEROPARTICOESSOMARIEMANN;
 
-	for (j = 0; j < NUMEROPARTICOESSOMARIEMANN; j++)
+	for (j = NUMEROZERO; j < NUMEROPARTICOESSOMARIEMANN; j++)
 		{
-		strcpy (str2, "");
+		strcpy (str2, STRINGVAZIA);
 
-		for (i = 0; i < strlen (str); i++)
+		for (i = NUMEROZERO; i < strlen (str); i++)
 			if (str [i] == VARIAVELDESUBSTITUICAO)
-				strcat (str2, antoniovandre_numeroparastring ((long double) ((long double) a + (long double) j * (long double) norma + (long double) ((long double) norma / 2))));
+				strcat (str2, antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) a + (TIPONUMEROREAL) j * (TIPONUMEROREAL) norma + (TIPONUMEROREAL) ((TIPONUMEROREAL) norma / 2))));
 			else
 				strncat (str2, & str [i], 1);
 
@@ -2958,11 +2965,11 @@ char * antoniovandre_integraldefinida (char * str, long double a, long double b)
 
 		if (! strcmp (str3, STRINGSAIDAERROOVER)) return STRINGSAIDAERROOVER;
 
-		parcela = strtold (str3, & err) * (long double) norma;
+		parcela = strtold (str3, & err) * (TIPONUMEROREAL) norma;
 
-		if (* err != 0) return STRINGSAIDAERRO;
+		if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-		integral += (long double) parcela;
+		integral += (TIPONUMEROREAL) parcela;
 
 		if (integral > VALOR_MAX) return STRINGSAIDAERROOVER;
 		}
@@ -2984,23 +2991,25 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 	char buffer2 [TAMANHO_BUFFER_WORD];
 	char antoniovandre_funcoes_buffer_char;
 	char antoniovandre_pontos_buffer_char;
-	unsigned long int totalitens = 0;
-	unsigned long int totalpontos = 0;
-	unsigned long int totalfuncoes = 0;
-	unsigned long int contadoritens = 0;
-	long double m = VALOR_MAX;
-	long double mt;
-	long double x;
-	long double y;
-	long double yt;
-	int i = 1;
+	unsigned long int totalitens = NUMEROZERO;
+	unsigned long int totalpontos = NUMEROZERO;
+	unsigned long int totalfuncoes = NUMEROZERO;
+	unsigned long int contadoritens = NUMEROZERO;
+	TIPONUMEROREAL m = VALOR_MAX;
+	TIPONUMEROREAL m2 = VALOR_MAX;
+	TIPONUMEROREAL mt;
+	TIPONUMEROREAL mt2;
+	TIPONUMEROREAL x;
+	TIPONUMEROREAL y;
+	TIPONUMEROREAL yt;
+	int i = NUMEROUM;
 	int flag;
-	int flag2 = 0;
-	int flag3 = 0;
+	int flag2 = NUMEROZERO;
+	int flag3 = NUMEROZERO;
 	char tc;
 	char * err;
 
-	if (log == 1)
+	if (log == NUMEROUM)
 		{
 		printf ("Verificando validade dos arquivos... ");
 		fflush (stdout);
@@ -3010,43 +3019,43 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 	if (arquivopontos == NULL)
 		{
-		if (log == 1) printf ("Erro.\n");
+		if (log == NUMEROUM) printf ("Erro.\n");
 		return STRINGSAIDAERRO;
 		}
 
-	fseek (arquivopontos, 0, SEEK_END);
+	fseek (arquivopontos, NUMEROZERO, SEEK_END);
 
 	if (ftell (arquivopontos) > (unsigned long int) TAMANHO_MAX_ARQUIVO)
 		{
-		if (log == 1) printf ("Erro.\n");
+		if (log == NUMEROUM) printf ("Erro.\n");
 		fclose (arquivopontos);
 		return STRINGSAIDAERROOVER;
 		}
 
-	fseek (arquivopontos, 0, SEEK_SET);
+	fseek (arquivopontos, NUMEROZERO, SEEK_SET);
 
 	arquivofuncoes = fopen (arquivofuncoespath, "r");
 
 	if (arquivofuncoes == NULL)
 		{
-		if (log == 1) printf ("Erro.\n");
+		if (log == NUMEROUM) printf ("Erro.\n");
 		return STRINGSAIDAERRO;
 		}
 
-	fseek (arquivofuncoes, 0, SEEK_END);
+	fseek (arquivofuncoes, NUMEROZERO, SEEK_END);
 
 	if (ftell (arquivofuncoes) > (unsigned long int) TAMANHO_MAX_ARQUIVO)
 		{
-		if (log == 1) printf ("Erro.\n");
+		if (log == NUMEROUM) printf ("Erro.\n");
 		fclose (arquivofuncoes);
 		return STRINGSAIDAERROOVER;
 		}
 
-	fseek (arquivofuncoes, 0, SEEK_SET);
+	fseek (arquivofuncoes, NUMEROZERO, SEEK_SET);
 
-	if (log == 1) printf("Ok.\n");
+	if (log == NUMEROUM) printf("Ok.\n");
 
-	if (log == 1)
+	if (log == NUMEROUM)
 		{
 		printf ("Reunindo metadados...  ");
 		fflush (stdout);
@@ -3058,7 +3067,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 		if ((antoniovandre_pontos_buffer_char == DELIMITADORSTRING2) || (antoniovandre_pontos_buffer_char == '\n') || (feof (arquivopontos))) totalpontos++;
 
-		if (i++ % INTERVALOPROGRESSO2 == 0)
+		if (i++ % INTERVALOPROGRESSO2 == NUMEROZERO)
 			{
 			switch (tc)
 				{
@@ -3081,7 +3090,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 			printf ("\b%c", tc);
 			fflush (stdout);
 
-			i = 1;
+			i = NUMEROUM;
 			}
 		} while (! feof (arquivopontos));
 
@@ -3093,7 +3102,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 		if ((antoniovandre_funcoes_buffer_char == DELIMITADORSTRING) || (antoniovandre_funcoes_buffer_char == '\n') || (feof (arquivofuncoes))) totalfuncoes++;
 
-		if (i++ % INTERVALOPROGRESSO2 == 0)
+		if (i++ % INTERVALOPROGRESSO2 == NUMEROZERO)
 			{
 			switch (tc)
 				{
@@ -3116,7 +3125,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 			printf ("\b%c", tc);
 			fflush (stdout);
 
-			i = 1;
+			i = NUMEROUM;
 			}
 		} while (! feof (arquivofuncoes));
 
@@ -3124,61 +3133,62 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 	totalitens = totalpontos * totalfuncoes;
 
-	if (log == 1) printf("\bOk.\n");
+	if (log == NUMEROUM) printf("\bOk.\n");
 
-	fseek (arquivopontos, 0, SEEK_SET);
-	fseek (arquivofuncoes, 0, SEEK_SET);
+	fseek (arquivopontos, NUMEROZERO, SEEK_SET);
+	fseek (arquivofuncoes, NUMEROZERO, SEEK_SET);
 
-	strcpy (bufferr, "");
+	strcpy (bufferr, STRINGVAZIA);
 
 	do
 		{
-		if ((flag2 == 1) || (flag3 == 0))
+		if ((flag2 == NUMEROUM) || (flag3 == NUMEROZERO))
 			{
-			strcpy (buffer, "");
+			strcpy (buffer, STRINGVAZIA);
 
 			do
 				{
 				antoniovandre_funcoes_buffer_char = fgetc (arquivofuncoes);
 
-				if ((! feof (arquivofuncoes)) && (antoniovandre_funcoes_buffer_char != DELIMITADORSTRING) && (antoniovandre_funcoes_buffer_char != ' ') && (antoniovandre_funcoes_buffer_char != '\n'))
+				if ((! feof (arquivofuncoes)) && (antoniovandre_funcoes_buffer_char != DELIMITADORSTRING) && (antoniovandre_funcoes_buffer_char != ESPACOBRANCO) && (antoniovandre_funcoes_buffer_char != '\n'))
 					strncat (buffer, & antoniovandre_funcoes_buffer_char, 1);
 				} while (((! feof (arquivofuncoes))) && (antoniovandre_funcoes_buffer_char != DELIMITADORSTRING) && (antoniovandre_funcoes_buffer_char != '\n'));
 
-			fseek (arquivopontos, 0, SEEK_SET);
-			flag2 = 0;
-			flag3 = 1;
-			mt = 0;
+			fseek (arquivopontos, NUMEROZERO, SEEK_SET);
+			flag2 = NUMEROZERO;
+			flag3 = NUMEROUM;
+			mt = NUMEROZERO;
+			mt2 = NUMEROZERO;
 			}
 
-		strcpy (buffer1, "");
-		strcpy (buffer2, "");
-		flag = 0;
+		strcpy (buffer1, STRINGVAZIA);
+		strcpy (buffer2, STRINGVAZIA);
+		flag = NUMEROZERO;
 
-		while (flag2 == 0)
+		while (flag2 == NUMEROZERO)
 			{
 			antoniovandre_pontos_buffer_char = fgetc (arquivopontos);
 
-			if (antoniovandre_pontos_buffer_char != ' ')
+			if (antoniovandre_pontos_buffer_char != ESPACOBRANCO)
 				if (antoniovandre_pontos_buffer_char == DELIMITADORSTRING)
-					flag = 1;
+					flag = NUMEROUM;
 				else
 					{
 					if (feof (arquivopontos))
 						{
-						flag2 = 1;
+						flag2 = NUMEROUM;
 						break;
 						}
 					else
 						{
 						if ((antoniovandre_pontos_buffer_char == DELIMITADORSTRING2) || (antoniovandre_pontos_buffer_char == '\n'))
 							{
-							flag = 0;
+							flag = NUMEROZERO;
 							break;
 							}
 						else
 							{
-							if (flag == 0)
+							if (flag == NUMEROZERO)
 								strncat (buffer1, & antoniovandre_pontos_buffer_char, 1);
 							else
 								strncat (buffer2, & antoniovandre_pontos_buffer_char, 1);
@@ -3189,22 +3199,22 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 		x = strtold (buffer1, & err);
 
-		if (* err != 0) return STRINGSAIDAERRO;
+		if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 		if (x > VALOR_MAX) return STRINGSAIDAERROOVER;
 
 		y = strtold (buffer2, & err);
 			
 		if (y > VALOR_MAX) return STRINGSAIDAERROOVER;
-		if (* err != 0) return STRINGSAIDAERRO;
+		if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-		strcpy (buffert, "");
+		strcpy (buffert, STRINGVAZIA);
 
-		for (i = 0; i < strlen (buffer); i++)
+		for (i = NUMEROZERO; i < strlen (buffer); i++)
 			{
 			tc = buffer [i];
 
 			if (tc == 'x')
-				strcat (buffert, antoniovandre_numeroparastring ((long double) x));
+				strcat (buffert, antoniovandre_numeroparastring ((TIPONUMEROREAL) x));
 			else
 				strncat (buffert, & tc, 1);
 			}
@@ -3217,24 +3227,34 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 		contadoritens++;
 
-		if (* err == 0) mt += (long double) ((long double) y - (long double) yt); else {flag2 = 1; continue;}
-
-		if ((flag2 == 1) && (fabs ((long double) mt) < (long double) m))
+		if (* err == NUMEROZERO)
 			{
-			m = fabs ((long double) mt);
-			strcpy (bufferr, buffer);
+			mt += (y - yt);
+			mt2 += fabsl (y - yt);
+			}
+		else {flag2 = NUMEROUM; continue;}
+
+		if ((flag2 == NUMEROUM) && (fabsl (mt) <= fabsl (m)))
+			{
+			m = mt;
+
+			if (mt2 < m2)
+				{
+				m2 = mt2;
+				strcpy (bufferr, buffer);
+				}
 			}
 
-		if ((log == 1) && ((contadoritens == 1) || (contadoritens == totalitens - totalpontos) || (contadoritens % INTERVALOPROGRESSO == 0)))
+		if ((log == NUMEROUM) && ((contadoritens == NUMEROUM) || (contadoritens == totalitens - totalpontos) || (contadoritens % INTERVALOPROGRESSO == NUMEROZERO)))
 			{
 			printf ("\r%.13f%% concluído.", (double) (100.0 * (double) ((double) (contadoritens) / (double) (totalitens - (double) totalpontos))));
 
 			fflush (stdout);
 			}
 
-		} while ((! feof (arquivofuncoes)) || (flag2 == 0));
+		} while ((! feof (arquivofuncoes)) || (flag2 == NUMEROZERO));
 
-	if (log == 1) {printf ("\n"); fflush (stdout);}
+	if (log == NUMEROUM) {printf ("\n"); fflush (stdout);}
 
 	fclose (arquivopontos);
 	fclose (arquivofuncoes);
@@ -3247,14 +3267,14 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 numerocomplexo antoniovandre_produtocomplexo (numerocomplexo * numeroscomplexos, int numeroargumentos)
 	{
 	numerocomplexo result;
-	long double a;
-	long double b;
+	TIPONUMEROREAL a;
+	TIPONUMEROREAL b;
 	int i;
 
-	a = 1;
-	b = 0;
+	a = NUMEROUM;
+	b = NUMEROZERO;
 
-	for (i = 0; i < numeroargumentos; i++)
+	for (i = NUMEROZERO; i < numeroargumentos; i++)
 		{
 		result.real = a * numeroscomplexos [i].real - b * numeroscomplexos [i].img;
 
