@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 28-10-2020.
+// Última atualização: 03-11-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -58,7 +58,7 @@ typedef long double TIPONUMEROREAL;
 
 typedef struct {char token [TAMANHO_BUFFER_WORD]; TIPONUMEROREAL valor; char comentario [TAMANHO_BUFFER_PHRASE];} tokenfuncaoconstante; // Estrutura para funções e constantes.
 
-typedef struct {TIPONUMEROREAL real; TIPONUMEROREAL img;} numerocomplexo; // Estrutura número complexo.
+typedef struct {TIPONUMEROREAL real; TIPONUMEROREAL img;} NUMEROCOMPLEXO; // Estrutura número complexo.
 
 #define ARQUIVO_MATHSOBRE "/usr/share/antoniovandre_sobre.txt"
 // #define ARQUIVO_MATH_ESTATISTICAS "antoniovandre_math_estatisticas.txt"
@@ -3009,7 +3009,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 	int i = NUMEROUM;
 	int flag;
 	int flag2 = NUMEROZERO;
-	int flag3 = NUMEROZERO;
+	int flag3;
 	int flag4;
 	char tc;
 	char * err;
@@ -3147,7 +3147,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 	do
 		{
-		if ((flag2 == NUMEROUM) || (flag3 == NUMEROZERO))
+		if (flag2 == NUMEROUM)
 			{
 			strcpy (buffer, STRINGVAZIA);
 
@@ -3160,52 +3160,52 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 				} while (((! feof (arquivofuncoes))) && (antoniovandre_funcoes_buffer_char != DELIMITADORSTRING) && (antoniovandre_funcoes_buffer_char != CARACTEREFIMLINHA));
 
 			fseek (arquivopontos, NUMEROZERO, SEEK_SET);
+			flag = NUMEROZERO;
 			flag2 = NUMEROZERO;
-			flag3 = NUMEROUM;
+			flag3 = NUMEROZERO;
 			flag4 = NUMEROZERO;
 			mt = NUMEROZERO;
 			mt2 = NUMEROZERO;
 			}
 
-		strcpy (buffer1, STRINGVAZIA);
-		strcpy (buffer2, STRINGVAZIA);
-		flag = NUMEROZERO;
-
 		while (flag2 == NUMEROZERO)
 			{
+			if (feof (arquivopontos))
+				{
+				flag2 = NUMEROUM;
+				break;
+				}
+
 			antoniovandre_pontos_buffer_char = fgetc (arquivopontos);
 
 			if (antoniovandre_pontos_buffer_char != ESPACOBRANCO)
 				{
 				if (antoniovandre_pontos_buffer_char == DELIMITADORSTRING)
-					flag = NUMEROUM;
-				else
 					{
-					if (feof (arquivopontos))
-						{
-						flag2 = NUMEROUM;
-						break;
-						}
-					else
-						{
-						if ((antoniovandre_pontos_buffer_char == DELIMITADORSTRING2) || (antoniovandre_pontos_buffer_char == CARACTEREFIMLINHA))
-							{
-							flag = NUMEROZERO;
-							break;
-							}
-						else
-							{
-							if (flag == NUMEROZERO)
-								strncat (buffer1, & antoniovandre_pontos_buffer_char, NUMEROUM);
-							else
-								strncat (buffer2, & antoniovandre_pontos_buffer_char, NUMEROUM);
-							}
-						}
+					strcpy (buffer2, STRINGVAZIA);
+					flag = NUMEROUM;
+					continue;
 					}
+
+				if ((antoniovandre_pontos_buffer_char == DELIMITADORSTRING2) || (antoniovandre_pontos_buffer_char == CARACTEREFIMLINHA))
+					{
+					flag = NUMEROZERO;
+					flag3 = NUMEROZERO;
+					break;
+					}
+
+				if (flag == NUMEROZERO)
+					{
+					if (flag3 == NUMEROZERO) strcpy (buffer1, STRINGVAZIA);
+					strncat (buffer1, & antoniovandre_pontos_buffer_char, NUMEROUM);
+					flag3 = NUMEROUM;
+					}
+				else
+					strncat (buffer2, & antoniovandre_pontos_buffer_char, NUMEROUM);
 				}
 			}
 
-		if ((strcmp (buffer1, STRINGVAZIA)) && (strcmp (buffer2, STRINGVAZIA)))
+		if (flag2 == NUMEROZERO)
 			{
 			x = strtold (buffer1, & err);
 
@@ -3238,7 +3238,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 		contadoritens++;
 
-		if ((strcmp (buffer1, STRINGVAZIA)) && (strcmp (buffer2, STRINGVAZIA)))
+		if (flag2 == NUMEROZERO)
 			{
 			if ((flag4 == NUMEROZERO) && (* err == NUMEROZERO))
 				{
@@ -3283,9 +3283,9 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 // Produto de números complexos.
 
-numerocomplexo antoniovandre_produtocomplexo (numerocomplexo * numeroscomplexos, int numeroargumentos)
+NUMEROCOMPLEXO antoniovandre_produtocomplexo (NUMEROCOMPLEXO * numeroscomplexos, int numeroargumentos)
 	{
-	numerocomplexo result;
+	NUMEROCOMPLEXO result;
 	TIPONUMEROREAL a;
 	TIPONUMEROREAL b;
 	int i;
