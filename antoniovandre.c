@@ -2286,12 +2286,12 @@ char * antoniovandre_evalcelulafuncao (char * str)
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * logl ((TIPONUMEROREAL) argumento)));
 			}
 
-	strtold (str, & err);
+	resultado = strtold (str, & err);
 
 	if ((* err != NUMEROZERO) || (! strcmp (str, STRINGVAZIA)))
 		return STRINGSAIDAERRO;
 	else
-		return str;
+		return antoniovandre_numeroparastring (resultado);
 	}
 
 // Função eval célula.
@@ -2619,19 +2619,19 @@ char * antoniovandre_eval (char * str)
 			{
 			if ((tc == OPERADORSUBTRACAO) && (tc2 == antoniovandre_operadores [j])) return STRINGSAIDAERRO;
 
-			flag = NUMEROZERO;
-
-			for (k = NUMEROZERO; k < strlen (antoniovandre_operadoresespeciais); k++)
-				if (tc == antoniovandre_operadoresespeciais [k])
-					{
-					flag = NUMEROUM;
-					break;
-					}
-
-			if (flag == NUMEROUM) break;
-
 			if ((tc == antoniovandre_operadores [j]) && (tc2 == OPERADORSUBTRACAO)) return STRINGSAIDAERRO;
 			}
+
+		flag = NUMEROZERO;
+
+		for (k = NUMEROZERO; k < strlen (antoniovandre_operadoresespeciais); k++)
+			if (tc == antoniovandre_operadoresespeciais [k])
+				{
+				flag = NUMEROUM;
+				break;
+				}
+
+		if (flag == NUMEROUM) break;
 		}
 
 	contador = NUMEROZERO;
@@ -2726,14 +2726,8 @@ char * antoniovandre_eval (char * str)
 					tc = OPERADORMULTIPLICACAO;
 					strncat (str2t, & tc, NUMEROUM);
 
-					tc = TOKENINICIOEVAL;
-					strncat (str2t, & tc, NUMEROUM);
-
 					for (k = i + 1; k < j; k++)
 						strncat (str2t, & str2 [k], NUMEROUM);
-
-					tc = TOKENFIMEVAL;
-					strncat (str2t, & tc, NUMEROUM);
 					}
 
 				for (k = j; k < strlen (str2); k++)
