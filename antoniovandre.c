@@ -2671,6 +2671,7 @@ char * antoniovandre_eval (char * str)
 	int flag4;
 	int flag5;
 	int contador;
+	int contador2;
 	char tc;
 	char tc2;
 
@@ -2744,6 +2745,7 @@ char * antoniovandre_eval (char * str)
 					{
 					flag = NUMEROUM;
 
+					contador2 = NUMEROZERO;
 					l = j - NUMEROUM;
 
 					do
@@ -2751,11 +2753,14 @@ char * antoniovandre_eval (char * str)
 						flag3 = NUMEROZERO;
 
 						for (m = NUMEROZERO; m < strlen (antoniovandre_numeros); m++)
-							if (str2 [l] == antoniovandre_numeros [m])
+							if ((str2 [l] == antoniovandre_numeros [m]) && (str2 [l] != OPERADORSUBTRACAO))
 								flag3 = NUMEROUM;
 
+						if (str2 [l] == TOKENINICIOEVAL) contador2++;
+						if (str2 [l] == TOKENFIMEVAL) contador2--;
+
 						l--;
-						} while ((flag3 == NUMEROUM) && (((str2 [l] != TOKENINICIOEVAL) || (str2 [l] != OPERADORSUBTRACAO)) || (l > NUMEROZERO)));
+						} while ((flag3 == NUMEROUM) && ((str2 [l] != TOKENINICIOEVAL) || (contador2 != NUMEROZERO) || (l > NUMEROZERO)));
 					}
 
 			if (flag == NUMEROUM)
@@ -2809,6 +2814,8 @@ char * antoniovandre_eval (char * str)
 
 				for (k = j; k < strlen (str2); k++)
 					strncat (str2t, & str2 [k], NUMEROUM);
+
+				strcpy (str2, str2t);
 				}
 			}
 		}
