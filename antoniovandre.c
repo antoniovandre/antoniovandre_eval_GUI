@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 15-11-2020.
+// Última atualização: 16-11-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,10 +19,11 @@
 
 #include "antoniovandre_extra.c"
 
+#define VERSION 20201116
 #define TAMANHO_BUFFER_SMALL 75 // Para pequenos buffers.
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
-#define VALOR_MAX 1000000000L // Afim de evitar erros de saída.
+#define VALOR_MAX 1000000000 // Afim de evitar erros de saída.
 #define TAMANHO_MAX_ARQUIVO 1000000000000 // Afim de evitar erros de saída.
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -45,13 +46,15 @@
 #define EPSILON 0.001 // Para funções de Cálculo Diferencial.
 #define VARIAVELDESUBSTITUICAO 'x' // Deve ser uma letra não presente nos nomes das funções.
 #define NUMEROPARTICOESSOMARIEMANN 100 // Para Cálculo Integral.
-#define VERDADE 1
-#define FALSIDADE 0
+#define VERDADE NUMEROUM
+#define FALSIDADE NUMEROZERO
 #define INTERVALOPROGRESSO 100 // Para não haver flood quando mostrando progressos de processos.
 #define INTERVALOPROGRESSO2 500000 // Para não haver flood quando mostrando progressos de processos, para processos mais rápidos.
-#define APROXIMACAO 0.0000000001L // Para verificação de aproximação numérica.
-#define APROXIMACAO2 0.000001L // Para verificação de aproximação numérica. Segunda opção.
+#define INTERVALOPROGRESSO3 50 // Para não haver flood quando mostrando progressos de processos, para processos mais lentos.
+#define APROXIMACAO 0.0000000001 // Para verificação de aproximação numérica.
+#define APROXIMACAO2 0.000001 // Para verificação de aproximação numérica. Segunda opção.
 #define MAXNUMERADORFRACOES 100000 // Para a conversão de números em frações. Útil para, dentre outras coisas, calcular potências de bases negativas.
+#define MINPRECISAO 8 // Afim de garantir retornos corretos de algumas funções.
 #define MAXPRECISAO 19 // Afim de evitar erros de saída.
 
 typedef long double TIPONUMEROREAL;
@@ -195,7 +198,12 @@ int antoniovandre_precisao_real ()
 
 	fclose (fileprecisaoreal);
 
-	if (antoniovandre_precisao_real_valor > MAXPRECISAO) return MAXPRECISAO; else return antoniovandre_precisao_real_valor;
+	if (antoniovandre_precisao_real_valor < MINPRECISAO)
+		return MINPRECISAO;
+	else if (antoniovandre_precisao_real_valor > MAXPRECISAO)
+		return MAXPRECISAO;
+	else
+		return antoniovandre_precisao_real_valor;
 	}
 
 // Array de letras.
@@ -905,11 +913,9 @@ char * antoniovandre_evalcelulafuncao (char * str)
 	funcoesconstantes [37].valor = (TIPONUMEROREAL) FISICA_MP_SI_VALOR;
 	strcpy (funcoesconstantes [37].comentario, FISICA_MP_SI_COMENTARIO);
 
-//	Trecho incompatível com alguns compiladores.
-
-/*	strcpy (funcoesconstantes [38].token, FISICA_A_SI);
+	strcpy (funcoesconstantes [38].token, FISICA_A_SI);
 	funcoesconstantes [38].valor = (TIPONUMEROREAL) FISICA_A_SI_VALOR;
-	strcpy (funcoesconstantes [38].comentario, FISICA_A_SI_COMENTARIO);*/
+	strcpy (funcoesconstantes [38].comentario, FISICA_A_SI_COMENTARIO);
 
 	strcpy (funcoesconstantes [39].token, "modulo");
 	strcpy (funcoesconstantes [39].comentario, "Função módulo.");
@@ -2351,6 +2357,8 @@ char * antoniovandre_evalcelulafuncao (char * str)
 				return antoniovandre_numeroparastring (INTERVALOPROGRESSO);
 			else if (! strcmp (str2, "intervaloprogresso2"))
 				return antoniovandre_numeroparastring (INTERVALOPROGRESSO2);
+			else if (! strcmp (str2, "intervaloprogresso3"))
+				return antoniovandre_numeroparastring (INTERVALOPROGRESSO3);
 			else if (! strcmp (str2, "aproximacao"))
 				return antoniovandre_numeroparastring (APROXIMACAO);
 			else if (! strcmp (str2, "aproximacao2"))
@@ -2359,6 +2367,8 @@ char * antoniovandre_evalcelulafuncao (char * str)
 				return antoniovandre_numeroparastring (MAXNUMERADORFRACOES);
 			else if (! strcmp (str2, "maxprecisao"))
 				return antoniovandre_numeroparastring (MAXPRECISAO);
+			else if (! strcmp (str2, "version"))
+				return antoniovandre_numeroparastring (VERSION);
 			else
 				return STRINGSAIDAERRO;
 			}
@@ -2671,7 +2681,6 @@ char * antoniovandre_eval (char * str)
 	int flag4;
 	int flag5;
 	int contador;
-	int contador2;
 	char tc;
 	char tc2;
 
@@ -2745,7 +2754,6 @@ char * antoniovandre_eval (char * str)
 					{
 					flag = NUMEROUM;
 
-					contador2 = NUMEROZERO;
 					l = j - NUMEROUM;
 
 					do
@@ -2756,11 +2764,8 @@ char * antoniovandre_eval (char * str)
 							if ((str2 [l] == antoniovandre_numeros [m]) && (str2 [l] != OPERADORSUBTRACAO))
 								flag3 = NUMEROUM;
 
-						if (str2 [l] == TOKENINICIOEVAL) contador2++;
-						if (str2 [l] == TOKENFIMEVAL) contador2--;
-
 						l--;
-						} while ((flag3 == NUMEROUM) && ((str2 [l] != TOKENINICIOEVAL) || (contador2 != NUMEROZERO) || (l > NUMEROZERO)));
+						} while ((flag3 == NUMEROUM) && ((str2 [l] != TOKENINICIOEVAL) || (l > NUMEROZERO)));
 					}
 
 			if (flag == NUMEROUM)
