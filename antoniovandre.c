@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 16-11-2020.
+// Última atualização: 02-12-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,11 +19,13 @@
 
 #include "antoniovandre_extra.c"
 
-#define VERSION 20201116
+#define VERSION 20201128
 #define TAMANHO_BUFFER_SMALL 75 // Para pequenos buffers.
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
 #define VALOR_MAX 1000000000 // Afim de evitar erros de saída.
+#define VALOR_MAX_2 10000000 // Valor máximo. Segunda opção.
+#define VALOR_MAX_3 50 // Valor máximo. Terceira opção.
 #define TAMANHO_MAX_ARQUIVO 1000000000000 // Afim de evitar erros de saída.
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -44,15 +46,21 @@
 #define TOKENINICIOEVAL '('
 #define TOKENFIMEVAL ')'
 #define EPSILON 0.001 // Para funções de Cálculo Diferencial.
-#define VARIAVELDESUBSTITUICAO 'x' // Deve ser uma letra não presente nos nomes das funções.
+#define VARIAVELDESUBSTITUICAO VARIAVELPADRAO // Deve ser uma letra não presente nos nomes das funções.
+#define VARIAVELDESUBSTITUICAO2 'y' // Deve ser uma letra não presente nos nomes das funções.
 #define NUMEROPARTICOESSOMARIEMANN 100 // Para Cálculo Integral.
 #define VERDADE NUMEROUM
 #define FALSIDADE NUMEROZERO
 #define INTERVALOPROGRESSO 100 // Para não haver flood quando mostrando progressos de processos.
 #define INTERVALOPROGRESSO2 500000 // Para não haver flood quando mostrando progressos de processos, para processos mais rápidos.
 #define INTERVALOPROGRESSO3 50 // Para não haver flood quando mostrando progressos de processos, para processos mais lentos.
+#define INTERVALOPROGRESSO4 200 // Para não haver flood quando mostrando progressos de processos, quarta opção.
 #define APROXIMACAO 0.0000000001 // Para verificação de aproximação numérica.
 #define APROXIMACAO2 0.000001 // Para verificação de aproximação numérica. Segunda opção.
+#define APROXIMACAO3 0.005 // Para verificação de aproximação numérica. Terceira opção.
+#define APROXIMACAO4 0.05 // Para verificação de aproximação numérica. Quarta opção.
+#define APROXIMACAO5 0.0005 // Para verificação de aproximação numérica. Quinta opção.
+#define APROXIMACAO6 0.005 // Para verificação de aproximação numérica. Sexta opção.
 #define MAXNUMERADORFRACOES 100000 // Para a conversão de números em frações. Útil para, dentre outras coisas, calcular potências de bases negativas.
 #define MINPRECISAO 8 // Afim de garantir retornos corretos de algumas funções.
 #define MAXPRECISAO 19 // Afim de evitar erros de saída.
@@ -2351,6 +2359,11 @@ char * antoniovandre_evalcelulafuncao (char * str)
 				tc = VARIAVELDESUBSTITUICAO;
 				return antoniovandre_numeroparastring ((int) tc);
 				}
+			else if (! strcmp (str2, "variaveldesubstituicao2"))
+				{
+				tc = VARIAVELDESUBSTITUICAO2;
+				return antoniovandre_numeroparastring ((int) tc);
+				}
 			else if (! strcmp (str2, "numeroparticoessomariemann"))
 				return antoniovandre_numeroparastring (NUMEROPARTICOESSOMARIEMANN);
 			else if (! strcmp (str2, "intervaloprogresso"))
@@ -2359,12 +2372,24 @@ char * antoniovandre_evalcelulafuncao (char * str)
 				return antoniovandre_numeroparastring (INTERVALOPROGRESSO2);
 			else if (! strcmp (str2, "intervaloprogresso3"))
 				return antoniovandre_numeroparastring (INTERVALOPROGRESSO3);
+			else if (! strcmp (str2, "intervaloprogresso4"))
+				return antoniovandre_numeroparastring (INTERVALOPROGRESSO4);
 			else if (! strcmp (str2, "aproximacao"))
 				return antoniovandre_numeroparastring (APROXIMACAO);
 			else if (! strcmp (str2, "aproximacao2"))
 				return antoniovandre_numeroparastring (APROXIMACAO2);
+			else if (! strcmp (str2, "aproximacao3"))
+				return antoniovandre_numeroparastring (APROXIMACAO3);
+			else if (! strcmp (str2, "aproximacao4"))
+				return antoniovandre_numeroparastring (APROXIMACAO4);
+			else if (! strcmp (str2, "aproximacao5"))
+				return antoniovandre_numeroparastring (APROXIMACAO5);
+			else if (! strcmp (str2, "aproximacao6"))
+				return antoniovandre_numeroparastring (APROXIMACAO6);
 			else if (! strcmp (str2, "maxnumeradorfracoes"))
 				return antoniovandre_numeroparastring (MAXNUMERADORFRACOES);
+			else if (! strcmp (str2, "minprecisao"))
+				return antoniovandre_numeroparastring (MINPRECISAO);
 			else if (! strcmp (str2, "maxprecisao"))
 				return antoniovandre_numeroparastring (MAXPRECISAO);
 			else if (! strcmp (str2, "version"))
@@ -2991,6 +3016,7 @@ char * antoniovandre_derivada (char * str, TIPONUMEROREAL ponto)
 	TIPONUMEROREAL valorsup;
 	TIPONUMEROREAL valorinf;
 	int i;
+	char tc;
 	char * err;
 
 	if (ponto > VALOR_MAX) return STRINGSAIDAERROOVER;
@@ -2999,7 +3025,15 @@ char * antoniovandre_derivada (char * str, TIPONUMEROREAL ponto)
 
 	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (str [i] == VARIAVELDESUBSTITUICAO)
+			{
+			tc = TOKENINICIOEVAL;
+			strncat (str2, & tc, NUMEROUM);
+
 			strcat (str2, antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) ponto + (TIPONUMEROREAL) EPSILON)));
+
+			tc = TOKENFIMEVAL;
+			strncat (str2, & tc, NUMEROUM);
+			}
 		else
 			strncat (str2, & str [i], NUMEROUM);
 
@@ -3011,7 +3045,15 @@ char * antoniovandre_derivada (char * str, TIPONUMEROREAL ponto)
 
 	for (i = NUMEROZERO; i < strlen (str); i++)
 		if (str [i] == VARIAVELDESUBSTITUICAO)
+			{
+			tc = TOKENINICIOEVAL;
+			strncat (str3, & tc, NUMEROUM);
+
 			strcat (str3, antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) ponto - (TIPONUMEROREAL) EPSILON)));
+
+			tc = TOKENFIMEVAL;
+			strncat (str3, & tc, NUMEROUM);
+			}
 		else
 			strncat (str3, & str [i], NUMEROUM);
 
@@ -3033,6 +3075,7 @@ char * antoniovandre_integraldefinida (char * str, TIPONUMEROREAL a, TIPONUMEROR
 	TIPONUMEROREAL parcela;
 	int i;
 	int j;
+	char tc;
 	char * err;
 
 	norma = (TIPONUMEROREAL) ( (TIPONUMEROREAL) b - (TIPONUMEROREAL) a) / (TIPONUMEROREAL) NUMEROPARTICOESSOMARIEMANN;
@@ -3043,7 +3086,15 @@ char * antoniovandre_integraldefinida (char * str, TIPONUMEROREAL a, TIPONUMEROR
 
 		for (i = NUMEROZERO; i < strlen (str); i++)
 			if (str [i] == VARIAVELDESUBSTITUICAO)
+				{
+				tc = TOKENINICIOEVAL;
+				strncat (str2, & tc, NUMEROUM);
+
 				strcat (str2, antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) a + (TIPONUMEROREAL) j * (TIPONUMEROREAL) norma + (TIPONUMEROREAL) ((TIPONUMEROREAL) norma / 2))));
+
+				tc = TOKENFIMEVAL;
+				strncat (str2, & tc, NUMEROUM);
+				}
 			else
 				strncat (str2, & str [i], NUMEROUM);
 
@@ -3095,6 +3146,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 	int flag3;
 	int flag4;
 	char tc;
+	char tc2;
 	char * err;
 
 	if (log == NUMEROUM)
@@ -3307,7 +3359,15 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 				tc = buffer [i];
 
 				if (tc == VARIAVELPADRAO)
+					{
+					tc2 = TOKENINICIOEVAL;
+					strncat (buffert, & tc2, NUMEROUM);
+
 					strcat (buffert, antoniovandre_numeroparastring ((TIPONUMEROREAL) x));
+
+					tc2 = TOKENFIMEVAL;
+					strncat (buffert, & tc2, NUMEROUM);
+					}
 				else
 					strncat (buffert, & tc, NUMEROUM);
 				}
@@ -3362,6 +3422,158 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 	fclose (arquivofuncoes);
 
 	return bufferr;
+	}
+
+// Rízes de uma função. Por aproximação.
+
+char * antoniovandre_raizesfuncao (char * funcao, char * mins, char * maxs, TIPONUMEROREAL step, int log)
+	{
+	TIPONUMEROREAL min;
+	TIPONUMEROREAL max;
+	TIPONUMEROREAL x;
+	TIPONUMEROREAL y;
+	TIPONUMEROREAL xi;
+	TIPONUMEROREAL xf;
+	TIPONUMEROREAL xr;
+	TIPONUMEROREAL xrt = VALOR_MAX_2;
+	char mins2 [TAMANHO_BUFFER_WORD];
+	char maxs2 [TAMANHO_BUFFER_WORD];
+	char str [TAMANHO_BUFFER_PHRASE];
+	char strt [TAMANHO_BUFFER_PHRASE];
+	char strr [TAMANHO_BUFFER_PHRASE];
+	int i;
+	int flag;
+	int flag2;
+	int flag3;
+	int flag4;
+	unsigned long int contador = NUMEROZERO;
+	unsigned long int contador2 = NUMEROZERO;
+	int contador3 = NUMEROZERO;
+	char tc;
+	char * err;
+
+	strcpy (strr, STRINGVAZIA);
+
+	strcpy (mins2, antoniovandre_eval (mins));
+	strcpy (maxs2, antoniovandre_eval (maxs));
+
+	if ((! strcmp (mins2, STRINGSAIDAERRO)) || (! strcmp (maxs2, STRINGSAIDAERRO)))
+		return STRINGSAIDAERRO;
+
+	if ((! strcmp (mins2, STRINGSAIDAERROOVER)) || (! strcmp (maxs2, STRINGSAIDAERROOVER)))
+		return STRINGSAIDAERROOVER;
+
+	min = strtold (mins2, & err);
+	max = strtold (maxs2, & err);
+
+	x = min;
+	flag = NUMEROZERO;
+	flag2 = NUMEROZERO;
+	flag3 = NUMEROZERO;
+	flag4 = NUMEROZERO;
+
+	do
+		{
+		if ((log == NUMEROUM) && (contador % INTERVALOPROGRESSO4 == NUMEROZERO)) {printf ("\r%.5f%% concluído.", (double) 100 * fabs ((x - min) / (max - min + step))); fflush (stdout);}
+
+		if (x > max + step) flag4 = NUMEROUM;
+
+		strcpy (str, STRINGVAZIA);
+
+		for (i = NUMEROZERO; i < strlen (funcao); i++)
+			{
+			if (funcao [i] == VARIAVELPADRAO)
+				{
+				tc = TOKENINICIOEVAL;
+				strncat (str, & tc, NUMEROUM);
+				strcat (str, antoniovandre_numeroparastring (x));
+				tc = TOKENFIMEVAL;
+				strncat (str, & tc, NUMEROUM);
+				flag = NUMEROUM;
+				}
+			else
+				strncat (str, & funcao [i], NUMEROUM);
+			}
+
+		strcpy (strt, antoniovandre_eval (str));
+
+		if ((! strcmp (strt, STRINGSAIDAERRO)) || (! strcmp (strt, STRINGSAIDAERROOVER)))
+			{
+			x += EPSILON;
+			contador++;
+			continue;
+			}
+
+		y = strtold (strt, & err);
+
+		if (* err == NUMEROZERO)
+			{
+			if ((fabsl (y) <= step / 20) && (flag4 == NUMEROZERO))
+				{
+				if ((flag == NUMEROZERO) || ((TIPONUMEROREAL) contador2 > (0.1 / step)))
+					{
+					if (log == NUMEROUM) {printf ("\r100.00000%% concluído.\nInfinitas raízes encontradas. Trata-se de uma possibilidade:\n"); fflush (stdout);}
+
+					return "inf";
+					}
+
+				if (flag2 == NUMEROZERO) xi = x; else {flag2 = NUMEROUM; xf = x;}
+
+				contador2++;
+				flag3 = NUMEROUM;
+				}
+			else
+				{
+				if (flag3 == NUMEROUM)
+					{
+					if (flag2 == NUMEROZERO)
+						xr = xi;
+					else
+						xr = (xi + xf) / 2;
+
+					if (fabsl (xr - xrt) > step)
+						{
+						if (xr > max) xr = max;
+
+						if (! strcmp (strr, STRINGVAZIA))
+							strcpy (strr, antoniovandre_numeroparastring (xr));
+						else
+							{
+							tc = DELIMITADORSTRING;
+							strncat (strr, & tc, NUMEROUM);
+							strcat (strr, antoniovandre_numeroparastring (xr));
+							}
+
+						contador3++;
+						}
+
+					xrt = xr;
+					contador2 = NUMEROZERO;
+					}
+
+				flag3 = NUMEROZERO; flag2 = NUMEROZERO;
+				}
+			}
+
+		contador++;
+		x += step;
+		} while (flag4 == NUMEROZERO);
+
+	if (log == NUMEROUM)
+		{
+		printf ("\r100.00000%% concluído.\n");
+
+		if (contador3 > 1)
+			printf ("Tratam-se de aproximações:\n");
+		else if (contador3 == 1)
+			printf ("Trata-se de uma aproximação:\n");
+		else
+			printf ("Nenhuma raiz encontrada. Trata-se de uma possibilidade.\n");
+
+		fflush (stdout);
+		}
+
+	return (strr);
 	}
 
 // Produto de números complexos.
