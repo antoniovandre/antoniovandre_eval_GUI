@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 02-12-2020.
+// Última atualização: 07-12-2020.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -19,13 +19,14 @@
 
 #include "antoniovandre_extra.c"
 
-#define VERSION 20201128
+#define VERSION 20201206
 #define TAMANHO_BUFFER_SMALL 75 // Para pequenos buffers.
 #define TAMANHO_BUFFER_WORD 8192 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 81920 // Para strings grandes.
 #define VALOR_MAX 1000000000 // Afim de evitar erros de saída.
 #define VALOR_MAX_2 10000000 // Valor máximo. Segunda opção.
 #define VALOR_MAX_3 50 // Valor máximo. Terceira opção.
+#define MARCADORREAL VALOR_MAX + 1 // Útil para delimitar memórias alocadas.
 #define TAMANHO_MAX_ARQUIVO 1000000000000 // Afim de evitar erros de saída.
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -378,7 +379,7 @@ char * antoniovandre_numeroparastring (TIPONUMEROREAL numero)
 		strcat (strr, "-");
 		}
 
-	if (numero > VALOR_MAX) return STRINGSAIDAERROOVER;
+	if ((numero > VALOR_MAX) || (numero < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 	for (i = potencia_max; i >= potencia_min; i--)
 		{
@@ -401,10 +402,10 @@ char * antoniovandre_numeroparastring (TIPONUMEROREAL numero)
 			{
 			switch (algarismo)
 				{
-				case 0:
+				case NUMEROZERO:
 					strcat (strr, "0");
 					break;
-				case 1:
+				case NUMEROUM:
 					strcat (strr, "1");
 					break;
 				case 2:
@@ -676,7 +677,7 @@ char * antoniovandre_valornumericopolinomio (char * args)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (fator > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((fator > VALOR_MAX) || (fator < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			for (j = NUMEROZERO; j < indice_inicio; j++)
 				{
@@ -696,7 +697,7 @@ char * antoniovandre_valornumericopolinomio (char * args)
 
 				coef = antoniovandre_partenumericamonomio (str);
 
-				if (coef > VALOR_MAX) return STRINGSAIDAERROOVER;
+				if ((coef > VALOR_MAX) || (coef < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 				strcpy (str2, antoniovandre_parteliteralmonomio (str));
 
@@ -708,7 +709,7 @@ char * antoniovandre_valornumericopolinomio (char * args)
 					else
 						strncat (str3, & str2 [k], NUMEROUM);
 
-				if (coef > VALOR_MAX) return STRINGSAIDAERROOVER;
+				if ((coef > VALOR_MAX) || (coef < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 				strcat (str4, antoniovandre_numeroparastring (coef));
 				strcat (str4, str3);
@@ -1070,7 +1071,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}	
 				}
 
@@ -1094,7 +1095,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1102,7 +1103,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			if (argumento <= NUMEROZERO)
 				resultado = (long int) argumento;
@@ -1132,7 +1133,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1140,7 +1141,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			if (argumento >= NUMEROZERO)
 				resultado = (long int) argumento;
@@ -1170,7 +1171,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1178,7 +1179,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) (5 * (argumento - 32) / 9));
 			}
@@ -1198,7 +1199,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1206,7 +1207,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((5 * (argumento - 32) / 9) + 273.15));
 			}
@@ -1226,7 +1227,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1234,7 +1235,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((9 * argumento / 5) + 32));
 			}
@@ -1254,7 +1255,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1262,7 +1263,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) (argumento - 273.15));
 			}
@@ -1282,7 +1283,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1290,7 +1291,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((9 * (argumento - 273.15) / 5) + 32));
 			}
@@ -1310,7 +1311,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1318,7 +1319,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) (argumento + 273.15));
 			}
@@ -1338,7 +1339,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1346,7 +1347,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) argumento * 9 / 10);
 			}
@@ -1366,7 +1367,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1374,7 +1375,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) argumento * M_PIl / 200);
 			}
@@ -1394,7 +1395,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1402,7 +1403,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) argumento * 10 / 9);
 			}
@@ -1422,7 +1423,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1430,7 +1431,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) argumento * M_PIl / 180);
 			}
@@ -1450,7 +1451,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1458,7 +1459,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) argumento * 200 / M_PIl);
 			}
@@ -1478,7 +1479,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1486,7 +1487,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) argumento * 180 / M_PIl);
 			}
@@ -1506,7 +1507,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1514,7 +1515,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) fabsl (argumento));
 			}
@@ -1534,7 +1535,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1542,7 +1543,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || ((argumento != (long int) argumento) || argumento < NUMEROZERO)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) antoniovandre_fatorial ((unsigned long int) argumento));
 			}
@@ -1562,7 +1563,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1570,7 +1571,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (argumento == NUMEROZERO)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((TIPONUMEROREAL) (logl ((TIPONUMEROREAL) (1 + (TIPONUMEROREAL) powl (1 + (TIPONUMEROREAL) powl ((TIPONUMEROREAL) argumento, 2), 0.5)) / ((TIPONUMEROREAL) argumento))))));
 			}
@@ -1590,7 +1591,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1598,7 +1599,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || ((argumento <= NUMEROZERO) || (argumento > NUMEROUM))) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((TIPONUMEROREAL) (logl ((TIPONUMEROREAL) (1 + (TIPONUMEROREAL) powl (1 - (TIPONUMEROREAL) powl ((TIPONUMEROREAL) argumento, 2), 0.5)) / ((TIPONUMEROREAL) argumento))))));
 			}
@@ -1618,7 +1619,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1626,7 +1627,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || ((argumento >= -1) && (argumento <= NUMEROUM))) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((TIPONUMEROREAL) ((logl ((TIPONUMEROREAL) ((TIPONUMEROREAL) argumento + NUMEROUM) / ((TIPONUMEROREAL) argumento - NUMEROUM))) / 2))));
 			}
@@ -1646,7 +1647,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1654,7 +1655,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || ((argumento <= -1) || (argumento >= NUMEROUM))) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((TIPONUMEROREAL) ((logl ((TIPONUMEROREAL) (1 + (TIPONUMEROREAL) argumento) / (1 - (TIPONUMEROREAL) argumento))) / 2))));
 			}
@@ -1674,7 +1675,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1682,7 +1683,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (argumento < NUMEROUM)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((TIPONUMEROREAL) logl ((TIPONUMEROREAL) (argumento + powl ((TIPONUMEROREAL) (powl ((TIPONUMEROREAL) argumento, 2) - NUMEROUM), 0.5))))));
 			}
@@ -1702,7 +1703,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1710,7 +1711,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((TIPONUMEROREAL) logl ((TIPONUMEROREAL) (argumento + powl ((TIPONUMEROREAL) (powl ((TIPONUMEROREAL) argumento, 2) + NUMEROUM), 0.5))))));
 			}
@@ -1730,7 +1731,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1738,7 +1739,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (argumento == NUMEROZERO)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) (2 / (powl (M_El, (TIPONUMEROREAL) argumento) - powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))))));
 			}
@@ -1758,7 +1759,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1766,7 +1767,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) (2 / (powl (M_El, (TIPONUMEROREAL) argumento) + powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))))));
 			}
@@ -1786,7 +1787,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1794,7 +1795,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (argumento == NUMEROZERO)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((powl (M_El, (TIPONUMEROREAL) argumento) + powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))) / (powl (M_El, (TIPONUMEROREAL) argumento) - powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))))));
 			}
@@ -1814,7 +1815,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1822,7 +1823,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((powl (M_El, (TIPONUMEROREAL) argumento) - powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))) / (powl (M_El, (TIPONUMEROREAL) argumento) + powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))))));
 			}
@@ -1842,7 +1843,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1850,7 +1851,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (argumento == NUMEROZERO)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((powl (M_El, (TIPONUMEROREAL) argumento) - powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))) / 2)));
 			}
@@ -1870,7 +1871,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1878,7 +1879,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (argumento == NUMEROZERO)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * (TIPONUMEROREAL) ((powl (M_El, (TIPONUMEROREAL) argumento) + powl (M_El, ((-1) * (TIPONUMEROREAL) argumento))) / 2)));
 			}
@@ -1898,7 +1899,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1906,7 +1907,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || ((argumento > -1) && (argumento < NUMEROUM))) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * asinl (1 / (TIPONUMEROREAL) argumento)));
 			}
@@ -1926,7 +1927,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1934,7 +1935,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || ((argumento > -1) && (argumento < NUMEROUM))) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * acosl (1 / (TIPONUMEROREAL) argumento)));
 			}
@@ -1954,7 +1955,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1962,7 +1963,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			if (argumento == NUMEROZERO) resultado = (TIPONUMEROREAL) coeficiente * M_PI_2l; else if (argumento < NUMEROZERO) resultado = (TIPONUMEROREAL) coeficiente * (atanl (1 / (TIPONUMEROREAL) argumento) + M_PIl); else resultado = (TIPONUMEROREAL) coeficiente * atanl (1 / (TIPONUMEROREAL) argumento);
 
@@ -1984,7 +1985,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -1992,7 +1993,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * atanl ((TIPONUMEROREAL) argumento)));
 			}
@@ -2012,7 +2013,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -2020,7 +2021,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (argumento < -1) || (argumento > NUMEROUM)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * acosl ((TIPONUMEROREAL) argumento)));
 			}
@@ -2040,7 +2041,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -2048,7 +2049,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (argumento < -1) || (argumento > NUMEROUM)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * asinl ((TIPONUMEROREAL) argumento)));
 			}
@@ -2068,7 +2069,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -2076,7 +2077,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (fmodl (argumento, M_PIl) == NUMEROZERO)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente / sinl ((TIPONUMEROREAL) argumento)));
 			}
@@ -2096,7 +2097,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -2104,7 +2105,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (fmodl (argumento, M_PIl) == strtold (antoniovandre_numeroparastring (M_PI_2l), & err2))) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente / cosl ((TIPONUMEROREAL) argumento)));
 			}
@@ -2124,7 +2125,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -2132,7 +2133,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * sinl ((TIPONUMEROREAL) argumento)));
 			}
@@ -2152,7 +2153,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -2160,7 +2161,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * cosl ((TIPONUMEROREAL) argumento)));
 			}
@@ -2180,7 +2181,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -2188,7 +2189,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (fmodl (argumento, M_PIl) == NUMEROZERO)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente / tanl ((TIPONUMEROREAL) argumento)));
 			}
@@ -2208,7 +2209,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -2216,7 +2217,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (fmodl (argumento, M_PIl) == strtold (antoniovandre_numeroparastring (M_PI_2l), & err2))) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * tanl ((TIPONUMEROREAL) argumento)));
 			}
@@ -2236,7 +2237,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -2244,7 +2245,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (argumento <= NUMEROZERO)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * logl ((TIPONUMEROREAL) argumento) / M_LN2l));
 			}
@@ -2264,7 +2265,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -2272,7 +2273,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (argumento <= NUMEROZERO)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * logl ((TIPONUMEROREAL) argumento) / M_LN10l));
 			}
@@ -2292,7 +2293,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 					{
 					coeficiente = strtold (buffer, & err);
 					if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-					if (coeficiente > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((coeficiente > VALOR_MAX) || (coeficiente < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					}
 				}
 
@@ -2300,7 +2301,7 @@ char * antoniovandre_evalcelulafuncao (char * str)
 
 			if ((* err != NUMEROZERO) || (argumento <= NUMEROZERO)) return STRINGSAIDAERRO;
 
-			if (argumento > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((argumento > VALOR_MAX) || (argumento < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * logl ((TIPONUMEROREAL) argumento)));
 			}
@@ -2568,14 +2569,14 @@ char * antoniovandre_evalcelula (char * str)
 						valor = powl ((TIPONUMEROREAL) valort, (TIPONUMEROREAL) valort2);
 
 					if (isnan (valor) || isinf (valor)) return STRINGSAIDAERRO;
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((valor > VALOR_MAX) || (valor < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					break;
 					}
 
 				if ((strt [posicoes_operadores [i]] == OPERADORMULTIPLICACAO) && (flag2 == NUMEROZERO))
 					{
 					valor = (TIPONUMEROREAL) valort * (TIPONUMEROREAL) valort2;
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((valor > VALOR_MAX) || (valor < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					break;
 					}
 
@@ -2584,28 +2585,28 @@ char * antoniovandre_evalcelula (char * str)
 					if (valort2 == NUMEROZERO) return STRINGSAIDAERRO;
 
 					valor = (TIPONUMEROREAL) valort / (TIPONUMEROREAL) valort2;
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((valor > VALOR_MAX) || (valor < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					break;
 					}
 
 				if ((strt [posicoes_operadores [i]] == '+') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
 					valor = (TIPONUMEROREAL) valort + (TIPONUMEROREAL) valort2;
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((valor > VALOR_MAX) || (valor < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					break;
 					}
 
 				if ((strt [posicoes_operadores [i]] == OPERADORSUBTRACAO) && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
 					valor = (TIPONUMEROREAL) valort - (TIPONUMEROREAL) valort2;
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((valor > VALOR_MAX) || (valor < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					break;
 					}
 
 				if ((strt [posicoes_operadores [i]] == '%') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
 					valor = fmodl ((TIPONUMEROREAL) valort, (TIPONUMEROREAL) valort2);
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((valor > VALOR_MAX) || (valor < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					break;
 					}
 
@@ -2613,7 +2614,7 @@ char * antoniovandre_evalcelula (char * str)
 					{
 					if ((valort != (long int) valort) || (valort < NUMEROZERO) || (valort2 != (long int) valort2) || (valort2 < NUMEROZERO) || (valort < valort2)) return STRINGSAIDAERRO;
 					valor = (TIPONUMEROREAL) antoniovandre_fatorial ((unsigned long int) valort) / antoniovandre_fatorial ((unsigned long int) (valort - valort2));
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((valor > VALOR_MAX) || (valor < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					break;
 					}
 
@@ -2621,7 +2622,7 @@ char * antoniovandre_evalcelula (char * str)
 					{
 					if ((valort != (long int) valort) || (valort < NUMEROZERO) || (valort2 != (long int) valort2) || (valort2 < NUMEROZERO) || (valort < valort2)) return STRINGSAIDAERRO;
 					valor = (TIPONUMEROREAL) antoniovandre_fatorial ((unsigned long int) valort) / (antoniovandre_fatorial ((unsigned long int) (valort - valort2)) * antoniovandre_fatorial ((unsigned long int) (valort2)));
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((valor > VALOR_MAX) || (valor < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					break;
 					}
 
@@ -2629,28 +2630,28 @@ char * antoniovandre_evalcelula (char * str)
 					{
 					if (valort2 != (int) valort2) return STRINGSAIDAERRO;
 					valor = roundl ((TIPONUMEROREAL) valort / powl (10, valort2)) * powl (10, valort2);
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((valor > VALOR_MAX) || (valor < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					break;
 					}
 
 				if ((strt [posicoes_operadores [i]] == '>') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
 					(valort > valort2) ? (valor = valort) : (valor = valort2);
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((valor > VALOR_MAX) || (valor < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					break;
 					}
 
 				if ((strt [posicoes_operadores [i]] == '<') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
 					(valort < valort2) ? (valor = valort) : (valor = valort2);
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((valor > VALOR_MAX) || (valor < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					break;
 					}
 
 				if ((strt [posicoes_operadores [i]] == ':') && (flag == NUMEROZERO) && (flag2 == NUMEROZERO))
 					{
 					valor = logl (valort) / logl (valort2);
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((valor > VALOR_MAX) || (valor < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					break;
 					}
 
@@ -2661,7 +2662,7 @@ char * antoniovandre_evalcelula (char * str)
 					else
 						valor = NUMEROZERO;
 
-					if (valor > VALOR_MAX) return STRINGSAIDAERROOVER;
+					if ((valor > VALOR_MAX) || (valor < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 					break;
 					}
 				}
@@ -3019,7 +3020,7 @@ char * antoniovandre_derivada (char * str, TIPONUMEROREAL ponto)
 	char tc;
 	char * err;
 
-	if (ponto > VALOR_MAX) return STRINGSAIDAERROOVER;
+	if ((ponto > VALOR_MAX) || (ponto < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 	strcpy (str2, STRINGVAZIA);
 
@@ -3108,7 +3109,7 @@ char * antoniovandre_integraldefinida (char * str, TIPONUMEROREAL a, TIPONUMEROR
 
 		integral += (TIPONUMEROREAL) parcela;
 
-		if (integral > VALOR_MAX) return STRINGSAIDAERROOVER;
+		if ((integral > VALOR_MAX) || (integral < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 		}
 
 	return antoniovandre_numeroparastring (integral);
@@ -3345,11 +3346,11 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 			x = strtold (buffer1, & err);
 
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
-			if (x > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((x > VALOR_MAX) || (x < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 
 			y = strtold (buffer2, & err);
 
-			if (y > VALOR_MAX) return STRINGSAIDAERROOVER;
+			if ((y > VALOR_MAX) || (y < (-1) * VALOR_MAX)) return STRINGSAIDAERROOVER;
 			if (* err != NUMEROZERO) return STRINGSAIDAERRO;
 
 			strcpy (buffert, STRINGVAZIA);
@@ -3598,4 +3599,102 @@ NUMEROCOMPLEXO antoniovandre_produtocomplexo (NUMEROCOMPLEXO * numeroscomplexos,
 		}
 
 	return result;
+	}
+
+// Número dimensões de uma matriz. Segundo argumento NUMEROZERO para o número de linhas e NUMEROUM para o de colunas.
+
+// Por conveniência, a última linha deve ser um ponteiro NULL, e a última coluna de cada linha deve ser MARCADORREAL.
+
+int antoniovandre_dimensoesmatriz (TIPONUMEROREAL ** matriz, int lc)
+	{
+	int i = NUMEROZERO;
+
+	switch (lc)
+		{
+		case NUMEROZERO:
+			while (matriz [i] != NULL) i++;
+			return i;
+			break;
+		case NUMEROUM:
+			while (matriz [NUMEROZERO] [i] != MARCADORREAL) i++;
+			return i;
+			break;
+		default:
+			return NUMEROZERO;
+		}
+	}
+
+// Remover linha e coluna de uma matriz.
+
+// Lembrar-se de dar "free" na matriz-resultado após o uso.
+
+TIPONUMEROREAL ** antoniovandre_removerlinhacoluna (TIPONUMEROREAL ** matriz, int i, int j)
+	{
+	TIPONUMEROREAL ** matrizt;
+	int dl = antoniovandre_dimensoesmatriz (matriz, NUMEROZERO);
+	int dc = antoniovandre_dimensoesmatriz (matriz, NUMEROUM);
+	int shiftl;
+	int shiftc;
+	int k;
+	int l;
+
+	matrizt = (TIPONUMEROREAL **) malloc ((dl) * sizeof (TIPONUMEROREAL *));
+	matrizt [dl - NUMEROUM] = NULL;
+
+	for (k = NUMEROZERO; k < dl - NUMEROUM; k++)
+		{
+		matrizt [k] = (TIPONUMEROREAL *) malloc ((dc) * sizeof (TIPONUMEROREAL));
+		matrizt [k] [dc - NUMEROUM] = MARCADORREAL;
+		}
+
+	for (k = NUMEROZERO; k < dl - NUMEROUM; k++)
+		for (l = NUMEROZERO; l < dc - NUMEROUM; l++)
+			{
+			if (k >= i - NUMEROUM)
+				shiftl = NUMEROUM;
+			else
+				shiftl = NUMEROZERO;
+
+
+			if (l >= j - NUMEROUM)
+				shiftc = NUMEROUM;
+			else
+				shiftc = NUMEROZERO;
+
+			matrizt [k] [l] = matriz [k + shiftl] [l + shiftc];
+			}
+
+	return matrizt;
+	}
+
+// Determinante de uma matriz.
+
+TIPONUMEROREAL antoniovandre_determinante (TIPONUMEROREAL ** matriz)
+	{
+	TIPONUMEROREAL det = NUMEROZERO;
+	TIPONUMEROREAL ** matrizt;
+	int i;
+	int j;
+
+	if (antoniovandre_dimensoesmatriz (matriz, NUMEROZERO) != antoniovandre_dimensoesmatriz (matriz, NUMEROUM))
+		return NAN;
+
+	if (antoniovandre_dimensoesmatriz (matriz, NUMEROZERO) == NUMEROUM)
+		return (matriz [NUMEROZERO] [NUMEROZERO]);
+	else
+		for (i = NUMEROUM; i <= antoniovandre_dimensoesmatriz (matriz, NUMEROZERO); i++)
+			{
+			matrizt = antoniovandre_removerlinhacoluna (matriz, i, NUMEROUM);
+
+			det += (powl (-1, i + NUMEROUM) * matriz [i - NUMEROUM] [NUMEROZERO] * antoniovandre_determinante (matrizt));
+
+			for (j = NUMEROZERO; j < antoniovandre_dimensoesmatriz (matriz, NUMEROZERO); j++)
+				free (matrizt [j]);
+
+			free (matrizt);
+
+			if ((det > VALOR_MAX) || (det < (-1) * VALOR_MAX)) return INFINITY;
+			}
+
+	return det;
 	}
