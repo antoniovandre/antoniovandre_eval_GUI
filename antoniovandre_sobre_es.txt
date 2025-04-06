@@ -1,0 +1,289 @@
+                                        
+      .':clllc;'.   ..;clll:,.          
+    .col;'..,cxxl,,ldo:'.,lxxl.         
+  .:dc.      .lkkxxl:.  .cdxkx:         
+ .cd:.       .lkkko.    ;xkkkd'         
+ ,o:.        ,dkkx:     .;cc;.   .......
+  .         .ckkko.         ....''''''''
+            ,dkkx;       ...''''''''''''
+           .ckkko.    ..''''''''''''''''
+           'dkkx:. ..'''''',;,''''''''''
+ .:cc;.   .ckkkd,.'''''''';odc''''''''''
+;dkkkx,   ;xkkkl,'''''''';oxl,''''''''''
+ckkxd:.  ,dxxkxo,'''''',cddc,'''''''''''
+'okdc'.,coc':dxxo::::clddl;'''''''''''''
+ .,:clcc;.  .;clooooool:;'''''''''''''''
+           .''''',,,''''''''''''''''''''
+          .'''''''''''''''''''''''''''''
+          .'''''''''''''''''''''''''''''
+         .''''''''''''''''''''''''''''''
+         .''''''''''''''''''''''''''''''
+
+Proyecto Mathematical Ramblings.
+____________________
+
+Operadores disponibles para "antoniovandre_eval":
+
+"+": suma.
+
+"-": resta.
+
+"*": multiplicación.
+
+"/": división.
+
+"^": exponenciación.
+
+"%": resto de la división.
+
+"@" arreglos (Análisis Combinatorio).
+
+"#": combinaciones (Análisis Combinatorio).
+
+"$": redondeando al orden de magnitud.
+
+">": máximo.
+
+"<": mínimo.
+
+":": logaritmo base.
+
+"~": devuelve "1" si es un valor aproximado y "0" si no es así.
+_____
+
+Los paréntesis se pueden usar en "antoniovandre_eval".
+_____
+
+Constantes disponibles para "antoniovandre_eval":
+
+"PI": relación entre la longitud y el diámetro de un círculo.
+
+"T": doble pi.
+
+"E": base de logaritmos naturales.
+
+"C": velocidad de la luz en el vacío, en SI.
+
+"G": constante de Gravitación Universal, en SI.
+
+"QE": carga elemental, en el SI.
+
+"H": constante de Planck, en el SI.
+
+"HH": constante de Planck reducida, en el SI.
+
+"K": constante de Boltzmann, en el SI.
+
+"ME": masa de electrones, en el SI.
+
+"MP": masa de protones, en el SI.
+
+"MN": masa de neutrones, en SI.
+
+"AM": número de Avogadro, multiplicado por 10^(-23), en mol^(-1).
+
+"KE": constante de Coulomb, constante electrostática, en SI.
+
+"R": constante universal de gases perfectos, en SI.
+
+"SB": la constante de Stefan-Boltzmann en SI.
+
+"PM": constante de permeabilidade magnética no vácuo, en SI.
+
+"PE": constante de permeabilidad eléctrica del vacío, en SI.
+
+"B": desplazamiento constante de Wien, en SI.
+
+"P": proporción áurea.
+
+"CC": constante catalana.
+
+"EM": constante de Euler-Mascheroni.
+
+"FA": constante alfa de Feigenbaum.
+
+"FS": constante sigma de Feigenbaum.
+
+"AP": constante de Apéry.
+
+"CO": constante de Conway.
+
+"KH": constante de Khinchin.
+
+"GK": constante de Glaisher-Kinkelin.
+_____
+
+Funciones disponibles para "antoniovandre_eval":
+
+"sen": función seno.
+
+"cos": función coseno.
+
+"tg": función tangente.
+
+"cotg": función cotangente.
+
+"sec": función secante.
+
+"cossec": función cossecante.
+
+"arcsen": función arco-seno.
+
+"arccos": función arco-coseno.
+
+"arctg": función de arco-tangente.
+
+"arccotg": función arco-cotangente.
+
+"arcsec": función de secado por arco.
+
+"arccossec": función arco-cosecante.
+
+"cord": función de cuerda.
+
+"arccord": función de arco de cuerda.
+
+"ln": función de logaritmo natural.
+
+"logdez": función de logaritmo en base 10.
+
+"logdois": función de logaritmo en base 2.
+
+"senh": función seno hiperbólica.
+
+"cosh": función coseno hiperbólica.
+
+"tgh": función tangente hiperbólica.
+
+"cotgh": función cotangente hiperbólica.
+
+"sech": función secante hiperbólica.
+
+"cossech": función cosecante hiperbólica.
+
+"arcsenh": función arco-seno hiperbólico.
+
+"arccosh": función coseno del arco hiperbólico.
+
+"arctgh": función hiperbólica de arco-tangente.
+
+"arccotgh": función hiperbolica de arco-cotangente.
+
+"arcsech": función de secado de arco hiperbólico.
+
+"arccossech": función hiperbólica de arco-cosecante.
+
+"factorial": función factorial.
+
+"módulo": función del módulo.
+
+"piso": función de piso.
+
+"teto": función de techo.
+
+"radparagrau": función para convertir radianes a grados.
+
+"radparagrado": función para convertir radianes a grados.
+
+"graupararad": función para convertir grados a radianes.
+
+"grauparagrado": función para convertir grados a grados.
+
+"gradopararad": función para convertir grados a radianes.
+
+"gradoparagrau": función para convertir grados a grados.
+
+"kelvinparacelsius": función para convertir la temperatura en Kelvin a Celsius.
+
+"kelvinparafahrenheit": función para convertir la temperatura en Kelvin a Fahrenheit.
+
+"celsiusparakelvin": función para convertir la temperatura en grados Celsius a Kelvin.
+
+"celsiusparafahrenheit": función para convertir la temperatura en grados Celsius a Fahrenheit.
+
+"fahrenheitparakelvin": función para convertir la temperatura en Fahrenheit a Kelvin.
+
+"fahrenheitparacelsius": función para convertir la temperatura de Fahrenheit a Celsius.
+
+"seigual": función condicional igual; requiere cuatro argumentos separados por "|", si el primero es igual al segundo, devuelve el tercero, en caso contrario el cuarto.
+
+"sediferente": función condicional diferente; requiere cuatro argumentos separados por "|", si el primero es diferente del segundo, devuelve el tercero, en caso contrario el cuarto.
+
+"semaiorouigual": función condicional mayor o igual; requiere cuatro argumentos separados por "|", si el primero es mayor o igual que el segundo, devuelve el tercero, en caso contrario el cuarto.
+
+"semenorouigual": función condicional igual; requiere cuatro argumentos separados por "|", si el primero es menor o igual que el segundo, devuelve el tercero, en caso contrario el cuarto.
+
+"semaior": función condicional más grande; requiere cuatro argumentos separados por "|", si el primero es mayor que el segundo, devuelve el tercero, en caso contrario el cuarto.
+
+"semenor": función condicional menor; requiere cuatro argumentos separados por "|", si el primero es menor que el segundo, devuelve el tercero, en caso contrario el cuarto.
+
+"pitagoras": La función de Pitágoras, devuelve la hipotenusa dados los catetos; requiere dos argumentos separados por "|", los catetos.
+
+"diagonalparalelepipedo": devuelve la diagonal de un paralelepípedo; requiere tres argumentos separados por "|", los bordes.
+
+"pat": devuelve el enésimo término de un AP; requiere tres argumentos separados por "|", el primer término, la razón y la posición "n".
+
+"par": devuelve la proporción de un PA; requiere tres argumentos separados por "|", el primer término, el último término y el número de términos.
+
+"pas": devuelve la suma de los términos de un PA; requiere tres argumentos separados por "|", el primer término, el último término y el número de términos.
+
+"pasr": devuelve la suma de los términos de un PA; requiere tres argumentos separados por "|", el primer término, la razón y el número de términos.
+
+"pgt": devuelve el enésimo término de un GP; requiere tres argumentos separados por "|", el primer término, la razón y la posición "n".
+
+"pgr": devuelve la proporción de un PG; requiere tres argumentos separados por "|", el primer término, el último término y el número de términos.
+
+"pgs": devuelve la suma de los términos de un GP; requiere tres argumentos separados por "|", el primer término, el último término y el número de términos.
+
+"pgsr": devuelve la suma de los términos de un GP; requiere tres argumentos separados por "|", el primer término, la razón y el número de términos.
+
+"mmc": devuelve el mmc de los argumentos, argumentos enteros positivos separados por "|".
+
+"mdc": devuelve el mcd de los argumentos, argumentos enteros positivos separados por "|".
+
+"mediaaritmetica": devuelve la media aritmética de los argumentos, argumentos separados por "|".
+
+"mediaaritmeticaponderada": devuelve la media aritmética ponderada de los argumentos, argumentos en pares, pesos primero, valores segundo, separados por "|".
+
+"mediageometrica": devuelve la media geométrica de los argumentos, argumentos separados por "|".
+
+"mediaharmonica": devuelve la media aritmética de los argumentos, argumentos separados por "|".
+
+"sum": devuelve la suma; argumentos separados por "|", primero la función en la variable predeterminada, segundo el primer índice y tercero el segundo índice.
+
+"prod": devuelve el producto; argumentos separados por "|", primero la función en la variable predeterminada, segundo el primer índice y tercero el segundo índice.
+
+"composicao": devuelve el valor numérico del compuesto de la función pasada como argumento; argumentos separados por "|", primero la función en la variable estándar, segundo el punto y tercero el número de composiciones.
+
+"base": devuelve el número correspondiente a la cadena pasada como primer argumento, la cadena debe estar entre "[" y "]" para que su procesamiento sea ignorado; la base correspondiente es el segundo argumento; argumentos separados por "|".
+
+"max": devuelve el valor máximo entre los argumentos pasados; argumentos separados por "|".
+
+"min": devuelve el valor mínimo entre los argumentos pasados; argumentos separados por "|".
+
+"mediana": devuelve la mediana estadística de los argumentos pasados; argumentos separados por "|".
+
+"variancia": devuelve la varianza estadística de los argumentos pasados; argumentos separados por "|".
+
+"desviopadrao": devuelve la desviación estándar de los argumentos pasados; argumentos separados por "|".
+
+"tamanhostring": devuelve la longitud de la cadena pasada como argumento; debe estar entre los caracteres "[" y "]" para que se ignore su procesamiento.
+
+"numeroocorrenciasstring": devuelve el número de apariciones de una subcadena en una cadena pasada como argumentos; primero: la cadena principal; segundo: la subcadena; debe estar entre los caracteres "[" y "]" para que se ignore su procesamiento.
+
+"der": derivada en un punto. Requiere 4 argumentos separados por "|": la función sobre la variable estándar, el punto, el orden de la derivada y la precisión de los números naturales.
+
+"int": integral definida. Requiere 4 argumentos separados por "|": la función en la variable predeterminada, el límite inferior, el límite superior y el número de precisión natural.
+
+"raizes": devuelve las raíces de la función pasada como parámetro; requiere 5 argumentos: la función en la variable predeterminada, el punto de búsqueda inferior, el punto de búsqueda superior, la raíz a encontrar, comenzando con "0" para la primera raíz encontrada, "1" si se encuentra una segunda raíz, "2 " si se encuentra una tercera raíz, etc., o "-1" para devolver el número de raíces encontradas, y como último argumento la resolución entera positiva de la búsqueda.
+_____
+
+Ejemplo de cálculo en "antoniovandre_eval":
+
+Entrada: "(2 + ln (5 - 2 ^ (8 - 6))) * 3";
+
+Salida: "6".
+____________________
+
+Sugerencias o errores de informe: "a.vandre.g@gmail.com".
+____________________
