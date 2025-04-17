@@ -6,7 +6,7 @@
 
 # Licença: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-# Última atualização: 26-03-2025. Não considerando alterações em variáveis globais.
+# Última atualização: 17-04-2025. Não considerando alterações em variáveis globais.
 
 SOURCEDIR="Math/"
 
@@ -449,7 +449,7 @@ if [ "${1}" == "instalar" ] && [ $(python3 --version | cut -d "." -f 2) -lt "7" 
 
 if [ "${1}" == "instalar" ] && ! ls INSTALAR &>> /dev/null; then echo -e "${AV_VERMELHO}${INSTALEDODIRETORIO}${AV_SEMCOR}."; read; exit 1; fi
 
-if [ "${1}" == "instalar" ]; then if wget -T $TIMEOUTMENSAGEM -qO- https://bit.ly/antoniovandreevalguimensagemdl 2>> /dev/null; then echo -e ""; fi; echo -e "${INSTALARINTRODUCAO}"; read; else echo -e "${DESINSTALARINTRODUCAO}"; read; fi
+if [ "${1}" == "instalar" ]; then if wget -T $TIMEOUTMENSAGEM -qO- "https://antoniovandre.github.io/antoniovandre_eval_GUI/antoniovandre_eval%20GUI%20-%20Mensagem%20de%20Antonio%20Vandr%C3%A9%20Pedrosa%20Furtunato%20Gomes.txt" 2>> /dev/null; then echo -e ""; fi; echo -e "${INSTALARINTRODUCAO}"; read; else echo -e "${DESINSTALARINTRODUCAO}"; read; fi
 
 DIR="${PWD}"
 cd "${SOURCEDIR}"
