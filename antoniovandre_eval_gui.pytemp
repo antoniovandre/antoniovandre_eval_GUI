@@ -34,11 +34,11 @@ bglabel.place (x=0, y=0, relwidth=1, relheight=1)
 
 window.title ("antoniovandre_eval GUI")
 
-lbl_entre = Label (window, bg="black", fg="white", cursor="xterm #FFFFFF", insertbackground="white", text="ENTREEXPRESSAO:")
+lbl_entre = Label (window, bg="black", fg="white", text="ENTREEXPRESSAO:")
 
 lbl_entre.place (anchor='w', rely=.1)
 
-txt = tk.Entry (window, bg="black", fg="white", width=50)
+txt = tk.Entry (window, bg="black", fg="white", insertbackground="white", width=50)
 
 txt.pack ()
 
