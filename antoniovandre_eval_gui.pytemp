@@ -26,7 +26,7 @@ window.geometry('410x150')
 
 window.resizable (False, False)
 
-window.config(insertbackground='white')
+window.config(cursor='white')
 
 bgimage = PhotoImage (file="/usr/share/antoniovandre_eval_gui_bgimage.png")
 
