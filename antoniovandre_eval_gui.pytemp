@@ -34,7 +34,7 @@ bglabel.place (x=0, y=0, relwidth=1, relheight=1)
 
 window.title ("antoniovandre_eval GUI")
 
-lbl_entre = Label (window, bg="black", fg="white", cursor="xterm #FFFFFF", text="ENTREEXPRESSAO:")
+lbl_entre = Label (window, bg="black", fg="white", cursor="xterm #FFFFFF", insertbackground="white", text="ENTREEXPRESSAO:")
 
 lbl_entre.place (anchor='w', rely=.1)
 
