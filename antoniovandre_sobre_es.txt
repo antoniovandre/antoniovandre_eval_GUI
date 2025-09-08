@@ -56,62 +56,61 @@ _____
 
 Constantes disponibles para "antoniovandre_eval":
 
-"PI": relación entre la longitud y el diámetro de un círculo.
+PI: razón entre la longitud y el diámetro de un círculo.
 
-"T": doble pi.
+T: tau, el doble de pi.
 
-"E": base de logaritmos naturales.
+E: base de los logaritmos naturales.
 
-"C": velocidad de la luz en el vacío, en SI.
+C: velocidad de la luz en el vacío, SI.
 
-"G": constante de Gravitación Universal, en SI.
+GM: Constante de Gravitación Universal, multiplicada por 10^15, SI.
 
-"QE": carga elemental, en el SI.
+QEM: Carga Elemental, multiplicada por 10^28, SI.
 
-"H": constante de Planck, en el SI.
+HM: Constante de Planck, multiplicada por 10^42, SI.
 
-"HH": constante de Planck reducida, en el SI.
+HHM: Constante de Planck Reducida, multiplicada por 10^43, SI.
 
-"K": constante de Boltzmann, en el SI.
+KM: Constante de Boltzmann, multiplicada por 10^31, SI.
 
-"ME": masa de electrones, en el SI.
+MEM: masa del electrón, multiplicada por 10^41, SI.
 
-"MP": masa de protones, en el SI.
+MPM: masa del protón, multiplicada por 10^38, SI.
 
-"MN": masa de neutrones, en SI.
+MNM: masa del neutrón, multiplicada por 10^38, SI.
 
-"AM": número de Avogadro, multiplicado por 10^(-23), en mol^(-1).
+"AM": Número de Avogadro, multiplicado por 10^(-23), en mol^(-1).
 
-"KE": constante de Coulomb, constante electrostática, en SI.
+"KE": Constante de Coulomb, constante electrostática, en el SI.
 
-"R": constante universal de gases perfectos, en SI.
+"R": Constante universal de los gases, en el SI.
 
-"SB": la constante de Stefan-Boltzmann en SI.
+"SB": Constante de Stefan-Boltzmann, en el SI.
 
-"PM": constante de permeabilidade magnética no vácuo, en SI.
+"PM": Constante de permeabilidad magnética del vacío, en el SI.
 
-"PE": constante de permeabilidad eléctrica del vacío, en SI.
+"PEM": Constante de permeabilidad eléctrica del vacío, multiplicado por 10^22, en el SI.
 
-"B": desplazamiento constante de Wien, en SI.
+"B": Constante de desplazamiento de Wien, en el SI.
 
-"P": proporción áurea.
+"P": Proporción áurea.
 
-"CC": constante catalana.
+"CC": Constante de Catalan.
 
-"EM": constante de Euler-Mascheroni.
+"EM": Constante de Euler-Mascheroni.
 
-"FA": constante alfa de Feigenbaum.
+"FA": Constante alfa de Feigenbaum.
 
-"FS": constante sigma de Feigenbaum.
+"FS": Constante sigma de Feigenbaum.
 
-"AP": constante de Apéry.
+"AP": Constante de Apéry.
 
-"CO": constante de Conway.
+"CO": Constante de Conway.
 
-"KH": constante de Khinchin.
+"KH": Constante de Khinchin.
 
-"GK": constante de Glaisher-Kinkelin.
-_____
+"GK": constante de Glaisher-Kinkelin._____
 
 Funciones disponibles para "antoniovandre_eval":
 

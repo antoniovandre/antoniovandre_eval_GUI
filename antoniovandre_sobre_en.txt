@@ -56,60 +56,61 @@ _____
 
 Constants available for "antoniovandre_eval":
 
-"PI": ratio between the length and diameter of a circumference.
+"PI": ratio of the length to the diameter of a circle.
 
-"T": double pi.
+"T": tau, twice pi.
 
 "E": base of natural logarithms.
 
-"C": speed of light in vacuum, in IS.
+"C": speed of light in a vacuum, SI.
 
-"G": constant of Universal Gravitation, in IS.
+"GM": Universal Gravitation Constant, times 10^15, SI.
 
-"QE": elementary charge, in IS.
+"QEM": Elementary Charge, times 10^28, SI.
 
-"H": Planck's constant, on SI.
+"HM": Planck's Constant, times 10^42, SI.
 
-"HH": Planck's reduced constant, in IS.
+"HHM": Reduced Planck Constant, times 10^43, SI.
 
-"K": Boltzmann's constant, in IS.
+"KM": Boltzmann's Constant, times 10^31, SI.
 
-"ME": electron mass, in IS.
+"MEM": electron mass, times 10^41, SI.
 
-"MP": proton mass, in IS.
+"MPM": proton mass, times 10^38, SI.
 
-"MN": neutron mass, in SI.
+"MNM": neutron mass, times 10^38, in SI.
 
-"AM": Avogadro's constant, times 10^(-23), in mol^(-1).
+"AM": Avogadro's number, times 10^(-23), in mol^(-1).
 
-"KE": Coulomb's constant, electrostatic constant, in IS.
+"KE": Coulomb's constant, electrostatic constant, in SI.
 
-"R": universal constant of perfect gases, in IS.
+"R": universal gas constant, in SI.
 
-"SB": Stefan-Boltzmann's constant, in IS.
+"SB": Stefan-Boltzmann constant, in SI.
 
-"PM": magnetic permeability constant in vacuum, in IS.
+"PM": vacuum magnetic permeability constant, in SI.
 
-"PE": electric permeability constant in vacuum, in SI.
+"PEM": vacuum electrical permeability constant, times 10^22, in SI.
+
+"B": Wien displacement constant, in SI.
 
 "P": golden ratio.
 
-"CC": Catalan's constant.
+"CC": Catalan constant.
 
-"EM": Euler-Mascheroni's constant.
+"EM": Euler-Mascheroni constant.
 
 "FA": Feigenbaum's alpha constant.
 
 "FS": Feigenbaum's sigma constant.
 
-"AP": Apéry's constant.
+"AP": Apéry constant.
 
-"CO": Conway's constant.
+"CO": Conway constant.
 
-"KH": Khinchin's constant.
+"KH": Khinchin constant.
 
-"GK": Glaisher-Kinkelin's constant.
-_____
+"GK": Glaisher-Kinkelin constant._____
 
 Functions available for "antoniovandre_eval":
 

@@ -64,21 +64,21 @@ Constantes disponíveis para "antoniovandre_eval":
 
 "C": velocidade da luz no vácuo, no SI.
 
-"G": constante da Gravitação Universal, no SI.
+"GM": constante da Gravitação Universal, vezes 10^15, no SI.
 
-"QE": carga elementar, no SI.
+"QEM": carga elementar, vezes 10^28, no SI.
 
-"H": constante de Planck, no SI.
+"HM": constante de Planck, vezes 10^42, no SI.
 
-"HH": Constante reduzida de Planck, no SI.
+"HHM": Constante reduzida de Planck, vezes 10^43, no SI.
 
-"K": constante de Boltzmann, no SI.
+"KM": constante de Boltzmann, vezes 10^31, no SI.
 
-"ME": massa do elétron, no SI.
+"MEM": massa do elétron, vezes 10^41, no SI.
 
-"MP": massa do próton, no SI.
+"MPM": massa do próton, vezes 10^38, no SI.
 
-"MN": massa do neutron, no SI.
+"MNM": massa do neutron, vezes 10^38, no SI.
 
 "AM": número de Avogadro, vezes 10^(-23), em mol^(-1).
 
@@ -90,7 +90,7 @@ Constantes disponíveis para "antoniovandre_eval":
 
 "PM": onstante de permeabilidade magnética no vácuo, no SI.
 
-"PE": constante de permeabilidade elétrica do vácuo, no SI.
+"PEM": constante de permeabilidade elétrica do vácuo, vezes 10^22, no SI.
 
 "B": constante de deslocamento de Wien, no SI.
 
@@ -111,7 +111,6 @@ Constantes disponíveis para "antoniovandre_eval":
 "KH": constante de Khinchin.
 
 "GK": constante de Glaisher-Kinkelin.
-_____
 
 Funções disponíveis para "antoniovandre_eval":
 

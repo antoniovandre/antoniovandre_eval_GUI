@@ -8,47 +8,43 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 16-11-2020.
+// Última atualização: 07-09-2025.
 
 #define FISICA_C_SI "C"
 #define FISICA_C_SI_VALOR 299792458
 #define FISICA_C_SI_COMENTARIO "Constante c, velocidade da luz no vácuo, no SI."
 
-#define FISICA_G_SI "G"
-#define FISICA_G_SI_VALOR 0.0000000000667430
-#define FISICA_G_SI_COMENTARIO "Constante G, da Gravitação Universal, no SI."
+#define FISICA_G_SI "GM"
+#define FISICA_G_SI_VALOR 66743
+#define FISICA_G_SI_COMENTARIO "Constante G, da Gravitação Universal, vezes 10^15, no SI."
 
-#define FISICA_QE_SI "QE"
-#define FISICA_QE_SI_VALOR 0.0000000000000000001602176634
-#define FISICA_QE_SI_COMENTARIO "Constante e, carga elementar, no SI."
+#define FISICA_QE_SI "QEM"
+#define FISICA_QE_SI_VALOR 1602176634
+#define FISICA_QE_SI_COMENTARIO "Constante e, carga elementar, vezes 10^28, no SI."
 
-#define FISICA_H_SI "H"
-#define FISICA_H_SI_VALOR 0.000000000000000000000000000000000662606891
-#define FISICA_H_SI_COMENTARIO "Constante h, de Planck, no SI."
+#define FISICA_H_SI "HM"
+#define FISICA_H_SI_VALOR 662606891
+#define FISICA_H_SI_COMENTARIO "Constante h, de Planck, vezes 10^42, no SI."
 
-#define FISICA_HH_SI "HH"
-#define FISICA_HH_SI_VALOR 0.0000000000000000000000000000000001054571621
-#define FISICA_HH_SI_COMENTARIO "Constante reduzida de Planck, no SI."
+#define FISICA_HH_SI "HHM"
+#define FISICA_HH_SI_VALOR 1054571621
+#define FISICA_HH_SI_COMENTARIO "Constante reduzida de Planck, vezes 10^43, no SI."
 
-#define FISICA_K_SI "K"
-#define FISICA_K_SI_VALOR 0.0000000000000000000000138065156
-#define FISICA_K_SI_COMENTARIO "Constante de Boltzmann, no SI."
+#define FISICA_K_SI "KM"
+#define FISICA_K_SI_VALOR 138065156
+#define FISICA_K_SI_COMENTARIO "Constante de Boltzmann, vezes 10^31, no SI."
 
-#define FISICA_ME_SI "ME"
-#define FISICA_ME_SI_VALOR 0.00000000000000000000000000000091093837015
-#define FISICA_ME_SI_COMENTARIO "Massa do elétron, no SI."
+#define FISICA_ME_SI "MEM"
+#define FISICA_ME_SI_VALOR 91093837015
+#define FISICA_ME_SI_COMENTARIO "Massa do elétron, vezes 10^41, no SI."
 
-#define FISICA_MP_SI "MP"
-#define FISICA_MP_SI_VALOR 0.00000000000000000000000000167262192369
-#define FISICA_MP_SI_COMENTARIO "Massa do próton, no SI."
+#define FISICA_MP_SI "MPM"
+#define FISICA_MP_SI_VALOR 167262192369
+#define FISICA_MP_SI_COMENTARIO "Massa do próton, vezes 10^38, no SI."
 
-#define FISICA_A_SI "A"
-#define FISICA_A_SI_VALOR 602214076000000000000000
-#define FISICA_A_SI_COMENTARIO "Número de Avogadro, em mol^(-1)."
-
-#define FISICA_AM_SI "AM"
-#define FISICA_AM_SI_VALOR 6.02214076
-#define FISICA_AM_SI_COMENTARIO "Número de Avogadro, vezes 10^(-23), em mol^(-1)."
+#define FISICA_A_SI "AM"
+#define FISICA_A_SI_VALOR 6.02214076
+#define FISICA_A_SI_COMENTARIO "Número de Avogadro, vezes 10^(-23), em mol^(-1)."
 
 #define FISICA_KE_SI "KE"
 #define FISICA_KE_SI_VALOR 8987551792.3
@@ -66,17 +62,17 @@
 #define FISICA_PM_SI_VALOR 0.00000125663706143591729538505735331180115367886775975004232838997783692312656251448359945121393013684
 #define FISICA_PM_SI_COMENTARIO "Constante de permeabilidade magnética no vácuo, no SI."
 
-#define FISICA_PE_SI "PE"
-#define FISICA_PE_SI_VALOR 0.0000000000088541878176
-#define FISICA_PE_SI_COMENTARIO "Constante de permeabilidade elétrica do vácuo, no SI."
+#define FISICA_PE_SI "PEM"
+#define FISICA_PE_SI_VALOR 88541878176
+#define FISICA_PE_SI_COMENTARIO "Constante de permeabilidade elétrica do vácuo, vezes 10^22, no SI."
 
 #define FISICA_B_SI "B"
 #define FISICA_B_SI_VALOR 0.002897771955185172
 #define FISICA_B_SI_COMENTARIO "Constante de deslocamento de Wien, no SI."
 
-#define FISICA_MN_SI "MN"
-#define FISICA_MN_SI_VALOR 0.00000000000000000000000000167492749804
-#define FISICA_MN_SI_COMENTARIO "Massa do neutron, no SI."
+#define FISICA_MN_SI "MNM"
+#define FISICA_MN_SI_VALOR 167492749804
+#define FISICA_MN_SI_COMENTARIO "Massa do neutron, vezes 10^38, no SI."
 
 #define MATEMATICA_T "T"
 #define MATEMATICA_T_VALOR 6.28318530717958647692528676655900576839433879875021164194988918461563281257241799725606965068423
