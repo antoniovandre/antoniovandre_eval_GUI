@@ -1370,9 +1370,9 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 	funcoesconstantes [37].valor = (TIPONUMEROREAL) FISICA_MP_SI_VALOR;
 	antoniovandre_copiarstring (funcoesconstantes [37].comentario, FISICA_MP_SI_COMENTARIO);
 
-	antoniovandre_copiarstring (funcoesconstantes [38].token, MATEMATICA_A);
-	funcoesconstantes [38].valor = (TIPONUMEROREAL) MATEMATICA_A_VALOR;
-	antoniovandre_copiarstring (funcoesconstantes [38].comentario, MATEMATICA_A_COMENTARIO);
+	antoniovandre_copiarstring (funcoesconstantes [38].token, MATEMATICA_AP);
+	funcoesconstantes [38].valor = (TIPONUMEROREAL) MATEMATICA_AP_VALOR;
+	antoniovandre_copiarstring (funcoesconstantes [38].comentario, MATEMATICA_AP_COMENTARIO);
 
 	antoniovandre_copiarstring (funcoesconstantes [39].token, "modulo");
 	antoniovandre_copiarstring (funcoesconstantes [39].comentario, "Função módulo.");
