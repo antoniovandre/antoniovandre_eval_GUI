@@ -76,9 +76,9 @@ Constants available for "antoniovandre_eval":
 
 "MEM": electron mass, times 10^41, SI.
 
-"MPM": proton mass, times 10^38, SI.
+"MPM": proton mass, times 10^27, SI.
 
-"MNM": neutron mass, times 10^38, in SI.
+"MNM": neutron mass, times 10^27, in SI.
 
 "AM": Avogadro's number, times 10^(-23), in mol^(-1).
 

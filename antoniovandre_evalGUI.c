@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 07-09-2025. Não considerando alterações em variáveis globais.
+// Última atualização: 11-09-2025. Não considerando alterações em variáveis globais.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -17,7 +17,7 @@
 
 #include "antoniovandre_constantes.c"
 
-#define VERSION 20250907
+#define VERSION 20250911
 #define MENSAGEMNAOCOMPILADOR "Software não compilado em razão do compilador não ser compatível."
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -1219,6 +1219,10 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 
 	char * ignstr;
 	flag = NUMEROZERO;
+
+	resultado = strtold (str, & err);
+
+	if (* err == NUMEROZERO) if (resultado > VALOR_MAX) {char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERROOVER); if (MACROALOCACAODINAMICA) {free (str2); free (buffer); free (funcoesconstantes);} return result;}
 
 	for (j = NUMEROZERO; j < len; j++)
 		{

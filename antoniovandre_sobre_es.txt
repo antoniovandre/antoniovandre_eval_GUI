@@ -76,9 +76,9 @@ KM: Constante de Boltzmann, multiplicada por 10^31, SI.
 
 MEM: masa del electrón, multiplicada por 10^41, SI.
 
-MPM: masa del protón, multiplicada por 10^38, SI.
+MPM: masa del protón, multiplicada por 10^27, SI.
 
-MNM: masa del neutrón, multiplicada por 10^38, SI.
+MNM: masa del neutrón, multiplicada por 10^27, SI.
 
 "AM": Número de Avogadro, multiplicado por 10^(-23), en mol^(-1).
 

@@ -8,71 +8,71 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 07-09-2025.
+// Última atualização: 11-09-2025.
 
 #define FISICA_C_SI "C"
-#define FISICA_C_SI_VALOR 299792458
+#define FISICA_C_SI_VALOR 299792458E0
 #define FISICA_C_SI_COMENTARIO "Constante c, velocidade da luz no vácuo, no SI."
 
 #define FISICA_G_SI "GM"
-#define FISICA_G_SI_VALOR 66743
+#define FISICA_G_SI_VALOR 66743E0
 #define FISICA_G_SI_COMENTARIO "Constante G, da Gravitação Universal, vezes 10^15, no SI."
 
 #define FISICA_QE_SI "QEM"
-#define FISICA_QE_SI_VALOR 1602176634
+#define FISICA_QE_SI_VALOR 1602176634E0
 #define FISICA_QE_SI_COMENTARIO "Constante e, carga elementar, vezes 10^28, no SI."
 
 #define FISICA_H_SI "HM"
-#define FISICA_H_SI_VALOR 662606891
+#define FISICA_H_SI_VALOR 662606891E0
 #define FISICA_H_SI_COMENTARIO "Constante h, de Planck, vezes 10^42, no SI."
 
 #define FISICA_HH_SI "HHM"
-#define FISICA_HH_SI_VALOR 1054571621
+#define FISICA_HH_SI_VALOR 1054571621E0
 #define FISICA_HH_SI_COMENTARIO "Constante reduzida de Planck, vezes 10^43, no SI."
 
 #define FISICA_K_SI "KM"
-#define FISICA_K_SI_VALOR 138065156
+#define FISICA_K_SI_VALOR 138065156E0
 #define FISICA_K_SI_COMENTARIO "Constante de Boltzmann, vezes 10^31, no SI."
 
 #define FISICA_ME_SI "MEM"
-#define FISICA_ME_SI_VALOR 91093837015
+#define FISICA_ME_SI_VALOR 91093837015E0
 #define FISICA_ME_SI_COMENTARIO "Massa do elétron, vezes 10^41, no SI."
 
 #define FISICA_MP_SI "MPM"
-#define FISICA_MP_SI_VALOR 167262192369
-#define FISICA_MP_SI_COMENTARIO "Massa do próton, vezes 10^38, no SI."
+#define FISICA_MP_SI_VALOR 1.67262192369E0
+#define FISICA_MP_SI_COMENTARIO "Massa do próton, vezes 10^27, no SI."
 
 #define FISICA_A_SI "AM"
-#define FISICA_A_SI_VALOR 6.02214076
+#define FISICA_A_SI_VALOR 6.02214076E0
 #define FISICA_A_SI_COMENTARIO "Número de Avogadro, vezes 10^(-23), em mol^(-1)."
 
 #define FISICA_KE_SI "KE"
-#define FISICA_KE_SI_VALOR 8987551792.3
+#define FISICA_KE_SI_VALOR 8987551792.3E0
 #define FISICA_KE_SI_COMENTARIO "Constante de Coulomb, constante eletrostática, no SI."
 
 #define FISICA_R_SI "R"
-#define FISICA_R_SI_VALOR 8.31446261815324
+#define FISICA_R_SI_VALOR 8.31446261815324E0
 #define FISICA_R_SI_COMENTARIO "Constante universal dos gases perfeitos, no SI."
 
 #define FISICA_SB_SI "SB"
-#define FISICA_SB_SI_VALOR 0.00000005670374419
+#define FISICA_SB_SI_VALOR 0.00000005670374419E0
 #define FISICA_SB_SI_COMENTARIO "Constante de Stefan-Boltzmann, no SI."
 
 #define FISICA_PM_SI "PM"
-#define FISICA_PM_SI_VALOR 0.00000125663706143591729538505735331180115367886775975004232838997783692312656251448359945121393013684
+#define FISICA_PM_SI_VALOR 0.00000125663706143591729538505735331180115367886775975004232838997783692312656251448359945121393013684E0
 #define FISICA_PM_SI_COMENTARIO "Constante de permeabilidade magnética no vácuo, no SI."
 
 #define FISICA_PE_SI "PEM"
-#define FISICA_PE_SI_VALOR 88541878176
+#define FISICA_PE_SI_VALOR 88541878176E0
 #define FISICA_PE_SI_COMENTARIO "Constante de permeabilidade elétrica do vácuo, vezes 10^22, no SI."
 
 #define FISICA_B_SI "B"
-#define FISICA_B_SI_VALOR 0.002897771955185172
+#define FISICA_B_SI_VALOR 0.002897771955185172E0
 #define FISICA_B_SI_COMENTARIO "Constante de deslocamento de Wien, no SI."
 
 #define FISICA_MN_SI "MNM"
-#define FISICA_MN_SI_VALOR 167492749804
-#define FISICA_MN_SI_COMENTARIO "Massa do neutron, vezes 10^38, no SI."
+#define FISICA_MN_SI_VALOR 1.67492749804E0
+#define FISICA_MN_SI_COMENTARIO "Massa do neutron, vezes 10^27, no SI."
 
 #define MATEMATICA_T "T"
 #define MATEMATICA_T_VALOR 6.28318530717958647692528676655900576839433879875021164194988918461563281257241799725606965068423
