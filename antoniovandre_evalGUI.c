@@ -8735,6 +8735,8 @@ char * antoniovandre_eval (char * str, int precisao)
 			{flag = NUMEROUM; break;}
 		}
 
+	tc = TOKENINICIOEVAL; strncat (str2, & tc, NUMEROUM);
+
 	if (flag == NUMEROUM)
 		{
 		for (j = i; j >= NUMEROZERO; j--)
@@ -8771,6 +8773,8 @@ char * antoniovandre_eval (char * str, int precisao)
 		}
 	else
 		for (i = NUMEROZERO; i < strlen (str); i++) if (str [i] != ESPACOBRANCO) strncat (str2, & str [i], NUMEROUM);
+
+	tc = TOKENFIMEVAL; strncat (str2, & tc, NUMEROUM);
 
 	flag = NUMEROZERO;
 	int inicioargumentos = NUMEROMENOSUM;
@@ -9085,7 +9089,8 @@ char * antoniovandre_eval (char * str, int precisao)
 
 		if (flag == flag2)
 			{
-			k = inicio - NUMEROUM;
+			k = inicio - 2;
+
 			flag4 = NUMEROZERO;
 
 			do
