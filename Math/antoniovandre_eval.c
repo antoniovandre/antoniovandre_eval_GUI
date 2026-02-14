@@ -83,7 +83,7 @@ int main (int argc, char *argv [])
 			}
 		}
 
-	argvb2[sizeof(argvb2)] = TOKENFIMEVAL;
+	argvb2[j] = TOKENFIMEVAL;
 
 	flag = NUMEROZERO;
 
