@@ -4,7 +4,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 03-08-2024. Não considerando alterações em variáveis globais.
+// Última atualização: 14-02-2026. Não considerando alterações em variáveis globais.
 
 #include "../antoniovandre_evalGUI.c"
 
@@ -60,6 +60,8 @@ int main (int argc, char *argv [])
 		}
 	else fgets(argvb, TAMANHO_BUFFER_PHRASE, stdin);
 
+	argvb2[NUMEROZERO] = TOKENINICIOEVAL; j++;
+
 	flag = NUMEROZERO;
 
 	for (i = NUMEROZERO; i < strlen (argvb); i++)
@@ -77,6 +79,8 @@ int main (int argc, char *argv [])
 				argvb3 [j++] = argvb [i];
 			}
 		}
+
+	argvb2[j] = TOKENFIMEVAL;
 
 	flag = NUMEROZERO;
 
