@@ -60,8 +60,6 @@ int main (int argc, char *argv [])
 		}
 	else fgets(argvb, TAMANHO_BUFFER_PHRASE, stdin);
 
-	argvb2[NUMEROZERO] = TOKENINICIOEVAL; j++;
-
 	argvb2[NUMEROZERO] = CHARUM; j++;
 	argvb2[NUMEROUM] = TOKENINICIOEVAL; j++;
 
