@@ -62,11 +62,14 @@ int main (int argc, char *argv [])
 
 	argvb2[NUMEROZERO] = TOKENINICIOEVAL; j++;
 
+	argvb2[NUMEROZERO] = CHARUM; j++;
+	argvb2[NUMEROUM] = TOKENINICIOEVAL; j++;
+
 	flag = NUMEROZERO;
 
 	for (i = NUMEROZERO; i < strlen (argvb); i++)
 		{
-		if (argvb [i] == DELIMITADORSTRING) {flag = NUMEROUM; i++; j = NUMEROZERO;}
+		if (argvb [i] == DELIMITADORSTRING) {flag = NUMEROUM; i++;}
 
 		if (flag == NUMEROZERO)
 			{
@@ -80,7 +83,7 @@ int main (int argc, char *argv [])
 			}
 		}
 
-	argvb2[j] = TOKENFIMEVAL;
+	argvb2[sizeof(argvb2)] = TOKENFIMEVAL;
 
 	flag = NUMEROZERO;
 
