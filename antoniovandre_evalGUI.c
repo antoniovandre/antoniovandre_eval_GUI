@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 25-02-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 01-03-2026. Não considerando alterações em variáveis globais.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,7 +18,7 @@
 
 #include "antoniovandre_constantes.c"
 
-#define VERSION 20260225
+#define VERSION 20260301
 #define MENSAGEMNAOCOMPILADOR "Software não compilado em razão do compilador não ser compatível."
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -7908,7 +7908,20 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 				return antoniovandre_numeroparastring (VALOR_MAX, precisao);
 				}
 			else if (! strcmp (str2, "tamanho_max_arquivo"))
+				{
+				if (MACROALOCACAODINAMICA)
+					{
+					free (str2);
+					free (buffer);
+
+					for (i = NUMEROZERO; i < TAMANHO_BUFFER_SMALL; i++)
+						{free (funcoesconstantes [i].token); free (funcoesconstantes [i].comentario);}
+
+					free (funcoesconstantes);
+					}
+
 				return antoniovandre_numeroparastring (TAMANHO_MAX_ARQUIVO, precisao);
+				}
 			else if (! strcmp (str2, "variavelpadrao"))
 				{
 				if (MACROALOCACAODINAMICA)
@@ -7957,7 +7970,7 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 				tc = DELIMITADORSTRING2;
 				return antoniovandre_numeroparastring ((int) tc, precisao);
 				}
-			else if (! strcmp (str2, "DELIMITADORSTRINGARGUMENTOS"))
+			else if (! strcmp (str2, "delimitadorstringargumentos"))
 				{
 				if (MACROALOCACAODINAMICA)
 					{
@@ -9097,7 +9110,18 @@ char * antoniovandre_eval (char * str, int precisao)
 				free (str2t);
 				}
 
-			return antoniovandre_evalcelulafuncao (temp, precisao);
+			str3 = antoniovandre_evalcelulafuncao (temp, precisao);
+
+			flag3 = NUMEROZERO;
+			j = strlen (str3);
+
+			for (i = NUMEROZERO; i < j; i++)
+				if (str3 [i] == VARIAVELPADRAO)
+					{flag3 = NUMEROUM; break;}
+
+			if (flag3 == NUMEROUM)
+				{free (str3); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERRO); return result;}
+			else return str3;
 			}
 
 		antoniovandre_copiarstring (str3, STRINGVAZIA);
@@ -9148,6 +9172,7 @@ char * antoniovandre_eval (char * str, int precisao)
 			if (strcmp (str6, STRINGVAZIA))
 				{
 				antoniovandre_concatenarstring (str3, str6);
+
 				if (tc != OPERADORSUBTRACAO) antoniovandre_concatenarstring (str3, "*");
 				}
 
@@ -9216,7 +9241,18 @@ char * antoniovandre_eval (char * str, int precisao)
 		free (str2t);
 		}
 
-	return antoniovandre_evalcelula (str2, precisao);
+	str3 = antoniovandre_evalcelula (str2, precisao);
+
+	flag = NUMEROZERO;
+	j = strlen (str3);
+
+	for (i = NUMEROZERO; i < j; i++)
+		if (str3 [i] == VARIAVELPADRAO)
+			{flag = NUMEROUM; break;}
+
+	if (flag == NUMEROUM)
+		{free (str3); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERRO); return result;}
+	else return str3;
 	}
 
 // Derivada em um ponto.
