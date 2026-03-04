@@ -6,7 +6,7 @@
 
 // Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
 
-// Última atualização: 01-03-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 03-03-2026. Não considerando alterações em variáveis globais.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,7 +18,7 @@
 
 #include "antoniovandre_constantes.c"
 
-#define VERSION 20260301
+#define VERSION 20260303
 #define MENSAGEMNAOCOMPILADOR "Software não compilado em razão do compilador não ser compatível."
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -8816,6 +8816,8 @@ char * antoniovandre_eval (char * str, int precisao)
 
 	if (flag == NUMEROUM)
 		{
+		tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+
 		for (i = NUMEROZERO; i < strlen (str2); i++)
 			if (str2 [i] != ESPACOBRANCO)
 				{
@@ -8824,6 +8826,8 @@ char * antoniovandre_eval (char * str, int precisao)
 				else
 					strncat (str3, & str2 [i], NUMEROUM);
 				}
+
+		tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
 		}
 	else
 		for (i = NUMEROZERO; i < strlen (str2); i++) if (str2 [i] != ESPACOBRANCO) strncat (str3, & str2 [i], NUMEROUM);
