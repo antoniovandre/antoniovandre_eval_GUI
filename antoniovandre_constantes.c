@@ -6,7 +6,7 @@
 
 // As constantes devem ter seus nomes em caracteres maiúsculos.
 
-// Licença de uso: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
+// Licença de uso: Creative Commons Atribuição (CC BY).
 
 // Última atualização: 11-09-2025.
 
