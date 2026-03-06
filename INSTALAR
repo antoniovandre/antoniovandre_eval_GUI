@@ -4,8 +4,6 @@
 
 # Script para compilar e instalar antoniovandre_eval_gui, versão de distribuição.
 
-# Licença: Atribuição-NãoComercial-CompartilhaIgual (CC BY-NC-SA).
-
 # Última atualização: 17-04-2025. Não considerando alterações em variáveis globais.
 
 SOURCEDIR="Math/"
