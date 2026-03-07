@@ -6,7 +6,7 @@
 
 // Licença de uso: Creative Commons Atribuição (CC BY).
 
-// Última atualização: 05-03-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 07-03-2026. Não considerando alterações em variáveis globais.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,7 +18,7 @@
 
 #include "antoniovandre_constantes.c"
 
-#define VERSION 20260305
+#define VERSION 20260307
 #define MENSAGEMNAOCOMPILADOR "Software não compilado em razão do compilador não ser compatível."
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -9720,7 +9720,7 @@ char * antoniovandre_funcaomaisproxima (char * arquivopontospath, char * arquivo
 
 		if ((log == NUMEROUM) && ((contadoritens == NUMEROUM) || (contadoritens == totalitens - totalpontos) || (contadoritens % INTERVALOPROGRESSO == NUMEROZERO)))
 			{
-			printf ("\r%.13f%% concluído.", (TIPONUMEROREAL) (100.0 * (TIPONUMEROREAL) ((TIPONUMEROREAL) (contadoritens) / (TIPONUMEROREAL) (totalitens - (TIPONUMEROREAL) totalpontos))));
+			printf ("\r%.13f%% concluído.", 100.0 * contadoritens / (totalitens - totalpontos));
 
 			fflush (stdout);
 			}
