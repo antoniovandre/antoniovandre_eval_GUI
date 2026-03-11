@@ -418,9 +418,9 @@ int antoniovandre_mathsobre ()
 	fclose (filesobre);
 	}
 
-// Função de salvar as estatísticas de uso dos softwares matemáticos.
+// Função de salvar as estatísticas de uso dos softwares matemáticos. Modificada para a versão de distribuição.
 
-int antoniovandre_salvarmathestatisticas (char * cabecalho)
+int antoniovandre_salvarmathestatisticas (char * arquivo_math_estatisticas, char * cabecalho)
 	{
 	if (ESCREVER_ESTATISTICAS)
 		{
@@ -445,11 +445,11 @@ int antoniovandre_salvarmathestatisticas (char * cabecalho)
 
 		antoniovandre_copiarstring (antoniovandre_estatisticas_buffer, STRINGVAZIA);
 
-		filemathestatisticas = fopen (ARQUIVO_MATH_ESTATISTICAS, "r+");
+		filemathestatisticas = fopen (arquivo_math_estatisticas, "r+");
 
 		if (filemathestatisticas == NULL)
 			{
-			filemathestatisticas = fopen (ARQUIVO_MATH_ESTATISTICAS, "w");
+			filemathestatisticas = fopen (arquivo_math_estatisticas, "w");
 
 			if (filemathestatisticas == NULL)
 				{
@@ -479,7 +479,7 @@ int antoniovandre_salvarmathestatisticas (char * cabecalho)
 					fread (& tc, sizeof (char), NUMEROUM, filemathestatisticas);
 
 					for (i = NUMEROZERO; i < strlen (antoniovandre_numeros); i++)
-						if (antoniovandre_numeros [i] == tc) {flag3 = NUMEROUM; break;}
+						if (antoniovandre_numeros[i] == tc) {flag3 = NUMEROUM; break;}
 
 					if (flag3 == NUMEROUM)
 						antoniovandre_estatisticas_buffer [j++] = tc;
