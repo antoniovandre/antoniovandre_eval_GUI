@@ -1,4 +1,4 @@
-// Proprietário: Antonio Vandré Pedrosa Furtunato Gomes.
+// Proprietário: Antonio Vandré Pedrosa Furtunato Gomes (github.com/antoniovandre).
 
 // Projeto Mathematical Ramblings.
 
@@ -24,8 +24,8 @@
 #define NUMEROUM 1
 #define NUMEROMENOSUM -1
 #define TAMANHO_BUFFER_SMALL 112 // Para pequenos buffers.
-#define TAMANHO_BUFFER_WORD 1024 // Para strings pequenas.
-#define TAMANHO_BUFFER_PHRASE 16384 // Para strings grandes.
+#define TAMANHO_BUFFER_WORD 512 // Para strings pequenas.
+#define TAMANHO_BUFFER_PHRASE 2048 // Para strings grandes.
 #define TAMANHO_BUFFER_TEXT 500000000 // Para conteúdos de arquivos.
 #define VALOR_MAX 0.9999999999999999E17 // A fim de evitar erros de saída.
 #define VALOR_MAX_2 10000000 // Valor máximo. Segunda opção.
