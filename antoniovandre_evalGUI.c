@@ -6,7 +6,7 @@
 
 // Licença de uso: Creative Commons Atribuição (CC BY).
 
-// Última atualização: 23-03-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 27-03-2026. Não considerando alterações em variáveis globais.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,7 +18,7 @@
 
 #include "antoniovandre_constantes.c"
 
-#define VERSION 20260323
+#define VERSION 20260327
 #define MENSAGEMNAOCOMPILADOR "Software não compilado em razão do compilador não ser compatível."
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -1235,7 +1235,7 @@ char * antoniovandre_formatarreal (char * result, int precisao)
 
 	valor = strtold (result, & err);
 
-	if (* err != NUMEROZERO) {if (result != NULL) free (result); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERRO); return result;}
+	if (* err != NUMEROZERO) {if (result != NULL) free (result); char * resultf = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (resultf, STRINGSAIDAERRO); return resultf;}
 
 	if (result != NULL) free (result);
 
@@ -8767,7 +8767,7 @@ char * antoniovandre_eval (char * str, int precisao)
 		flagargumentos = NUMEROZERO;
 		numerotokens = NUMEROZERO;
 
-		for (i = NUMEROZERO; i < l; i++)
+		for (i = NUMEROZERO; i < n; i++)
 			if (str2 [i] == DELIMITADORSTRINGARGUMENTOS)
 				flagargumentos = NUMEROUM;
 
@@ -8787,7 +8787,7 @@ char * antoniovandre_eval (char * str, int precisao)
 				}
 			}
 
-		for (i = NUMEROZERO; i < l; i++)
+		for (i = NUMEROZERO; i < n; i++)
 			if ((str2 [i] == TOKENINICIOEVAL) || (str2 [i] == TOKENFIMEVAL))
 				numerotokens++;
 
