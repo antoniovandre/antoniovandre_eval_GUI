@@ -275,6 +275,8 @@ Functions available for "antoniovandre_eval":
 "int": definite integral. Requires 4 arguments separated by "|": the function in the standard variable, the lower limit, the upper limit, and the natural number precision.
 
 "raizes": returns the roots of the function passed as a parameter; requires 5 arguments: the function in the default variable, the lower search point, the upper search point, the root to be found, starting with "0" for the first root found, "1" if a second root is found, "2" if a third root is found, etc., or "-1" to return the number of roots found, and as the last argument the positive integer resolution of the search.
+
+"sinal": returns "0" if the argument is null, "1" if positive, or "-1" if negative.
 _____
 
 Calculation example in "antoniovandre_eval":
