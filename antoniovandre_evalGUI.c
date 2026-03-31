@@ -9604,8 +9604,8 @@ char * antoniovandre_eval (char * str, int precisao)
 	int o;
 	int p;
 	int q;
-	int flag = NUMEROZERO;
-	int flag2 = NUMEROZERO;
+	int flag;
+	int flag2;
 	int flag3;
 	int flag4;
 	int flag5;
@@ -9632,20 +9632,12 @@ char * antoniovandre_eval (char * str, int precisao)
 	for (i = NUMEROZERO; i < j; i++) if (str [i] != ESPACOBRANCO) strncat (str2, & str [i], NUMEROUM);
 
 	flag = NUMEROZERO;
-	flag2 = NUMEROZERO;
 
 	k = strlen (str2);
 
 	for (i = NUMEROZERO; i < k; i++)
 		if (str2 [i] == DELIMITADORSTRINGARGUMENTOS)
 			{flag = NUMEROUM; break;}
-
-	for (i = NUMEROZERO; i < k; i++)
-		if (str2 [i] == VARIAVELPADRAO)
-			{flag2 = NUMEROUM; break;}
-
-	if ((flag == NUMEROZERO) && (flag2 == NUMEROUM))
-		{if (MACROALOCACAODINAMICA) {if (str6 != NULL) free (str6); if (str5 != NULL) free (str5); if (str4t != NULL) free (str4t); if (str4 != NULL) free (str4); if (str3 != NULL) free (str3); if (str2t != NULL) free (str2t);} char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); if (result == NULL) {char * r = (char *) malloc (NUMEROUM); r [NUMEROZERO] = CARACTEREFIMSTRING; return r;} antoniovandre_copiarstring (result, STRINGSAIDAERRO); return result;}
 
 	if (flag == NUMEROUM)
 		{
