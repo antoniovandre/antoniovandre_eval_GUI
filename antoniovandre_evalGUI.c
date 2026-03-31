@@ -9640,17 +9640,19 @@ char * antoniovandre_eval (char * str, int precisao)
 		if (str2 [i] == DELIMITADORSTRINGARGUMENTOS)
 			{flag = NUMEROUM; break;}
 
-	if (flag == NUMEROUM)
-		for (i = NUMEROZERO; i < k; i++)
-			if (str2 [i] == VARIAVELPADRAO)
-				{flag2 = NUMEROUM; break;}
+	for (i = NUMEROZERO; i < k; i++)
+		if (str2 [i] == VARIAVELPADRAO)
+			{flag2 = NUMEROUM; break;}
 
-	for (p = NUMEROZERO; p < k; p++)
-		if (str2 [p] == DELIMITADORSTRINGARGUMENTOS)
-			break;
+	if ((flag == NUMEROZERO) && (flag2 == NUMEROUM))
+		{if (MACROALOCACAODINAMICA) {if (str6 != NULL) free (str6); if (str5 != NULL) free (str5); if (str4t != NULL) free (str4t); if (str4 != NULL) free (str4); if (str3 != NULL) free (str3); if (str2t != NULL) free (str2t);} char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); if (result == NULL) {char * r = (char *) malloc (NUMEROUM); r [NUMEROZERO] = CARACTEREFIMSTRING; return r;} antoniovandre_copiarstring (result, STRINGSAIDAERRO); return result;}
 
 	if (flag == NUMEROUM)
 		{
+		for (p = NUMEROZERO; p < k; p++)
+			if (str2 [p] == DELIMITADORSTRINGARGUMENTOS)
+				break;
+
 		for (i = NUMEROZERO; i < k; i++)
 			if (str2 [i] != ESPACOBRANCO)
 				{
