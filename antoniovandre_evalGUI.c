@@ -6,7 +6,7 @@
 
 // Licença de uso: Creative Commons Atribuição (CC BY).
 
-// Última atualização: 28-03-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 31-03-2026. Não considerando alterações em variáveis globais.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,7 +18,7 @@
 
 #include "antoniovandre_constantes.c"
 
-#define VERSION 20260328
+#define VERSION 20260331
 #define MENSAGEMNAOCOMPILADOR "Software não compilado em razão do compilador não ser compatível."
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -3431,7 +3431,7 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 
 				if (contador != 2) {if (temp != NULL) free (temp); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERRO); if (str2 != NULL) free (str2); if (MACROALOCACAODINAMICA) {if (buffer != NULL) free (buffer); for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++) {if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);} if (funcoesconstantes != NULL) free (funcoesconstantes);} return result;}
 
-				char * argumentos0 = antoniovandre_eval (antoniovandre_substring (temp, NUMEROZERO, posicoes [NUMEROZERO] - NUMEROUM), precisao);
+				char * argumentos0 = antoniovandre_substring (temp, NUMEROZERO, posicoes [NUMEROZERO] - NUMEROUM);
 
 				l = strlen (argumentos0);
 
@@ -4239,7 +4239,7 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 
 				if (contador != 2) {if (temp != NULL) free (temp); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERRO); if (str2 != NULL) free (str2); if (MACROALOCACAODINAMICA) {if (buffer != NULL) free (buffer); for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++) {if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);} if (funcoesconstantes != NULL) free (funcoesconstantes);} return result;}
 
-				char * argumentos0 = antoniovandre_eval (antoniovandre_substring (temp, NUMEROZERO, posicoes [NUMEROZERO] - NUMEROUM), precisao);
+				char * argumentos0 = antoniovandre_substring (temp, NUMEROZERO, posicoes [NUMEROZERO] - NUMEROUM);
 
 				l = strlen (argumentos0);
 
@@ -5441,7 +5441,7 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 
 				if (contador != 3) {if (temp != NULL) free (temp); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERRO); if (str2 != NULL) free (str2); if (MACROALOCACAODINAMICA) {if (buffer != NULL) free (buffer); for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++) {if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);} if (funcoesconstantes != NULL) free (funcoesconstantes);} return result;}
 
-				char * argumentos0 = antoniovandre_eval (antoniovandre_substring (temp, NUMEROZERO, posicoes [NUMEROZERO] - NUMEROUM), precisao);
+				char * argumentos0 = antoniovandre_substring (temp, NUMEROZERO, posicoes [NUMEROZERO] - NUMEROUM);
 
 				l = strlen (argumentos0);
 
@@ -5726,7 +5726,7 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 
 				if (contador != 3) {if (temp != NULL) free (temp); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERRO); if (str2 != NULL) free (str2); if (MACROALOCACAODINAMICA) {if (buffer != NULL) free (buffer); for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++) {if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);} if (funcoesconstantes != NULL) free (funcoesconstantes);} return result;}
 
-				char * argumentos0 = antoniovandre_eval (antoniovandre_substring (temp, NUMEROZERO, posicoes [NUMEROZERO] - NUMEROUM), precisao);
+				char * argumentos0 = antoniovandre_substring (temp, NUMEROZERO, posicoes [NUMEROZERO] - NUMEROUM);
 
 				l = strlen (argumentos0);
 
@@ -6011,7 +6011,7 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 
 				if (contador != 4) {if (temp != NULL) free (temp); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERRO); if (str2 != NULL) free (str2); if (MACROALOCACAODINAMICA) {if (buffer != NULL) free (buffer); for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++) {if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);} if (funcoesconstantes != NULL) free (funcoesconstantes);} return result;}
 
-				char * argumentos0 = antoniovandre_eval (antoniovandre_substring (temp, NUMEROZERO, posicoes [NUMEROZERO] - NUMEROUM), precisao);
+				char * argumentos0 = antoniovandre_substring (temp, NUMEROZERO, posicoes [NUMEROZERO] - NUMEROUM);
 
 				l = strlen (argumentos0);
 
