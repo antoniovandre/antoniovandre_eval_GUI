@@ -4,7 +4,7 @@
 
 // Licença de uso: Creative Commons Atribuição (CC BY).
 
-// Última atualização: 22-02-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 01-04-2026. Não considerando alterações em variáveis globais.
 
 #include "../antoniovandre_evalGUI.c"
 
@@ -84,18 +84,22 @@ int main (int argc, char *argv [])
 
 	if (! strcmp (strf, STRINGSAIDAERRO))
 		{
+		free (strf);
 		printf (EVAL_MENSAGEM_USO);
 		printf ("\n");
 		return NUMEROMENOSUM;
 		}
 	else if (! strcmp (strf, STRINGSAIDAERROOVER))
 		{
+		free (strf);
 		printf (MENSAGEM_ERRO_OVER);
 		printf ("\n");
 		return NUMEROMENOSUM;
 		}
 	else
 		printf ("%s\n", strf);
+
+	free (strf);
 
 	if (! strcmp (argvb3, STRINGVAZIA))
 		{if (! strcmp (argv [2], "0")) flag = NUMEROUM;}
