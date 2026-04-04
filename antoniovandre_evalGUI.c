@@ -26,6 +26,7 @@
 #define VERDADE NUMEROUM
 #define FALSIDADE NUMEROZERO
 #define TAMANHO_BUFFER_FUNCOESCONSTANTES 113 // Para pequenos buffers.
+#define TAMANHO_BUFFER_SMALL 16 // Para pequenos buffers.
 #define TAMANHO_BUFFER_WORD 1024 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 4096 // Para strings grandes.
 #define TAMANHO_BUFFER_TEXT 500000000 // Para conteúdos de arquivos.
