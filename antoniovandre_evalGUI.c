@@ -6,7 +6,7 @@
 
 // Licença de uso: Creative Commons Atribuição (CC BY).
 
-// Última atualização: 02-04-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 03-04-2026. Não considerando alterações em variáveis globais.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,7 +18,7 @@
 
 #include "antoniovandre_constantes.c"
 
-#define VERSION 20260402
+#define VERSION 20260403
 #define MENSAGEMNAOCOMPILADOR "Software não compilado em razão do compilador não ser compatível."
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -773,7 +773,6 @@ char * antoniovandre_numeroparastring (TIPONUMEROREAL numero, int precisao)
 
 	if (numero == NUMEROZERO)
 		{
-		int i;
 		char tc = '0';
 
 		antoniovandre_copiarstring (strr, STRINGVAZIA);
@@ -8150,6 +8149,7 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 			if (temp != NULL) free (temp);
 
 			temp = antoniovandre_numeroparastring (M_PI_2, precisao);
+
 			if ((* err != NUMEROZERO) || (fmodl (argumento, M_PI) == strtold (temp, & err2))) {if (str != NULL) free (str); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERRO); if (str2 != NULL) free (str2); if (MACROALOCACAODINAMICA) {if (buffer != NULL) free (buffer); for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++) {if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);} if (funcoesconstantes != NULL) free (funcoesconstantes);} return result;}
 			if (temp != NULL) free (temp);
 
