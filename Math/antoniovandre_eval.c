@@ -82,7 +82,6 @@ int main (int argc, char *argv [])
 
 	strf = antoniovandre_eval (argvb2, precisao);
 
-	/*
 	if (! strcmp (strf, STRINGSAIDAERRO))
 		{
 		free (strf);
@@ -97,7 +96,7 @@ int main (int argc, char *argv [])
 		printf ("\n");
 		return NUMEROMENOSUM;
 		}
-	else */
+	else
 		printf ("%s\n", strf);
 
 	free (strf);
