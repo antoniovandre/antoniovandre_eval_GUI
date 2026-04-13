@@ -9107,16 +9107,7 @@ char * antoniovandre_eval (char * str, int precisao)
 						{tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM); flag3 = NUMEROZERO; flag4 = NUMEROZERO;}
 					}
 
-				if (str2 [i] == TOKENINICIOEVAL)
-					{tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);}
-
-				if (str2 [i] == TOKENFIMEVAL)
-					{tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);}
-
-				if (str2 [i] == DELIMITADORSTRINGARGUMENTOS)
-					{tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM); tc = DELIMITADORSTRINGARGUMENTOS; strncat (str3, & tc, NUMEROUM); tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);}
-				else
-					strncat (str3, & str2 [i], NUMEROUM);
+				strncat (str3, & str2 [i], NUMEROUM);
 				}
 
 		antoniovandre_copiarstring (str2, STRINGVAZIA);
