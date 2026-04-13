@@ -5417,7 +5417,7 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 					}
 				}
 
-			temp = antoniovandre_substring (str, i + 3, len - 2);
+			temp = antoniovandre_substring (str, i + 3, len - NUMEROUM);
 
 			int posicoes [3];
 			contador = NUMEROZERO;
