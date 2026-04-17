@@ -254,7 +254,7 @@ Functions available for "antoniovandre_eval":
 
 "composicao": returns the numerical value of the composite function passed as an argument; arguments separated by "|", first the function in the default variable, second the period, and third the number of compositions.
 
-"base": returns the number corresponding to the string passed as the first argument, the string must be between "[" and "]" for its processing to be ignored; the corresponding base is the second argument; arguments separated by "|".
+"base": returns the number corresponding to the string passed as the first argument,the corresponding base is the second argument; arguments separated by "|".
 
 "max": returns the maximum value among the arguments passed; arguments separated by "|".
 
@@ -266,9 +266,9 @@ Functions available for "antoniovandre_eval":
 
 "desviopadrao": returns the standard deviation of the arguments passed; arguments separated by "|".
 
-"tamanhostring": returns the length of the string passed as an argument; it must be between the characters "[" and "]" for its processing to be ignored.
+"tamanhostring": returns the size of the string passed as an argument.
 
-"numeroocorrenciasstring": returns the number of occurrences of a substring in a string passed as arguments; first: the main string; second: the substring; must be between the characters "[" and "]" so that their processing is ignored.
+"numeroocorrenciasstring": returns the number of occurrences of a substring in a string passed as arguments; first: the main string; second: the substring.
 
 "der": derivative at a point. Requires 4 arguments separated by "|": the function in the standard variable, the point, the order of the derivative, and the natural number precision.
 

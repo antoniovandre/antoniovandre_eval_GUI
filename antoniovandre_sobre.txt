@@ -254,7 +254,7 @@ Funções disponíveis para "antoniovandre_eval":
 
 "composicao": retorna o valor numérico da composta da função passada como argumento; argumentos separados por "|", primeiro a função na variável padrão, segundo o ponto, e terceiro o número de composições.
 
-"base": retorna o múmero correspondente à string passada como primeiro argumento, a string deve estar entre "[" e "]" para que seu processamento seja ignorado; a base correspondente é o segundo argumento; argumentos separados por "|".
+"base": retorna o múmero correspondente à string passada como primeiro argumento, a base correspondente é o segundo argumento; argumentos separados por "|".
 
 "max": retorna o máximo valor dentre os argumentos passados; argumentos separados por "|".
 
@@ -266,9 +266,9 @@ Funções disponíveis para "antoniovandre_eval":
 
 "desviopadrao": retorna o desvio padrão dos argumentos passados; argumentos separados por "|".
 
-"tamanhostring": retorna o tamanho da string passada como argumento; deve estar entre os caracteres "[" e "]" para que seu processamento seja ignorado.
+"tamanhostring": retorna o tamanho da string passada como argumento.
 
-"numeroocorrenciasstring": retorna o número de ocorrências de uma substring em uma string passadas como argumentos; primeiro: a main string; segundo: a substring; devem estar entre os caracteres "[" e "]" para que seus processamentos sejam ignorados.
+"numeroocorrenciasstring": retorna o número de ocorrências de uma substring em uma string passadas como argumentos; primeiro: a main string; segundo: a substring.
 
 "der": derivada em um ponto. Requer 4 argumentos separados por "|": a função na variável padrão, o ponto, a ordem da derivada, e o número natural precisão.
 
