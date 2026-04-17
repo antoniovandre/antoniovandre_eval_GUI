@@ -59,8 +59,7 @@
 #define TENTATIVASLOGICAS 4 // Podem ser necessárias mais de uma verificação lógica em alguns trechos.
 #define TOKENINICIOEVAL '('
 #define TOKENFIMEVAL ')'
-#define TOKENINICIOIGN '['
-#define TOKENFIMIGN ']'
+#define TOKENIGN '&'
 #define EPSILON 0.0001 // Para funções de Cálculo Diferencial e obtenção de raízes de funções.
 #define VARIAVELDESUBSTITUICAO VARIAVELPADRAO // Deve ser uma letra não presente nos nomes das funções ou constantes.
 #define VARIAVELDESUBSTITUICAO2 'Y' // Deve ser uma letra não presente nos nomes das funções ou constantes.
