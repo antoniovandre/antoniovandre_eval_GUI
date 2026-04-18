@@ -6,7 +6,7 @@
 
 // Licença de uso: Creative Commons Atribuição (CC BY).
 
-// Última atualização: 17-04-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 18-04-2026. Não considerando alterações em variáveis globais.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,14 +18,14 @@
 
 #include "antoniovandre_constantes.c"
 
-#define VERSION 20260417
+#define VERSION 20260418
 #define MENSAGEMNAOCOMPILADOR "Software não compilado em razão do compilador não ser compatível."
 #define NUMEROZERO 0
 #define NUMEROUM 1
 #define NUMEROMENOSUM -1
 #define VERDADE NUMEROUM
 #define FALSIDADE NUMEROZERO
-#define TAMANHO_BUFFER_FUNCOESCONSTANTES 113 // Para pequenos buffers.
+#define TAMANHO_BUFFER_FUNCOESCONSTANTES 109 // Para armazenar funções e constantes.
 #define TAMANHO_BUFFER_SMALL 16 // Para pequenos buffers.
 #define TAMANHO_BUFFER_WORD 1024 // Para strings pequenas.
 #define TAMANHO_BUFFER_PHRASE 4096 // Para strings grandes.
@@ -1660,29 +1660,23 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 	antoniovandre_copiarstring (funcoesconstantes [102].token, "desviopadrao");
 	antoniovandre_copiarstring (funcoesconstantes [102].comentario, "Desvio padrão.");
 
-	antoniovandre_copiarstring (funcoesconstantes [103].token, "tamanhostring");
-	antoniovandre_copiarstring (funcoesconstantes [103].comentario, "Tamanho de uma string.");
+	antoniovandre_copiarstring (funcoesconstantes [103].token, "der");
+	antoniovandre_copiarstring (funcoesconstantes [103].comentario, "Derivada em um ponto.");
 
-	antoniovandre_copiarstring (funcoesconstantes [104].token, "numeroocorrenciasstring");
-	antoniovandre_copiarstring (funcoesconstantes [104].comentario, "Número de ocorrências de uma substring em uma string.");
+	antoniovandre_copiarstring (funcoesconstantes [104].token, "int");
+	antoniovandre_copiarstring (funcoesconstantes [104].comentario, "Integral definida.");
 
-	antoniovandre_copiarstring (funcoesconstantes [105].token, "der");
-	antoniovandre_copiarstring (funcoesconstantes [105].comentario, "Derivada em um ponto.");
+	antoniovandre_copiarstring (funcoesconstantes [105].token, "raizes");
+	antoniovandre_copiarstring (funcoesconstantes [105].comentario, "Raízes de uma função.");
 
-	antoniovandre_copiarstring (funcoesconstantes [106].token, "int");
-	antoniovandre_copiarstring (funcoesconstantes [106].comentario, "Integral definida.");
+	antoniovandre_copiarstring (funcoesconstantes [106].token, "cord");
+	antoniovandre_copiarstring (funcoesconstantes [106].comentario, "Função corda.");
 
-	antoniovandre_copiarstring (funcoesconstantes [107].token, "raizes");
-	antoniovandre_copiarstring (funcoesconstantes [107].comentario, "Raízes de uma função.");
+	antoniovandre_copiarstring (funcoesconstantes [107].token, "arccord");
+	antoniovandre_copiarstring (funcoesconstantes [107].comentario, "Função arco-corda.");
 
-	antoniovandre_copiarstring (funcoesconstantes [108].token, "cord");
-	antoniovandre_copiarstring (funcoesconstantes [108].comentario, "Função corda.");
-
-	antoniovandre_copiarstring (funcoesconstantes [109].token, "arccord");
-	antoniovandre_copiarstring (funcoesconstantes [109].comentario, "Função arco-corda.");
-
-	antoniovandre_copiarstring (funcoesconstantes [110].token, "sinal");
-	antoniovandre_copiarstring (funcoesconstantes [110].comentario, "Função sinal.");
+	antoniovandre_copiarstring (funcoesconstantes [108].token, "sinal");
+	antoniovandre_copiarstring (funcoesconstantes [108].comentario, "Função sinal.");
 
 	for (i = NUMEROZERO; i < len; i++)
 		for (j = NUMEROZERO; j < TAMANHO_BUFFER_FUNCOESCONSTANTES; j++)
@@ -4979,147 +4973,6 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 				parcela += powl (argumenton [j] - mediaaritmetica, 2);
 
 			argumento = powl (parcela / ((TIPONUMEROREAL) (contador + NUMEROUM)), 0.5);
-
-			if (temp != NULL) free (temp);
-
-			if ((argumento > VALOR_MAX) || (argumento < (NUMEROMENOSUM) * VALOR_MAX)) {if (str != NULL) free (str); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERROOVER); if (str2 != NULL) free (str2); if (MACROALOCACAODINAMICA) {for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++) {if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);} if (funcoesconstantes != NULL) free (funcoesconstantes);} return result;}
-
-			if (MACROALOCACAODINAMICA)
-				{
-				if (str2 != NULL) free (str2);
-
-				for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++)
-					{if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);}
-
-				if (funcoesconstantes != NULL) free (funcoesconstantes);
-				}
-
-			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * argumento), precisao);
-			}
-		else if (! strncmp (str + i, "tamanhostring", 13))
-			{
-			coeficiente = NUMEROUM;
-
-			if (i > NUMEROZERO)
-				{
-				temp = antoniovandre_substring (str, NUMEROZERO, i - NUMEROUM);
-
-				antoniovandre_copiarstring (buffer, temp);
-
-				if (temp != NULL) free (temp);
-
-				if (! strcmp (buffer, "-"))
-					coeficiente = NUMEROMENOSUM;
-				else
-					{
-					temp = antoniovandre_eval (buffer, precisao);
-
-					coeficiente = strtold (temp, & err);
-
-					if (* err != NUMEROZERO)
-						coeficiente = NUMEROUM;
-					else if ((coeficiente > VALOR_MAX) || (coeficiente < (NUMEROMENOSUM) * VALOR_MAX)) {if (temp != NULL) free (temp); if (str != NULL) free (str); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERROOVER); if (str2 != NULL) free (str2); if (MACROALOCACAODINAMICA) {for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++) {if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);} if (funcoesconstantes != NULL) free (funcoesconstantes);} return result;}
-
-					if (temp != NULL) free (temp);					
-					}
-				}
-
-			temp = antoniovandre_substring (str, i + 13, len - NUMEROUM);
-
-			int posicoes [NUMEROUM];
-			int contador = NUMEROZERO;
-
-			l = strlen (temp);
-
-			for (j = NUMEROZERO; j < l; j++)
-				if (temp [j] == DELIMITADORSTRINGARGUMENTOS)
-					{if (contador < NUMEROUM) posicoes [contador] = j; contador++;}
-
-			if (contador != NUMEROZERO) {if (temp != NULL) free (temp); if (str != NULL) free (str); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERRO); if (str2 != NULL) free (str2); if (MACROALOCACAODINAMICA) {for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++) {if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);} if (funcoesconstantes != NULL) free (funcoesconstantes);} return result;}
-
-			char * argumentos0 = antoniovandre_substring (temp, NUMEROZERO, strlen (temp) - NUMEROUM);
-
-			argumento = strlen (argumentos0);
-
-			if (argumentos0 != NULL) free (argumentos0);
-
-			if (temp != NULL) free (temp);
-
-			if ((argumento > VALOR_MAX) || (argumento < (NUMEROMENOSUM) * VALOR_MAX)) {if (str != NULL) free (str); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERROOVER); if (str2 != NULL) free (str2); if (MACROALOCACAODINAMICA) {for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++) {if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);} if (funcoesconstantes != NULL) free (funcoesconstantes);} return result;}
-
-			if (MACROALOCACAODINAMICA)
-				{
-				if (str2 != NULL) free (str2);
-
-				for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++)
-					{if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);}
-
-				if (funcoesconstantes != NULL) free (funcoesconstantes);
-				}
-
-			return antoniovandre_numeroparastring ((TIPONUMEROREAL) ((TIPONUMEROREAL) coeficiente * argumento), precisao);
-			}
-		else if (! strncmp (str + i, "numeroocorrenciasstring", 23))
-			{
-			coeficiente = NUMEROUM;
-
-			if (i > NUMEROZERO)
-				{
-				temp = antoniovandre_substring (str, NUMEROZERO, i - NUMEROUM);
-
-				antoniovandre_copiarstring (buffer, temp);
-
-				if (temp != NULL) free (temp);
-
-				if (! strcmp (buffer, "-"))
-					coeficiente = NUMEROMENOSUM;
-				else
-					{
-					temp = antoniovandre_eval (buffer, precisao);
-
-					coeficiente = strtold (temp, & err);
-
-					if (* err != NUMEROZERO)
-						coeficiente = NUMEROUM;
-					else if ((coeficiente > VALOR_MAX) || (coeficiente < (NUMEROMENOSUM) * VALOR_MAX)) {if (temp != NULL) free (temp); if (str != NULL) free (str); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERROOVER); if (str2 != NULL) free (str2); if (MACROALOCACAODINAMICA) {for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++) {if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);} if (funcoesconstantes != NULL) free (funcoesconstantes);} return result;}
-
-					if (temp != NULL) free (temp);					
-					}
-				}
-
-			temp = antoniovandre_substring (str, i + 23, len - NUMEROUM);
-
-			int posicoes [NUMEROUM];
-			int contador = NUMEROZERO;
-
-			l = strlen (temp);
-
-			for (j = NUMEROZERO; j < l; j++)
-				if (temp [j] == DELIMITADORSTRINGARGUMENTOS)
-					{if (contador < NUMEROUM) posicoes [contador] = j; contador++;}
-
-			if (contador != NUMEROUM) {if (temp != NULL) free (temp); if (str != NULL) free (str); char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); antoniovandre_copiarstring (result, STRINGSAIDAERRO); if (str2 != NULL) free (str2); if (MACROALOCACAODINAMICA) {for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++) {if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);} if (funcoesconstantes != NULL) free (funcoesconstantes);} return result;}
-
-			char * argumentos0 = antoniovandre_substring (temp, NUMEROZERO, posicoes [NUMEROZERO] - NUMEROUM);
-
-			char * argumentos1 = antoniovandre_substring (temp, posicoes[NUMEROZERO] + NUMEROUM, strlen (temp) - NUMEROUM);
-
-			unsigned long long ocorrencias = NUMEROZERO;
-			char * comp;
-
-			for (j = NUMEROZERO; j <= strlen (argumentos0) - strlen (argumentos1); j++)
-				{
-				comp = antoniovandre_substring (argumentos0, j, j + strlen (argumentos1) - NUMEROUM);
-
-				if (! strcmp (comp, argumentos1)) ocorrencias++;
-
-				free (comp);
-				}
-
-			if (argumentos0 != NULL) free (argumentos0);
-			if (argumentos1 != NULL) free (argumentos1);
-
-			argumento = (TIPONUMEROREAL) ocorrencias;
 
 			if (temp != NULL) free (temp);
 
@@ -8788,17 +8641,29 @@ char * antoniovandre_evalcelula (char * str, int precisao)
 			return str;
 			}
 
+	if (str [j - NUMEROUM] == TOKENIGN)
+		{
+		if (MACROALOCACAODINAMICA) {if (strt4 != NULL) free (strt4); if (strtv2 != NULL) free (strtv2); if (strtv1 != NULL) free (strtv1); if (strt3 != NULL) free (strt3);}
+
+		antoniovandre_copiarstring (strt2, STRINGVAZIA);
+
+		for (i = NUMEROZERO; i < j - NUMEROUM; i++)
+			strncat (strt2, & str [i], NUMEROUM);
+
+		free (str);
+
+		return strt2;
+		}
+
 	flag = NUMEROZERO;
 
 	for (i = NUMEROZERO; i < j; i++)
-		if ((str [i] == DELIMITADORSTRINGARGUMENTOS) || (str [i] == TOKENIGN))
+		if (str [i] == DELIMITADORSTRINGARGUMENTOS)
 			{flag = NUMEROUM; break;}
 
 	if (flag == NUMEROUM)
 		{
-		if (MACROALOCACAODINAMICA) {if (strt4 != NULL) free (strt4); if (strtv2 != NULL) free (strtv2); if (strtv1 != NULL) free (strtv1); if (strt3 != NULL) free (strt3);}
-
-		flag3 = NUMEROZERO;
+		if (MACROALOCACAODINAMICA) {if (strt4 != NULL) free (strt4); if (strtv2 != NULL) free (strtv2); if (strtv1 != NULL) free (strtv1); if (strt3 != NULL) free (strt3); if (strt2 != NULL) free (strt2);}
 
 		for (i = NUMEROZERO; i < j; i++)
 			{
@@ -8808,30 +8673,13 @@ char * antoniovandre_evalcelula (char * str, int precisao)
 				if (str [i] == antoniovandre_letrasminusculas [l])
 					{flag2 = NUMEROUM; break;}
 
-			if (str [i] == TOKENIGN) {flag3 = NUMEROUM; break;}
+			if (flag2 == NUMEROUM) break;
 			}
 
-		if (flag3 == NUMEROUM)
-			{
-			antoniovandre_copiarstring (strt2, STRINGVAZIA);
-
-			for (i = NUMEROZERO; i < j; i++)
-				if (str [i] != TOKENIGN) strncat (strt2, & str [i], NUMEROUM);
-
-			free (str);
-
-			return strt2;
-			}
 		if (flag2 == NUMEROUM)
-			{
-			if (MACROALOCACAODINAMICA) if (strt2 != NULL) free (strt2);
 			return antoniovandre_evalcelulafuncao (str, precisao);
-			}
 		else
-			{
-			if (MACROALOCACAODINAMICA) if (strt2 != NULL) free (strt2);
 			return str;
-			}
 		}
 
 	antoniovandre_copiarstring (strt, STRINGVAZIA);
@@ -9190,9 +9038,6 @@ char * antoniovandre_eval (char * str, int precisao)
 		if (str [i] == DELIMITADORSTRINGARGUMENTOS) flag = NUMEROUM;
 		}
 
-	for (i = NUMEROZERO; i < j; i++)
-		if (! strncmp (str2 + i, "tamanhostring", 13)) {flag = NUMEROUM; break;}
-
 	if (flag == NUMEROUM)
 		{
 		k = NUMEROZERO;
@@ -9223,13 +9068,13 @@ char * antoniovandre_eval (char * str, int precisao)
 						contador--;
 					}
 
-					if ((! strncmp (str2 + i, "mediaaritmetica", 15)) || (! strncmp (str2 + i, "mediaaritmeticaponderada", 24)) || (! strncmp (str2 + i, "mediageometrica", 15)) || (! strncmp (str2 + i, "mediaharmonica", 14)) || (! strncmp (str2 + i, "variancia", 9)) || (! strncmp (str2 + i, "desviopadrao", 12)) || (! strncmp (str2 + i, "sum", 3)) || (! strncmp (str2 + i, "prod", 4)) || (! strncmp (str2 + i, "der", 3)) || (! strncmp (str2 + i, "int", 3)) || (! strncmp (str2 + i, "raizes", 6)) || (! strncmp (str2 + i, "seigual", 7)) || (! strncmp (str2 + i, "sediferente", 11)) || (! strncmp (str2 + i, "semaior", 6)) || (! strncmp (str2 + i, "semenor", 7)) || (! strncmp (str2 + i, "semaiorouigual", 14)) || (! strncmp (str2 + i, "semenorouigual", 14)) || (! strncmp (str2 + i, "base", 4)) || (! strncmp (str2 + i, "tamanhostring", 13)) || (! strncmp (str2 + i, "numeroocorrenciasstring", 23)))
+					if ((! strncmp (str2 + i, "mediaaritmetica", 15)) || (! strncmp (str2 + i, "mediaaritmeticaponderada", 24)) || (! strncmp (str2 + i, "mediageometrica", 15)) || (! strncmp (str2 + i, "mediaharmonica", 14)) || (! strncmp (str2 + i, "variancia", 9)) || (! strncmp (str2 + i, "desviopadrao", 12)) || (! strncmp (str2 + i, "sum", 3)) || (! strncmp (str2 + i, "prod", 4)) || (! strncmp (str2 + i, "der", 3)) || (! strncmp (str2 + i, "int", 3)) || (! strncmp (str2 + i, "raizes", 6)) || (! strncmp (str2 + i, "seigual", 7)) || (! strncmp (str2 + i, "sediferente", 11)) || (! strncmp (str2 + i, "semaior", 6)) || (! strncmp (str2 + i, "semenor", 7)) || (! strncmp (str2 + i, "semaiorouigual", 14)) || (! strncmp (str2 + i, "semenorouigual", 14)) || (! strncmp (str2 + i, "base", 4)))
 						if (flag2 == NUMEROZERO)
 							{
 							if (flag2 == NUMEROZERO)
 								{tc = TOKENINICIOEVAL; strncat(str3, & tc, NUMEROUM);}
 
-							if ((! strncmp (str2 + i, "base", 4)) || (! strncmp (str2 + i, "tamanhostring", 13)) || (! strncmp (str2 + i, "numeroocorrenciasstring", 23)))
+							if (! strncmp (str2 + i, "base", 4))
 								flag5 = NUMEROUM;
 
 							contador = NUMEROZERO;
