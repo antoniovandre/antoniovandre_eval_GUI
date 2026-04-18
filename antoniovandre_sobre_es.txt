@@ -270,7 +270,7 @@ Funciones disponibles para "antoniovandre_eval":
 
 "int": integral definida. Requiere 4 argumentos separados por "|": la función en la variable predeterminada, el límite inferior, el límite superior y el número de precisión natural.
 
-"raizes": devuelve las raíces de la función pasada como parámetro; requiere 5 argumentos: la función en la variable predeterminada, el punto de búsqueda inferior, el punto de búsqueda superior, la raíz a encontrar, comenzando con "0" para la primera raíz encontrada, "1" si se encuentra una segunda raíz, "2 " si se encuentra una tercera raíz, etc., o "-1" para devolver el número de raíces encontradas, y como último argumento la resolución entera positiva de la búsqueda.
+"raizes": devuelve las raíces de la función pasada como parámetro; requiere 5 argumentos separados por "|": la función en la variable predeterminada, el punto de búsqueda inferior, el punto de búsqueda superior, la raíz a encontrar, comenzando con "0" para la primera raíz encontrada, "1" si se encuentra una segunda raíz, "2 " si se encuentra una tercera raíz, etc., o "-1" para devolver el número de raíces encontradas, y como último argumento la resolución entera positiva de la búsqueda.
 
 "sinal": devuelve "0" si el argumento es nulo, "1" si es positivo o "-1" si es negativo.
 _____
