@@ -4,7 +4,7 @@
 
 // Licença de uso: Creative Commons Atribuição (CC BY).
 
-// Última atualização: 01-04-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 18-04-2026. Não considerando alterações em variáveis globais.
 
 #include "../antoniovandre_evalGUI.c"
 
@@ -21,6 +21,13 @@ int main (int argc, char *argv [])
 	int i;
 	int j = NUMEROZERO;
 	int flag = NUMEROZERO;
+
+	if (strlen (argv [NUMEROUM]) >= TAMANHO_BUFFER_PHRASE)
+		{
+		printf (MENSAGEM_ERRO_OVER);
+		printf ("\n");
+		return NUMEROMENOSUM;
+		}
 
 	int precisao = antoniovandre_precisao_real ();
 
