@@ -266,10 +266,6 @@ Funciones disponibles para "antoniovandre_eval":
 
 "desviopadrao": devuelve la desviación estándar de los argumentos pasados; argumentos separados por "|".
 
-"tamanhostring": devuelve la longitud de la cadena pasada como argumento.
-
-"numeroocorrenciasstring": devuelve el número de apariciones de una subcadena en una cadena pasada como argumentos; primero: la cadena principal; segundo: la subcadena.
-
 "der": derivada en un punto. Requiere 4 argumentos separados por "|": la función sobre la variable estándar, el punto, el orden de la derivada y la precisión de los números naturales.
 
 "int": integral definida. Requiere 4 argumentos separados por "|": la función en la variable predeterminada, el límite inferior, el límite superior y el número de precisión natural.

@@ -266,10 +266,6 @@ Functions available for "antoniovandre_eval":
 
 "desviopadrao": returns the standard deviation of the arguments passed; arguments separated by "|".
 
-"tamanhostring": returns the size of the string passed as an argument.
-
-"numeroocorrenciasstring": returns the number of occurrences of a substring in a string passed as arguments; first: the main string; second: the substring.
-
 "der": derivative at a point. Requires 4 arguments separated by "|": the function in the standard variable, the point, the order of the derivative, and the natural number precision.
 
 "int": definite integral. Requires 4 arguments separated by "|": the function in the standard variable, the lower limit, the upper limit, and the natural number precision.
