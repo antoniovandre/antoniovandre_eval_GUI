@@ -6,7 +6,7 @@
 
 // Licença de uso: Creative Commons Atribuição (CC BY).
 
-// Última atualização: 18-04-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 20-04-2026. Não considerando alterações em variáveis globais.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,7 +18,7 @@
 
 #include "antoniovandre_constantes.c"
 
-#define VERSION 20260418
+#define VERSION 20260420
 #define MENSAGEMNAOCOMPILADOR "Software não compilado em razão do compilador não ser compatível."
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -42,6 +42,7 @@
 #define NUMEROSTRINGPERSONAL VERDADE // Método pessoal de conversão de números para strings.
 #define OPERADORSUBTRACAO '-'
 #define OPERADORMULTIPLICACAO '*'
+#define OPERADOREXPONENCIACAO '^'
 #define CHARUM '1'
 #define STRINGMENOSUM "-1"
 #define VARIAVELPADRAO 'X'
@@ -8496,7 +8497,7 @@ char * antoniovandre_evalcelula (char * str, int precisao)
 				flag2 = NUMEROZERO;
 
 				for (j = NUMEROZERO; j < TAMANHO_BUFFER_PHRASE; j++)
-					if (strt [posicoes_operadores [j]] == '^') flag2 = NUMEROUM;
+					if (strt [posicoes_operadores [j]] == OPERADOREXPONENCIACAO) flag2 = NUMEROUM;
 
 				for (j = NUMEROZERO; j < TAMANHO_BUFFER_PHRASE; j++)
 					if (((strt [posicoes_operadores [j]] == OPERADORMULTIPLICACAO) || (strt [posicoes_operadores [j]] == '/'))) flag = NUMEROUM;
@@ -8558,7 +8559,7 @@ char * antoniovandre_evalcelula (char * str, int precisao)
 				valort2 = strtold (strtv2, & err);
 				if (* err != NUMEROZERO) {if (str != NULL) free (str); if (MACROALOCACAODINAMICA) {if (strt4 != NULL) free (strt4); if (strtv2 != NULL) free (strtv2); if (strtv1 != NULL) free (strtv1); if (strt3 != NULL) free (strt3); if (strt2 != NULL) free (strt2);} char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); if (result == NULL) {char * r = (char *) malloc (NUMEROUM); r [NUMEROZERO] = CARACTEREFIMSTRING; return r;} antoniovandre_copiarstring (result, STRINGSAIDAERRO); return result;}
 
-				if (strt [posicoes_operadores [i]] == '^')
+				if (strt [posicoes_operadores [i]] == OPERADOREXPONENCIACAO)
 					{
 					if (valort < NUMEROZERO)
 						{
@@ -8860,6 +8861,41 @@ char * antoniovandre_eval (char * str, int precisao)
 			antoniovandre_copiarstring (str2, str3);
 			antoniovandre_copiarstring (str3, STRINGVAZIA);
 			} while (flag4 == NUMEROUM);
+
+		j = strlen (str2);
+		flag2 = NUMEROZERO;
+
+		for (i = NUMEROZERO; i < j; i++)
+			{
+			if (str2 [i] == DELIMITADORSTRINGARGUMENTOS)
+				{
+				if (flag2 == NUMEROUM)
+					{
+					tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+					flag2 = NUMEROZERO;
+					}
+
+				tc = DELIMITADORSTRINGARGUMENTOS; strncat (str3, & tc, NUMEROUM);
+
+				if (i < j - NUMEROUM) for (k = i + NUMEROUM; (k < j) && (str2 [k] != DELIMITADORSTRINGARGUMENTOS); k++)
+					if (str2 [k] == OPERADOREXPONENCIACAO)
+						{
+						tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+						break;
+						}
+				}
+			else
+				{
+				strncat (str3, & str2 [i], NUMEROUM);
+
+				if (str2 [i] == OPERADOREXPONENCIACAO)
+					flag2 = NUMEROUM;
+				}
+			}
+
+		antoniovandre_copiarstring (str2, STRINGVAZIA);
+		antoniovandre_copiarstring (str2, str3);
+		antoniovandre_copiarstring (str3, STRINGVAZIA);
 		}
 
 	if (! strcmp (str2, STRINGVAZIA)) {if (str != NULL) free (str); if (MACROALOCACAODINAMICA) {if (str6 != NULL) free (str6); if (str5 != NULL) free (str5); if (str4t != NULL) free (str4t); if (str4 != NULL) free (str4); if (str3 != NULL) free (str3); if (str2t != NULL) free (str2t);} char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); if (result == NULL) {char * r = (char *) malloc (NUMEROUM); r [NUMEROZERO] = CARACTEREFIMSTRING; return r;} antoniovandre_copiarstring (result, STRINGSAIDAERRO); return result;}
@@ -9107,10 +9143,10 @@ char * antoniovandre_eval (char * str, int precisao)
 				{
 				antoniovandre_concatenarstring (str3, str6);
 
-				if (tc != OPERADORSUBTRACAO) antoniovandre_concatenarstring (str3, "*");
+				if (tc != OPERADORSUBTRACAO) {tc = OPERADORMULTIPLICACAO; strncat (str3, & tc, NUMEROUM);}
 				}
 
-			if (!strcmp (str3, "-")) antoniovandre_copiarstring (str3, "-1*");
+			if (!strcmp (str3, "-")) {antoniovandre_copiarstring (str3, STRINGMENOSUM); tc = OPERADORMULTIPLICACAO; strncat (str3, & tc, NUMEROUM);}
 
 			antoniovandre_copiarstring (str4, STRINGVAZIA);
 
@@ -9153,6 +9189,7 @@ char * antoniovandre_eval (char * str, int precisao)
 
 			for (i = NUMEROZERO; i < l; i++)
 				strncat (str3, & str5 [i], NUMEROUM);
+
 			flag5 = NUMEROZERO;
 
 			for (i = NUMEROZERO; i < t; i++)
