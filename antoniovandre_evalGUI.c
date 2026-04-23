@@ -6,7 +6,7 @@
 
 // Licença de uso: Creative Commons Atribuição (CC BY).
 
-// Última atualização: 20-04-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 23-04-2026. Não considerando alterações em variáveis globais.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,7 +18,7 @@
 
 #include "antoniovandre_constantes.c"
 
-#define VERSION 20260420
+#define VERSION 20260423
 #define MENSAGEMNAOCOMPILADOR "Software não compilado em razão do compilador não ser compatível."
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -9168,12 +9168,15 @@ char * antoniovandre_eval (char * str, int precisao)
 				strncat (str4t, & tc, NUMEROUM);
 				}
 
+			for (i = contador; i < l; i++)
+				strncat (str4t, & str4 [i], NUMEROUM);
+
 			for (i = NUMEROZERO; i < l; i++)
 				{
 				flag5 = NUMEROZERO;
 
 				for (k = NUMEROZERO; k < t; k++)
-					if (str4 [i] != antoniovandre_numeros [k])
+					if (str4t [i] == antoniovandre_numeros [k])
 						{flag5 = NUMEROUM; break;}
 
 				if (flag5 == NUMEROZERO) break;
@@ -9181,9 +9184,6 @@ char * antoniovandre_eval (char * str, int precisao)
 
 			if (flag5 == NUMEROZERO)
 				{
-				for (i = contador; i < l; i++)
-					strncat (str4t, & str4 [i], NUMEROUM);
-
 				char * temp2 = (char *) malloc (TAMANHO_BUFFER_PHRASE);
 
 				antoniovandre_copiarstring (temp2, STRINGVAZIA);
@@ -9195,7 +9195,7 @@ char * antoniovandre_eval (char * str, int precisao)
 				if (temp != NULL) free (temp);
 				}
 			else
-				antoniovandre_copiarstring (str5, str4);
+				antoniovandre_copiarstring (str5, str4t);
 
 			if (! strcmp (str5, STRINGSAIDAERRO)) {if (str != NULL) free (str); if (MACROALOCACAODINAMICA) {if (str6 != NULL) free (str6); if (str5 != NULL) free (str5); if (str4t != NULL) free (str4t); if (str4 != NULL) free (str4); if (str3 != NULL) free (str3); if (str2t != NULL) free (str2t);} char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); if (result == NULL) {char * r = (char *) malloc (NUMEROUM); r [NUMEROZERO] = CARACTEREFIMSTRING; return r;} antoniovandre_copiarstring (result, STRINGSAIDAERRO); return result;}
 
