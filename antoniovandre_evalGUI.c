@@ -6,7 +6,7 @@
 
 // Licença de uso: Creative Commons Atribuição (CC BY).
 
-// Última atualização: 23-04-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 24-04-2026. Não considerando alterações em variáveis globais.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,7 +18,7 @@
 
 #include "antoniovandre_constantes.c"
 
-#define VERSION 20260423
+#define VERSION 20260424
 #define MENSAGEMNAOCOMPILADOR "Software não compilado em razão do compilador não ser compatível."
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -9175,9 +9175,10 @@ char * antoniovandre_eval (char * str, int precisao)
 				{
 				flag5 = NUMEROZERO;
 
-				for (k = NUMEROZERO; k < t; k++)
-					if (str4t [i] == antoniovandre_numeros [k])
-						{flag5 = NUMEROUM; break;}
+				if (str4 [i] != OPERADORSUBTRACAO)
+					for (k = NUMEROZERO; k < t; k++)
+						if (str4 [i] == antoniovandre_numeros [k])
+							{flag5 = NUMEROUM; break;}
 
 				if (flag5 == NUMEROZERO) break;
 				}
