@@ -40,6 +40,7 @@
 #define COMPARARTRINGPERSONAL VERDADE // Método pessoal de comparação de strings.
 #define CONCATENARTRINGPERSONAL VERDADE // Método pessoal de concatenação de strings.
 #define NUMEROSTRINGPERSONAL VERDADE // Método pessoal de conversão de números para strings.
+#define OPERADORSOMA '+'
 #define OPERADORSUBTRACAO '-'
 #define OPERADORMULTIPLICACAO '*'
 #define OPERADOREXPONENCIACAO '^'
