@@ -6,7 +6,7 @@
 
 // Licença de uso: Creative Commons Atribuição (CC BY).
 
-// Última atualização: 28-04-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 01-05-2026. Não considerando alterações em variáveis globais.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,7 +18,7 @@
 
 #include "antoniovandre_constantes.c"
 
-#define VERSION 20260428
+#define VERSION 20260501
 #define MENSAGEMNAOCOMPILADOR "Software não compilado em razão do compilador não ser compatível."
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -43,6 +43,7 @@
 #define OPERADORSOMA '+'
 #define OPERADORSUBTRACAO '-'
 #define OPERADORMULTIPLICACAO '*'
+#define OPERADORDIVISAO '/'
 #define OPERADOREXPONENCIACAO '^'
 #define CHARUM '1'
 #define STRINGMENOSUM "-1"
@@ -8535,7 +8536,7 @@ char * antoniovandre_evalcelula (char * str, int precisao)
 					if (strt [posicoes_operadores [j]] == OPERADOREXPONENCIACAO) flag2 = NUMEROUM;
 
 				for (j = NUMEROZERO; j < TAMANHO_BUFFER_PHRASE; j++)
-					if (((strt [posicoes_operadores [j]] == OPERADORMULTIPLICACAO) || (strt [posicoes_operadores [j]] == '/'))) flag = NUMEROUM;
+					if (((strt [posicoes_operadores [j]] == OPERADORMULTIPLICACAO) || (strt [posicoes_operadores [j]] == OPERADORDIVISAO))) flag = NUMEROUM;
 
 				antoniovandre_copiarstring (strt2, STRINGVAZIA);
 
@@ -8639,7 +8640,7 @@ char * antoniovandre_evalcelula (char * str, int precisao)
 					break;
 					}
 
-				if ((strt [posicoes_operadores [i]] == '/') && (flag2 == NUMEROZERO))
+				if ((strt [posicoes_operadores [i]] == OPERADORDIVISAO) && (flag2 == NUMEROZERO))
 					{
 					if (valort2 == NUMEROZERO) {if (str != NULL) free (str); if (MACROALOCACAODINAMICA) {if (strt4 != NULL) free (strt4); if (strtv2 != NULL) free (strtv2); if (strtv1 != NULL) free (strtv1); if (strt3 != NULL) free (strt3); if (strt2 != NULL) free (strt2);} char * result = (char *) malloc (TAMANHO_BUFFER_PHRASE); if (result == NULL) {char * r = (char *) malloc (NUMEROUM); r [NUMEROZERO] = CARACTEREFIMSTRING; return r;} antoniovandre_copiarstring (result, STRINGSAIDAERRO); return result;}
 
@@ -8861,7 +8862,7 @@ char * antoniovandre_eval (char * str, int precisao)
 						contador--;
 					}
 
-					if ((! strncmp (str2 + i, "mediaaritmetica", 15)) || (! strncmp (str2 + i, "mediaaritmeticaponderada", 24)) || (! strncmp (str2 + i, "mediageometrica", 15)) || (! strncmp (str2 + i, "mediaharmonica", 14)) || (! strncmp (str2 + i, "variancia", 9)) || (! strncmp (str2 + i, "desviopadrao", 12)) || (! strncmp (str2 + i, "sum", 3)) || (! strncmp (str2 + i, "prod", 4)) || (! strncmp (str2 + i, "der", 3)) || (! strncmp (str2 + i, "int", 3)) || (! strncmp (str2 + i, "raizes", 6)) || (! strncmp (str2 + i, "seigual", 7)) || (! strncmp (str2 + i, "sediferente", 11)) || (! strncmp (str2 + i, "semaior", 6)) || (! strncmp (str2 + i, "semenor", 7)) || (! strncmp (str2 + i, "semaiorouigual", 14)) || (! strncmp (str2 + i, "semenorouigual", 14)) || (! strncmp (str2 + i, "pitagoras", 9)) || (! strncmp (str2 + i, "diagonalparalelepipedo", 22)) || (! strncmp (str2 + i, "pat", 3)) || (! strncmp (str2 + i, "par", 3)) || (! strncmp (str2 + i, "pas", 3)) || (! strncmp (str2 + i, "pasr", 4)) || (! strncmp (str2 + i, "pgt", 3)) || (! strncmp (str2 + i, "prg", 3)) || (! strncmp (str2 + i, "pgs", 3)) || (! strncmp (str2 + i, "pgsr", 4)) || (! strncmp (str2 + i, "mmc", 3)) || (! strncmp (str2 + i, "mdc", 3)) || (! strncmp (str2 + i, "max", 3)) || (! strncmp (str2 + i, "min", 3)) || (! strncmp (str2 + i, "base", 4)))
+					if ((! strncmp (str2 + i, "seigual", 7)) || (! strncmp (str2 + i, "sediferente", 11)) || (! strncmp (str2 + i, "semaiorouigual", 14)) || (! strncmp (str2 + i, "semenorouigual", 14)) || (! strncmp (str2 + i, "semaior", 6)) || (! strncmp (str2 + i, "semenor", 7)) || (! strncmp (str2 + i, "pitagoras", 9)) || (! strncmp (str2 + i, "diagonalparalelepipedo", 22)) || (! strncmp (str2 + i, "pat", 3)) || (! strncmp (str2 + i, "par", 3)) || (! strncmp (str2 + i, "pasr", 4)) || (! strncmp (str2 + i, "pas", 3)) || (! strncmp (str2 + i, "pgt", 3)) || (! strncmp (str2 + i, "pgr", 3)) || (! strncmp (str2 + i, "pgsr", 4)) || (! strncmp (str2 + i, "pgs", 3)) || (! strncmp (str2 + i, "mmc", 3)) || (! strncmp (str2 + i, "mdc", 3)) || (! strncmp (str2 + i, "sum", 3)) || (! strncmp (str2 + i, "prod", 4)) || (! strncmp (str2 + i, "mediaaritmeticaponderada", 24)) || (! strncmp (str2 + i, "mediaaritmetica", 15)) || (! strncmp (str2 + i, "mediageometrica", 15)) || (! strncmp (str2 + i, "mediaharmonica", 14)) || (! strncmp (str2 + i, "composicao", 10)) || (! strncmp (str2 + i, "base", 4)) || (! strncmp (str2 + i, "max", 3)) || (! strncmp (str2 + i, "min", 3)) || (! strncmp (str2 + i, "mediana", 7)) || (! strncmp (str2 + i, "variancia", 9)) || (! strncmp (str2 + i, "desviopadrao", 12)) || (! strncmp (str2 + i, "der", 3)) || (! strncmp (str2 + i, "int", 3)) || (! strncmp (str2 + i, "raizes", 6)))
 						if (flag2 == NUMEROZERO)
 							{
 							if (flag2 == NUMEROZERO)
