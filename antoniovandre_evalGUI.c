@@ -8091,6 +8091,23 @@ char * antoniovandre_evalcelulafuncao (char * str, int precisao)
 				tc = OPERADORMULTIPLICACAO;
 				return antoniovandre_numeroparastring ((int) tc, precisao);
 				}
+			else if (! strcmp (str2, "operadordivisao"))
+				{
+				if (str2 != NULL) free (str2);
+
+				if (MACROALOCACAODINAMICA)
+					{
+					if (buffer != NULL) free (buffer);
+
+					for (i = NUMEROZERO; i < TAMANHO_BUFFER_FUNCOESCONSTANTES; i++)
+						{if (funcoesconstantes [i].token != NULL) free (funcoesconstantes [i].token); if (funcoesconstantes [i].comentario != NULL) free (funcoesconstantes [i].comentario);}
+
+					if (funcoesconstantes != NULL) free (funcoesconstantes);
+					}
+
+				tc = OPERADORDIVISAO;
+				return antoniovandre_numeroparastring ((int) tc, precisao);
+				}
 			else if (! strcmp (str2, "operadorexponenciacao"))
 				{
 				if (str2 != NULL) free (str2);
