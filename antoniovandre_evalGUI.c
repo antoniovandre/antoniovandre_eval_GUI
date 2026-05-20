@@ -6,7 +6,7 @@
 
 // Licença de uso: Creative Commons Atribuição (CC BY).
 
-// Última atualização: 01-05-2026. Não considerando alterações em variáveis globais.
+// Última atualização: 20-05-2026. Não considerando alterações em variáveis globais.
 
 #include <stdlib.h>
 #include <stdio.h>
@@ -18,7 +18,7 @@
 
 #include "antoniovandre_constantes.c"
 
-#define VERSION 20260501
+#define VERSION 20260520
 #define MENSAGEMNAOCOMPILADOR "Software não compilado em razão do compilador não ser compatível."
 #define NUMEROZERO 0
 #define NUMEROUM 1
@@ -8846,8 +8846,219 @@ char * antoniovandre_eval (char * str, int precisao)
 	for (i = NUMEROZERO; i < j; i++)
 		{
 		if (str [i] != ESPACOBRANCO) strncat (str2, & str [i], NUMEROUM);
-		if (str [i] == DELIMITADORSTRINGARGUMENTOS) flag = NUMEROUM;
+
+		for (k = NUMEROZERO; k < u; k++)
+			if (str [i] == antoniovandre_letrasmaiusculas [k]) flag = NUMEROUM;
 		}
+
+	j = strlen (str2);
+
+	if (flag == NUMEROUM)
+		{
+		for (i = NUMEROZERO; i < j; i++)
+			{
+			if (! strncmp (str2 + i, "QEM", 3))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "QEM");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += 2;
+				}
+			else if (! strncmp (str2 + i, "HHM", 3))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "HHM");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += 2;
+				}
+			else if (! strncmp (str2 + i, "MEM", 3))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "MEM");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += 2;
+				}
+			else if (! strncmp (str2 + i, "MPM", 3))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "MPM");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += 2;
+				}
+			else if (! strncmp (str2 + i, "PEM", 3))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "PEM");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += 2;
+				}
+			else if (! strncmp (str2 + i, "MNM", 3))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "MNM");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += 2;
+				}
+			else if (! strncmp (str2 + i, "GM", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "GM");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "HM", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "HM");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "KM", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "KM");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "AM", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "AM");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "KE", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "KE");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "SB", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "SB");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "PM", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "PM");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "CC", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "CC");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "EM", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "EM");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "FA", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "FA");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "FS", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "FS");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "AP", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "AP");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "CO", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "CO");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "KH", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "KH");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "GK", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "GK");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "PI", 2))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "PI");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				i += NUMEROUM;
+				}
+			else if (! strncmp (str2 + i, "C", NUMEROUM))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "C");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				}
+			else if (! strncmp (str2 + i, "R", NUMEROUM))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "R");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				}
+			else if (! strncmp (str2 + i, "B", NUMEROUM))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "B");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				}
+			else if (! strncmp (str2 + i, "T", NUMEROUM))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "T");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				}
+			else if (! strncmp (str2 + i, "P", NUMEROUM))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "P");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				}
+			else if (! strncmp (str2 + i, "E", NUMEROUM))
+				{
+				tc = TOKENINICIOEVAL; strncat (str3, & tc, NUMEROUM);
+				strcat (str3, "E");
+				tc = TOKENFIMEVAL; strncat (str3, & tc, NUMEROUM);
+				}
+			else strncat (str3, & str2 [i], NUMEROUM);
+			}
+
+		antoniovandre_copiarstring (str2, STRINGVAZIA);
+		antoniovandre_copiarstring (str2, str3);
+		antoniovandre_copiarstring (str3, STRINGVAZIA);
+		}
+
+	flag = NUMEROZERO;
+
+	for (i = NUMEROZERO; i < j; i++)
+		if (str [i] == DELIMITADORSTRINGARGUMENTOS) {flag = NUMEROUM; break;}
 
 	if (flag == NUMEROUM)
 		{
